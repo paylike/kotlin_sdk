@@ -5,32 +5,26 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi
-import androidx.compose.animation.graphics.res.animatedVectorResource
-import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
-import androidx.compose.animation.graphics.vector.AnimatedImageVector
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.Arrangement.Center
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.viewinterop.AndroidView
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
+import androidx.compose.material.Button
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.text.input.KeyboardType
 import com.github.paylike.sample.ui.theme.Kotlin_sdkTheme
 import com.steliospapamichail.creditcardmasker.viewtransformations.CardNumberMask
 import com.steliospapamichail.creditcardmasker.viewtransformations.ExpirationDateMask
-import org.intellij.lang.annotations.JdkConstants
 
 class SampleActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,6 +35,9 @@ class SampleActivity : ComponentActivity() {
     }
 }
 
+enum class cardBrands {
+    NONE, MASTERCARD, VISA
+}
 
 val paylikeGreen= Color(0xFF2e8f29)
 
@@ -48,6 +45,11 @@ val paylikeGreen= Color(0xFF2e8f29)
 @OptIn(ExperimentalAnimationGraphicsApi::class)
 @Composable
 fun WhiteLabelDemo() {
+    var cardNumber by remember { mutableStateOf("") }
+    var highlightedCardBrand by remember { mutableStateOf(cardBrands.NONE) }
+    var expiryDate by remember { mutableStateOf("") }
+    var securityCode by remember { mutableStateOf("") }
+
     Kotlin_sdkTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
@@ -73,84 +75,157 @@ fun WhiteLabelDemo() {
                     Column(
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier.fillMaxSize().padding(0.dp)
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(0.dp)
                     ) {
                         Row (
+                            modifier = Modifier.fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.SpaceBetween,
                         ) {
-                            CardNumber()
-                            val image = painterResource(R.drawable.ic_visa_icon)
-                            Image(
-                                painter = image,
-                                contentDescription = null,
-                                modifier = Modifier.size(32.dp)
+                            CardNumber(
+                                cardNumber,
+                                {
+                                    if (it.length <= 16) cardNumber = it
+                                    if (it.isEmpty()) {
+                                        highlightedCardBrand = cardBrands.NONE
+                                        return@CardNumber
+                                    }
+                                    highlightedCardBrand = if (it[0]?.digitToIntOrNull() == 4)
+                                        cardBrands.VISA
+                                    else if (it[0]?.digitToIntOrNull() == 5)
+                                        cardBrands.MASTERCARD
+                                    else cardBrands.NONE
+                                },
+                                Modifier.weight(55f)
                             )
-                            val image2 = painterResource(R.drawable.ic_mastercard_icon)
-
-                            Image(
-                                painter = image2,
-                                contentDescription = null,
-                                modifier = Modifier.size(32.dp)
+                            val image = painterResource(R.drawable.ic_mastercard_icon)
+                            val image2 = painterResource(R.drawable.ic_visa_icon)
+                            Row (
+                                horizontalArrangement = Arrangement.End,
+                                modifier = Modifier.weight(45f)
                             )
+                            {
+                                Image(
+                                    painter = image,
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .size(40.dp)
+                                        .padding(horizontal = 8.dp),
+                                    colorFilter = if (highlightedCardBrand == cardBrands.VISA)
+                                        ColorFilter.tint(Color.LightGray) else null
+                                )
+                                Image(
+                                    painter = image2,
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .size(40.dp)
+                                        .padding(horizontal = 8.dp),
+                                    colorFilter = if (highlightedCardBrand == cardBrands.MASTERCARD)
+                                        ColorFilter.tint(Color.LightGray) else null
+                                )
+                            }
                         }
                         Row (
+                            modifier = Modifier.fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween
+                            horizontalArrangement = Arrangement.Start
                         ) {
-                            Expiration()
-                            SecurityCode()
+                            Expiration(
+                                expiryDate,
+                                { if (it.length <= 4) expiryDate = it },
+                                Modifier.weight(2f))
+                            SecurityCode(
+                                securityCode,
+                                { if (it.length <= 3) securityCode = it },
+                                Modifier.weight(1f))
+                        }
+                        Button(
+                            colors = ButtonDefaults.buttonColors(
+                                backgroundColor = paylikeGreen,
+                                contentColor = androidx.compose.ui.graphics.Color.White
+                            ),
+                            onClick = {},
+                            modifier = Modifier.size(100.dp, 32.dp)
+                        ) {
+                            Text("Pay", fontSize = 12.sp)
                         }
                     }
-
-
                 }
             )
         }
     }
 }
 
-
 @Composable
-fun CardNumber() {
-    var number by remember { mutableStateOf("") }
+fun CardNumber(
+    number: String,
+    onValueChanged: (String) -> Unit,
+    modifier: Modifier, )
+{
     TextField(
+        placeholder = { Text(text = "0000 0000 0000 0000") },
         value = number,
         visualTransformation = CardNumberMask(),
-        modifier = Modifier
-            .fillMaxWidth(0.6f),
-        onValueChange = {
-            if (it.length <= 16) number  = it
-        }
-    )
+        modifier = modifier,
+        onValueChange = onValueChanged,
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        colors = TextFieldDefaults.textFieldColors(
+            textColor = Color.Gray,
+            disabledTextColor = Color.Transparent,
+            backgroundColor = Color.White,
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent,
+            disabledIndicatorColor = Color.Transparent
+        )
 
-@Composable
-fun Expiration() {
-    var expiration by remember { mutableStateOf("") }
-    OutlinedTextField(
-        value = expiration,
-        //  visualTransformation = ExpirationDateMask(),
-        modifier = Modifier
-            .fillMaxWidth(0.4f)
-            .height(100.dp),
-
-        onValueChange = {
-            if (it.length <= 4) expiration = it
-        }, label = { Text("Expiration") }
     )
 }
 
 @Composable
-fun SecurityCode() {
-    var securityCode by remember { mutableStateOf("") }
-    OutlinedTextField(
-        modifier = Modifier
-            .fillMaxWidth(0.4f)
-            .height(100.dp),
+fun Expiration(
+    date: String,
+    onValueChanged: (String) -> Unit,
+    modifier: Modifier) {
+    TextField(
+        placeholder = { Text(text = "MM/YY") },
+        value = date,
+        visualTransformation = ExpirationDateMask(),
+        modifier = modifier,
+        onValueChange = onValueChanged,
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        colors = TextFieldDefaults.textFieldColors(
+            textColor = Color.Gray,
+            disabledTextColor = Color.Transparent,
+            backgroundColor = Color.White,
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent,
+            disabledIndicatorColor = Color.Transparent
+        )
+    )
+}
+
+@Composable
+fun SecurityCode(
+    securityCode: String,
+    onValueChanged: (String) -> Unit,
+    modifier: Modifier)
+{
+    TextField(
+        placeholder = { Text(text = "XXX") },
+        modifier = modifier,
         value = securityCode,
-        onValueChange = {
-            if (it.length <= 3) securityCode = it
-        }, label = { Text("Security Code                                                                                                                                                                                                                                                                    ") }
+        onValueChange = onValueChanged,
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        colors = TextFieldDefaults.textFieldColors(
+            textColor = Color.Gray,
+            disabledTextColor = Color.Transparent,
+            backgroundColor = Color.White,
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent,
+            disabledIndicatorColor = Color.Transparent
+        )
     )
 }
 
