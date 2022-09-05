@@ -22,6 +22,7 @@ import androidx.compose.material.Button
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.text.input.KeyboardType
+import com.github.paylike.kotlin_luhn.PaylikeLuhn
 import com.github.paylike.sample.ui.theme.Kotlin_sdkTheme
 import com.steliospapamichail.creditcardmasker.viewtransformations.CardNumberMask
 import com.steliospapamichail.creditcardmasker.viewtransformations.ExpirationDateMask
@@ -35,7 +36,7 @@ class SampleActivity : ComponentActivity() {
     }
 }
 
-enum class cardBrands {
+enum class CardBrands {
     NONE, MASTERCARD, VISA
 }
 
@@ -46,9 +47,13 @@ val paylikeGreen= Color(0xFF2e8f29)
 @Composable
 fun WhiteLabelDemo() {
     var cardNumber by remember { mutableStateOf("") }
-    var highlightedCardBrand by remember { mutableStateOf(cardBrands.NONE) }
+    var isCardNumberValid by remember { mutableStateOf(true) }
+    var highlightedCardBrand by remember { mutableStateOf(CardBrands.NONE) }
     var expiryDate by remember { mutableStateOf("") }
+    var isExpiryDateValid by remember { mutableStateOf(true) }
+
     var securityCode by remember { mutableStateOf("") }
+    var isSecurityCodeValid by remember { mutableStateOf(true) }
 
     Kotlin_sdkTheme {
         Surface(
@@ -86,17 +91,19 @@ fun WhiteLabelDemo() {
                         ) {
                             CardNumber(
                                 cardNumber,
+                                isCardNumberValid,
                                 {
+                                    isCardNumberValid = true
                                     if (it.length <= 16) cardNumber = it
                                     if (it.isEmpty()) {
-                                        highlightedCardBrand = cardBrands.NONE
+                                        highlightedCardBrand = CardBrands.NONE
                                         return@CardNumber
                                     }
                                     highlightedCardBrand = if (it[0]?.digitToIntOrNull() == 4)
-                                        cardBrands.VISA
+                                        CardBrands.VISA
                                     else if (it[0]?.digitToIntOrNull() == 5)
-                                        cardBrands.MASTERCARD
-                                    else cardBrands.NONE
+                                        CardBrands.MASTERCARD
+                                    else CardBrands.NONE
                                 },
                                 Modifier.weight(55f)
                             )
@@ -113,7 +120,7 @@ fun WhiteLabelDemo() {
                                     modifier = Modifier
                                         .size(40.dp)
                                         .padding(horizontal = 8.dp),
-                                    colorFilter = if (highlightedCardBrand == cardBrands.VISA)
+                                    colorFilter = if (highlightedCardBrand == CardBrands.VISA)
                                         ColorFilter.tint(Color.LightGray) else null
                                 )
                                 Image(
@@ -122,7 +129,7 @@ fun WhiteLabelDemo() {
                                     modifier = Modifier
                                         .size(40.dp)
                                         .padding(horizontal = 8.dp),
-                                    colorFilter = if (highlightedCardBrand == cardBrands.MASTERCARD)
+                                    colorFilter = if (highlightedCardBrand == CardBrands.MASTERCARD)
                                         ColorFilter.tint(Color.LightGray) else null
                                 )
                             }
@@ -134,11 +141,19 @@ fun WhiteLabelDemo() {
                         ) {
                             Expiration(
                                 expiryDate,
-                                { if (it.length <= 4) expiryDate = it },
+                                isExpiryDateValid,
+                                {
+                                    isExpiryDateValid = true
+                                    if (it.length <= 4) expiryDate = it
+                                },
                                 Modifier.weight(2f))
                             SecurityCode(
                                 securityCode,
-                                { if (it.length <= 3) securityCode = it },
+                                isSecurityCodeValid,
+                                {
+                                    isSecurityCodeValid = true
+                                    if (it.length <= 3) securityCode = it
+                                },
                                 Modifier.weight(1f))
                         }
                         Button(
@@ -146,7 +161,16 @@ fun WhiteLabelDemo() {
                                 backgroundColor = paylikeGreen,
                                 contentColor = androidx.compose.ui.graphics.Color.White
                             ),
-                            onClick = {},
+                            onClick = {
+                                if (cardNumber.length < 16 ||
+                                    !PaylikeLuhn.isValid(cardNumber))
+                                    isCardNumberValid = false
+                                if (expiryDate.length < 4 ||
+                                    expiryDate.substring(0, 2).toIntOrNull()!! > 12)
+                                    isExpiryDateValid = false
+                                if (securityCode.length < 3)
+                                    isSecurityCodeValid = false
+                            },
                             modifier = Modifier.size(100.dp, 32.dp)
                         ) {
                             Text("Pay", fontSize = 12.sp)
@@ -161,8 +185,10 @@ fun WhiteLabelDemo() {
 @Composable
 fun CardNumber(
     number: String,
+    isValid: Boolean,
     onValueChanged: (String) -> Unit,
-    modifier: Modifier, )
+    modifier: Modifier,
+    )
 {
     TextField(
         placeholder = { Text(text = "0000 0000 0000 0000") },
@@ -172,7 +198,7 @@ fun CardNumber(
         onValueChange = onValueChanged,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         colors = TextFieldDefaults.textFieldColors(
-            textColor = Color.Gray,
+            textColor = if (isValid) Color.Gray else Color.Red,
             disabledTextColor = Color.Transparent,
             backgroundColor = Color.White,
             focusedIndicatorColor = Color.Transparent,
@@ -186,6 +212,7 @@ fun CardNumber(
 @Composable
 fun Expiration(
     date: String,
+    isValid: Boolean,
     onValueChanged: (String) -> Unit,
     modifier: Modifier) {
     TextField(
@@ -196,7 +223,7 @@ fun Expiration(
         onValueChange = onValueChanged,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         colors = TextFieldDefaults.textFieldColors(
-            textColor = Color.Gray,
+            textColor = if (isValid) Color.Gray else Color.Red,
             disabledTextColor = Color.Transparent,
             backgroundColor = Color.White,
             focusedIndicatorColor = Color.Transparent,
@@ -209,6 +236,7 @@ fun Expiration(
 @Composable
 fun SecurityCode(
     securityCode: String,
+    isValid: Boolean,
     onValueChanged: (String) -> Unit,
     modifier: Modifier)
 {
@@ -219,7 +247,7 @@ fun SecurityCode(
         onValueChange = onValueChanged,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         colors = TextFieldDefaults.textFieldColors(
-            textColor = Color.Gray,
+            textColor = if (isValid) Color.Gray else Color.Red,
             disabledTextColor = Color.Transparent,
             backgroundColor = Color.White,
             focusedIndicatorColor = Color.Transparent,

@@ -68,6 +68,7 @@ dependencies {
 
     implementation 'com.github.SteliosPapamichail:CreditCardHelper:v1.0.0'
     implementation 'androidx.compose.animation:animation-graphics:1.2.0'
+    implementation 'com.github.paylike:kotlin_luhn:1.0.5'
 
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
