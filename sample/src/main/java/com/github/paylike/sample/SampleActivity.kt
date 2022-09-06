@@ -13,16 +13,17 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.material.Button
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.text.input.KeyboardType
 import com.github.paylike.kotlin_luhn.PaylikeLuhn
+import com.github.paylike.sample.CardBrands
+import com.github.paylike.sample.R
+import com.github.paylike.sample.ui.theme.PaylikeGreen
 import com.github.paylike.sample.ui.theme.Kotlin_sdkTheme
 import com.steliospapamichail.creditcardmasker.viewtransformations.CardNumberMask
 import com.steliospapamichail.creditcardmasker.viewtransformations.ExpirationDateMask
@@ -36,24 +37,20 @@ class SampleActivity : ComponentActivity() {
     }
 }
 
-enum class CardBrands {
-    NONE, MASTERCARD, VISA
-}
-
-val paylikeGreen= Color(0xFF2e8f29)
-
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
-@OptIn(ExperimentalAnimationGraphicsApi::class)
 @Composable
 fun WhiteLabelDemo() {
+    // props - could be refactored somehow to make this look better
     var cardNumber by remember { mutableStateOf("") }
     var isCardNumberValid by remember { mutableStateOf(true) }
-    var highlightedCardBrand by remember { mutableStateOf(CardBrands.NONE) }
+
     var expiryDate by remember { mutableStateOf("") }
     var isExpiryDateValid by remember { mutableStateOf(true) }
 
     var securityCode by remember { mutableStateOf("") }
     var isSecurityCodeValid by remember { mutableStateOf(true) }
+
+    var highlightedCardBrand by remember { mutableStateOf(CardBrands.NONE) }
 
     Kotlin_sdkTheme {
         Surface(
@@ -62,7 +59,7 @@ fun WhiteLabelDemo() {
         ) {
             Scaffold(
                 topBar = {
-                    TopAppBar(backgroundColor = paylikeGreen) {
+                    TopAppBar(backgroundColor = PaylikeGreen) {
                         Row(Modifier.fillMaxSize(),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.End,
@@ -158,7 +155,7 @@ fun WhiteLabelDemo() {
                         }
                         Button(
                             colors = ButtonDefaults.buttonColors(
-                                backgroundColor = paylikeGreen,
+                                backgroundColor = PaylikeGreen,
                                 contentColor = androidx.compose.ui.graphics.Color.White
                             ),
                             onClick = {
@@ -180,6 +177,30 @@ fun WhiteLabelDemo() {
             )
         }
     }
+}
+
+@Composable
+private fun TopBarContent() {
+    Row(
+        Modifier.fillMaxSize(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.End,
+    ) {
+        Text(
+            "Minimal white label demo",
+            color = Color(0xFFFFFFFF),
+            fontWeight = FontWeight.Bold,
+            fontSize = 20.sp,
+        )
+    }
+}
+
+private fun HighlightDetectedCardBrand(cardNumberInput: String): CardBrands {
+    return if (cardNumberInput[0]?.digitToIntOrNull() == 4)
+        CardBrands.VISA
+    else if (cardNumberInput[0]?.digitToIntOrNull() == 5)
+        CardBrands.MASTERCARD
+    else CardBrands.NONE
 }
 
 @Composable
