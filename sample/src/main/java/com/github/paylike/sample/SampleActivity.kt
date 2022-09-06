@@ -25,6 +25,7 @@ import com.github.paylike.sample.CardBrands
 import com.github.paylike.sample.R
 import com.github.paylike.sample.ui.theme.PaylikeGreen
 import com.github.paylike.sample.ui.theme.Kotlin_sdkTheme
+import com.github.paylike.sample.ui.theme.PaylikeWhite
 import com.steliospapamichail.creditcardmasker.viewtransformations.CardNumberMask
 import com.steliospapamichail.creditcardmasker.viewtransformations.ExpirationDateMask
 
@@ -59,19 +60,7 @@ fun WhiteLabelDemo() {
         ) {
             Scaffold(
                 topBar = {
-                    TopAppBar(backgroundColor = PaylikeGreen) {
-                        Row(Modifier.fillMaxSize(),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.End,
-                        ) {
-                            Text(
-                                "Minimal white label demo",
-                                color = Color(0xFFFFFFFF),
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 20.sp,
-                            )
-                        }
-                    }
+                    TopBarContent()
                 },
                 content = {
                     Column(
@@ -96,39 +85,17 @@ fun WhiteLabelDemo() {
                                         highlightedCardBrand = CardBrands.NONE
                                         return@CardNumber
                                     }
-                                    highlightedCardBrand = if (it[0]?.digitToIntOrNull() == 4)
-                                        CardBrands.VISA
-                                    else if (it[0]?.digitToIntOrNull() == 5)
-                                        CardBrands.MASTERCARD
-                                    else CardBrands.NONE
+                                    highlightedCardBrand = highlightDetectedCardBrand(it)
                                 },
                                 Modifier.weight(55f)
                             )
-                            val image = painterResource(R.drawable.ic_mastercard_icon)
-                            val image2 = painterResource(R.drawable.ic_visa_icon)
                             Row (
                                 horizontalArrangement = Arrangement.End,
                                 modifier = Modifier.weight(45f)
                             )
                             {
-                                Image(
-                                    painter = image,
-                                    contentDescription = null,
-                                    modifier = Modifier
-                                        .size(40.dp)
-                                        .padding(horizontal = 8.dp),
-                                    colorFilter = if (highlightedCardBrand == CardBrands.VISA)
-                                        ColorFilter.tint(Color.LightGray) else null
-                                )
-                                Image(
-                                    painter = image2,
-                                    contentDescription = null,
-                                    modifier = Modifier
-                                        .size(40.dp)
-                                        .padding(horizontal = 8.dp),
-                                    colorFilter = if (highlightedCardBrand == CardBrands.MASTERCARD)
-                                        ColorFilter.tint(Color.LightGray) else null
-                                )
+                                MasterCardImage(highlightedCardBrand)
+                                VisaImage(highlightedCardBrand)
                             }
                         }
                         Row (
@@ -156,7 +123,7 @@ fun WhiteLabelDemo() {
                         Button(
                             colors = ButtonDefaults.buttonColors(
                                 backgroundColor = PaylikeGreen,
-                                contentColor = androidx.compose.ui.graphics.Color.White
+                                contentColor = PaylikeWhite
                             ),
                             onClick = {
                                 if (cardNumber.length < 16 ||
@@ -181,26 +148,19 @@ fun WhiteLabelDemo() {
 
 @Composable
 private fun TopBarContent() {
-    Row(
-        Modifier.fillMaxSize(),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.End,
-    ) {
-        Text(
-            "Minimal white label demo",
-            color = Color(0xFFFFFFFF),
-            fontWeight = FontWeight.Bold,
-            fontSize = 20.sp,
-        )
+    TopAppBar(backgroundColor = PaylikeGreen) {
+        Row(Modifier.fillMaxSize(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.End,
+        ) {
+            Text(
+                "Minimal white label demo",
+                color = PaylikeWhite,
+                fontWeight = FontWeight.Bold,
+                fontSize = 20.sp,
+            )
+        }
     }
-}
-
-private fun HighlightDetectedCardBrand(cardNumberInput: String): CardBrands {
-    return if (cardNumberInput[0]?.digitToIntOrNull() == 4)
-        CardBrands.VISA
-    else if (cardNumberInput[0]?.digitToIntOrNull() == 5)
-        CardBrands.MASTERCARD
-    else CardBrands.NONE
 }
 
 @Composable
@@ -209,7 +169,7 @@ fun CardNumber(
     isValid: Boolean,
     onValueChanged: (String) -> Unit,
     modifier: Modifier,
-    )
+)
 {
     TextField(
         placeholder = { Text(text = "0000 0000 0000 0000") },
@@ -226,8 +186,42 @@ fun CardNumber(
             unfocusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent
         )
-
     )
+}
+
+@Composable
+private fun VisaImage(highlightedCardBrand: CardBrands) {
+    Image(
+        painter = painterResource(R.drawable.ic_visa_icon),
+        contentDescription = null,
+        modifier = Modifier
+            .size(40.dp)
+            .padding(horizontal = 8.dp),
+        colorFilter = if (highlightedCardBrand == CardBrands.MASTERCARD)
+            ColorFilter.tint(Color.LightGray) else null
+    )
+}
+
+@Composable
+private fun MasterCardImage(highlightedCardBrand: CardBrands) {
+    Image(
+        painter = painterResource(R.drawable.ic_mastercard_icon),
+        contentDescription = null,
+        modifier = Modifier
+            .size(40.dp)
+            .padding(horizontal = 8.dp),
+        colorFilter = if (highlightedCardBrand == CardBrands.VISA)
+            ColorFilter.tint(Color.LightGray) else null
+    )
+}
+
+
+private fun highlightDetectedCardBrand(cardNumberInput: String): CardBrands {
+    return if (cardNumberInput[0]?.digitToIntOrNull() == 4)
+        CardBrands.VISA
+    else if (cardNumberInput[0]?.digitToIntOrNull() == 5)
+        CardBrands.MASTERCARD
+    else CardBrands.NONE
 }
 
 @Composable
