@@ -1,10 +1,9 @@
-package com.github.paylike.sample
+package com.github.paylike.sample.viewmodel
 
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -21,7 +20,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.github.paylike.kotlin_luhn.PaylikeLuhn
-import com.github.paylike.sample.CardBrands
 import com.github.paylike.sample.R
 import com.github.paylike.sample.ui.theme.PaylikeGreen
 import com.github.paylike.sample.ui.theme.Kotlin_sdkTheme
