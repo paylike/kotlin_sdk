@@ -20,6 +20,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.github.paylike.kotlin_luhn.PaylikeLuhn
 import com.github.paylike.sample.R
 import com.github.paylike.sample.ui.theme.Kotlin_sdkTheme
@@ -32,20 +33,19 @@ import com.steliospapamichail.creditcardmasker.viewtransformations.CardNumberMas
 import com.steliospapamichail.creditcardmasker.viewtransformations.ExpirationDateMask
 
 class WhiteLabelActivity : ComponentActivity() {
-    private val sampleViewModel: WhiteLabelViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            WhiteLabelFormView(sampleViewModel)
+            WhiteLabelFormView()
         }
     }
 }
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun WhiteLabelFormView(viewModel: WhiteLabelViewModel) {
-    val uiState = remember { viewModel.uiState }
+fun WhiteLabelFormView(viewModel: WhiteLabelViewModel = viewModel()) {
+    val uiState = viewModel.uiState
 
     Kotlin_sdkTheme {
         Surface(
@@ -73,9 +73,7 @@ fun WhiteLabelFormView(viewModel: WhiteLabelViewModel) {
                                 uiState.cardNumber,
                                 uiState.isCardNumberValid,
                                 {
-                                    viewModel.setIsCardNumberValid(true)
-                                    viewModel.handleCardNumberInputChange(it)
-                                    viewModel.setHighlightedCardBrand(it)
+                                    viewModel.handleCardInputChange(it)
                                 },
                                 Modifier.weight(55f)
                             )
@@ -97,16 +95,14 @@ fun WhiteLabelFormView(viewModel: WhiteLabelViewModel) {
                                 uiState.expiryDate,
                                 uiState.isExpiryDateValid,
                                 {
-                                    uiState.isExpiryDateValid = true
-                                    if (it.length <= 4) uiState.expiryDate = it
+                                    viewModel.handleExpirationInputChange(it)
                                 },
                                 Modifier.weight(2f))
                             SecurityCode(
                                 uiState.securityCode,
                                 uiState.isSecurityCodeValid,
                                 {
-                                    uiState.isSecurityCodeValid = true
-                                    if (it.length <= 3) uiState.securityCode = it
+                                    viewModel.handleSecurityCodeChange(it)
                                 },
                                 Modifier.weight(1f))
                         }
@@ -116,14 +112,7 @@ fun WhiteLabelFormView(viewModel: WhiteLabelViewModel) {
                                 contentColor = PaylikeWhite
                             ),
                             onClick = {
-                                if (uiState.cardNumber.length < 16 ||
-                                    !PaylikeLuhn.isValid(uiState.cardNumber))
-                                    uiState.isCardNumberValid = false
-                                if (uiState.expiryDate.length < 4 ||
-                                    uiState.expiryDate.substring(0, 2).toIntOrNull()!! > 12)
-                                    uiState.isExpiryDateValid = false
-                                if (uiState.securityCode.length < 3)
-                                    uiState.isSecurityCodeValid = false
+                                viewModel.handleButtonClick()
                             },
                             modifier = Modifier.size(100.dp, 32.dp)
                         ) {
@@ -206,7 +195,6 @@ private fun MasterCardImage(highlightedCardBrand: CardBrands) {
     )
 }
 
-
 @Composable
 fun Expiration(
     date: String,
@@ -254,15 +242,3 @@ fun SecurityCode(
         )
     )
 }
-
-/*
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    Kotlin_sdkTheme {
-        val sampleViewModel: WhiteLabelViewModel by viewModels()
-
-        WhiteLabelFormView(sampleViewModel)
-    }
-}
- */

@@ -1,14 +1,14 @@
 package com.github.paylike.sample.viewmodel
 
-class UIState {
-    var cardNumber = ""
-    var isCardNumberValid = false
+data class UIState(
+    var cardNumber: String = "",
+    var isCardNumberValid: Boolean = false,
 
-    var expiryDate = ""
-    var isExpiryDateValid = false
+    var expiryDate: String = "",
+    var isExpiryDateValid:Boolean = false,
 
-    var securityCode = ""
-    var isSecurityCodeValid = false
+    var securityCode: String = "",
+    var isSecurityCodeValid: Boolean = false,
 
-    var highlightedCardBrand = CardBrands.NONE
-}
+    var highlightedCardBrand: CardBrands = CardBrands.NONE
+)
