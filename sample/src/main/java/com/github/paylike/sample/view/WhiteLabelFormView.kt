@@ -152,7 +152,10 @@ fun CardNumber(
 )
 {
     TextField(
-        placeholder = { Text(text = "0000 0000 0000 0000") },
+        placeholder = {
+            Text(text = "0000 0000 0000 0000",
+                 color = (if (isValid) Color.Gray else Color.Red))
+        },
         value = number,
         visualTransformation = CardNumberMask(),
         modifier = modifier,
@@ -202,7 +205,10 @@ fun Expiration(
     onValueChanged: (String) -> Unit,
     modifier: Modifier) {
     TextField(
-        placeholder = { Text(text = "MM/YY") },
+        placeholder = {
+            Text(text = "MM/YY",
+                 color = (if (isValid) Color.Gray else Color.Red))
+        },
         value = date,
         visualTransformation = ExpirationDateMask(),
         modifier = modifier,
@@ -227,7 +233,10 @@ fun SecurityCode(
     modifier: Modifier)
 {
     TextField(
-        placeholder = { Text(text = "XXX") },
+        placeholder = {
+            Text(text = "XXX",
+                 color = (if (isValid) Color.Gray else Color.Red))
+        },
         modifier = modifier,
         value = securityCode,
         onValueChange = onValueChanged,

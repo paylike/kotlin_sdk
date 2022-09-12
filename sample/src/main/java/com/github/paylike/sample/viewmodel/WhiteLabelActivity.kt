@@ -38,7 +38,9 @@ class WhiteLabelViewModel : ViewModel() {
     }
 
     private fun setCardNumber(newValue: String) {
-        if (newValue.length <= 16)
+        if (newValue.length <= 16 &&
+            !newValue.endsWith(' ') &&
+            !newValue.endsWith('\n'))
             uiState = uiState.copy(cardNumber = newValue)
     }
 
@@ -61,7 +63,9 @@ class WhiteLabelViewModel : ViewModel() {
     }
 
     private fun setExpiryDate(newValue: String) {
-        if (newValue.length <= 4) {
+        if (newValue.length <= 4 &&
+            !newValue.endsWith(' ') &&
+            !newValue.endsWith('\n')) {
             uiState = uiState.copy(expiryDate = newValue)
         }
     }
@@ -71,7 +75,9 @@ class WhiteLabelViewModel : ViewModel() {
     }
 
     private fun setSecurityCode(newValue: String) {
-        if (newValue.length <= 3)
+        if (newValue.length <= 3 &&
+            !newValue.endsWith(' ') &&
+            !newValue.endsWith('\n'))
             uiState = uiState.copy(securityCode = newValue)
     }
 }
