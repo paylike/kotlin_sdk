@@ -1,14 +1,14 @@
 package com.github.paylike.sample.viewmodel
 
 data class UIState(
-    var cardNumber: String = "",
-    var isCardNumberValid: Boolean = true,
+    val cardNumber: String = "",
+    val isCardNumberValid: Boolean = true,
 
-    var expiryDate: String = "",
-    var isExpiryDateValid:Boolean = true,
+    val expiryDate: String = "",
+    val isExpiryDateValid:Boolean = true,
 
-    var securityCode: String = "",
-    var isSecurityCodeValid: Boolean = true,
+    val securityCode: String = "",
+    val isSecurityCodeValid: Boolean = true,
 
-    var highlightedCardBrand: CardBrands = CardBrands.NONE
+    val highlightedCardBrand: CardBrands = CardBrands.NONE
 )

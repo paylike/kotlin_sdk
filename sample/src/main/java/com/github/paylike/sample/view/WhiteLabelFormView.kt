@@ -1,6 +1,5 @@
 package com.github.paylike.sample.view
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -9,7 +8,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -17,17 +16,11 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.github.paylike.kotlin_luhn.PaylikeLuhn
 import com.github.paylike.sample.R
-import com.github.paylike.sample.ui.theme.Kotlin_sdkTheme
-import com.github.paylike.sample.ui.theme.PaylikeGreen
-import com.github.paylike.sample.ui.theme.PaylikeWhite
+import com.github.paylike.sample.ui.theme.*
 import com.github.paylike.sample.viewmodel.CardBrands
-import com.github.paylike.sample.viewmodel.UIState
 import com.github.paylike.sample.viewmodel.WhiteLabelViewModel
 import com.steliospapamichail.creditcardmasker.viewtransformations.CardNumberMask
 import com.steliospapamichail.creditcardmasker.viewtransformations.ExpirationDateMask
@@ -36,15 +29,15 @@ class WhiteLabelActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val model: WhiteLabelViewModel by viewModels()
         setContent {
-            WhiteLabelFormView()
+            WhiteLabelFormView(model)
         }
     }
 }
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun WhiteLabelFormView(viewModel: WhiteLabelViewModel = viewModel()) {
+private fun WhiteLabelFormView(viewModel: WhiteLabelViewModel) {
     val uiState = viewModel.uiState
 
     Kotlin_sdkTheme {
@@ -56,7 +49,7 @@ fun WhiteLabelFormView(viewModel: WhiteLabelViewModel = viewModel()) {
                 topBar = {
                     TopBarContent()
                 },
-                content = {
+                content = { padding ->
                     Column(
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally,
@@ -80,8 +73,7 @@ fun WhiteLabelFormView(viewModel: WhiteLabelViewModel = viewModel()) {
                             Row (
                                 horizontalArrangement = Arrangement.End,
                                 modifier = Modifier.weight(45f)
-                            )
-                            {
+                            ) {
                                 MasterCardImage(uiState.highlightedCardBrand)
                                 VisaImage(uiState.highlightedCardBrand)
                             }
@@ -144,7 +136,7 @@ private fun TopBarContent() {
 }
 
 @Composable
-fun CardNumber(
+private fun CardNumber(
     number: String,
     isValid: Boolean,
     onValueChanged: (String) -> Unit,
@@ -154,7 +146,7 @@ fun CardNumber(
     TextField(
         placeholder = {
             Text(text = "0000 0000 0000 0000",
-                 color = (if (isValid) Color.Gray else Color.Red))
+                 color = (if (isValid) Color.Gray else PaylikeErrorRed))
         },
         value = number,
         visualTransformation = CardNumberMask(),
@@ -162,9 +154,9 @@ fun CardNumber(
         onValueChange = onValueChanged,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         colors = TextFieldDefaults.textFieldColors(
-            textColor = if (isValid) Color.Gray else Color.Red,
+            textColor = if (isValid) PaylikeGray else PaylikeErrorRed,
             disabledTextColor = Color.Transparent,
-            backgroundColor = Color.White,
+            backgroundColor = PaylikeWhite,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent
@@ -199,7 +191,7 @@ private fun MasterCardImage(highlightedCardBrand: CardBrands) {
 }
 
 @Composable
-fun Expiration(
+private fun Expiration(
     date: String,
     isValid: Boolean,
     onValueChanged: (String) -> Unit,
@@ -207,7 +199,7 @@ fun Expiration(
     TextField(
         placeholder = {
             Text(text = "MM/YY",
-                 color = (if (isValid) Color.Gray else Color.Red))
+                 color = (if (isValid) PaylikeGray else PaylikeErrorRed))
         },
         value = date,
         visualTransformation = ExpirationDateMask(),
@@ -215,9 +207,9 @@ fun Expiration(
         onValueChange = onValueChanged,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         colors = TextFieldDefaults.textFieldColors(
-            textColor = if (isValid) Color.Gray else Color.Red,
+            textColor = if (isValid) PaylikeGray else PaylikeErrorRed,
             disabledTextColor = Color.Transparent,
-            backgroundColor = Color.White,
+            backgroundColor = PaylikeWhite,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent
@@ -226,7 +218,7 @@ fun Expiration(
 }
 
 @Composable
-fun SecurityCode(
+private fun SecurityCode(
     securityCode: String,
     isValid: Boolean,
     onValueChanged: (String) -> Unit,
@@ -235,16 +227,16 @@ fun SecurityCode(
     TextField(
         placeholder = {
             Text(text = "XXX",
-                 color = (if (isValid) Color.Gray else Color.Red))
+                 color = (if (isValid) PaylikeGray else PaylikeErrorRed))
         },
         modifier = modifier,
         value = securityCode,
         onValueChange = onValueChanged,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         colors = TextFieldDefaults.textFieldColors(
-            textColor = if (isValid) Color.Gray else Color.Red,
+            textColor = if (isValid) PaylikeGray else PaylikeErrorRed,
             disabledTextColor = Color.Transparent,
-            backgroundColor = Color.White,
+            backgroundColor = PaylikeWhite,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent

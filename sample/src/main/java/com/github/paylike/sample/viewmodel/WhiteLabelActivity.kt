@@ -54,6 +54,7 @@ class WhiteLabelViewModel : ViewModel() {
                 CardBrands.MASTERCARD
             else CardBrands.NONE)
     }
+
     private fun setIsCardNumberValid(newValue: Boolean) {
         uiState = uiState.copy(isCardNumberValid = newValue)
     }
