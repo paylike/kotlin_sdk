@@ -21,9 +21,7 @@ class SampleActivity : ComponentActivity() {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
-                ) {
-                    Greeting("Android")
-                }
+                ) { Greeting("Android") }
             }
         }
     }
@@ -37,7 +35,5 @@ fun Greeting(name: String) {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    Kotlin_sdkTheme {
-        Greeting("Android")
-    }
+    Kotlin_sdkTheme { Greeting("Android") }
 }
