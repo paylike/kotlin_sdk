@@ -1,40 +1,49 @@
 package com.github.paylike.kotlin_sdk.simplewhitelabel.view.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material.Colors
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
-import androidx.compose.runtime.Composable
-
-private val DarkColorPalette =
-    darkColors(
-        primary = PaylikeGreen,
-        primaryVariant = PaylikeGreen,
-        secondary = PaylikeGreen,
-        secondaryVariant = PaylikeGreen,
-        surface = PaylikeBlack,
-        background = PaylikeBlack,
-        error = PaylikeErrorRed,
-    )
-
-private val LightColorPalette =
-    lightColors(
-        primary = PaylikeGreen,
-        primaryVariant = PaylikeGreen,
-        secondary = PaylikeGreen,
-        secondaryVariant = PaylikeGreen,
-        surface = PaylikeWhite,
-        background = PaylikeWhite,
-        error = PaylikeErrorRed,
-    )
+import androidx.compose.material.Shapes
+import androidx.compose.material.Typography
+import androidx.compose.runtime.*
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
 fun PaylikeTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
-    val colors =
+    val systemUiController = rememberSystemUiController()
+    val systemRespectedColorPalette =
         if (darkTheme) {
-            DarkColorPalette
+            PaylikeDarkColorPalette
         } else {
-            LightColorPalette
+            PaylikeLightColorPalette
         }
-    MaterialTheme(colors = colors, typography = Typography, shapes = Shapes, content = content)
+    systemUiController.setSystemBarsColor(
+        color = systemRespectedColorPalette.primaryVariant,
+        darkIcons = darkTheme,
+    )
+
+    CompositionLocalProvider(
+        LocalPaylikePaddings provides PaylikePaddings(),
+    ) {
+        MaterialTheme(
+            colors = systemRespectedColorPalette,
+            typography = PaylikeTypography,
+            shapes = PaylikeShapes,
+            content = content,
+        )
+    }
+}
+
+object PaylikeMaterialTheme {
+    val colors: Colors
+        @Composable @ReadOnlyComposable get() = MaterialTheme.colors
+
+    val typography: Typography
+        @Composable @ReadOnlyComposable get() = MaterialTheme.typography
+
+    val shapes: Shapes
+        @Composable @ReadOnlyComposable get() = MaterialTheme.shapes
+
+    val paddings: PaylikePaddings
+        @Composable @ReadOnlyComposable get() = LocalPaylikePaddings.current
 }

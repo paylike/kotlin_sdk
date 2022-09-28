@@ -12,7 +12,6 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.github.paylike.kotlin_sdk.CardBrands
 import com.github.paylike.kotlin_sdk.R
 import com.github.paylike.kotlin_sdk.simplewhitelabel.view.theme.*
@@ -68,11 +67,16 @@ fun WhiteLabelFormComposable(viewModel: WhiteLabelViewModel) {
                     colors =
                         ButtonDefaults.buttonColors(
                             backgroundColor = PaylikeGreen,
-                            contentColor = PaylikeWhite
+                            contentColor = Color.White
                         ),
                     onClick = { viewModel.handleButtonClick() },
                     modifier = Modifier.size(100.dp, 32.dp)
-                ) { Text("Pay", fontSize = 12.sp) }
+                ) {
+                    Text(
+                        "Pay",
+                        //                    fontSize = 12.sp,
+                        )
+                }
             }
         }
     }
@@ -99,9 +103,9 @@ private fun CardNumber(
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         colors =
             TextFieldDefaults.textFieldColors(
-                textColor = if (isValid) PaylikeGray else PaylikeErrorRed,
+                textColor = if (isValid) Color.Gray else PaylikeErrorRed,
                 disabledTextColor = Color.Transparent,
-                backgroundColor = PaylikeWhite,
+                backgroundColor = Color.White,
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
                 disabledIndicatorColor = Color.Transparent
@@ -118,7 +122,7 @@ private fun Expiration(
 ) {
     TextField(
         placeholder = {
-            Text(text = "MM/YY", color = (if (isValid) PaylikeGray else PaylikeErrorRed))
+            Text(text = "MM/YY", color = (if (isValid) Color.Gray else PaylikeErrorRed))
         },
         value = date,
         visualTransformation = ExpirationDateMask(),
@@ -127,9 +131,9 @@ private fun Expiration(
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         colors =
             TextFieldDefaults.textFieldColors(
-                textColor = if (isValid) PaylikeGray else PaylikeErrorRed,
+                textColor = if (isValid) Color.Gray else PaylikeErrorRed,
                 disabledTextColor = Color.Transparent,
-                backgroundColor = PaylikeWhite,
+                backgroundColor = Color.White,
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
                 disabledIndicatorColor = Color.Transparent
@@ -146,7 +150,7 @@ private fun SecurityCode(
 ) {
     TextField(
         placeholder = {
-            Text(text = "XXX", color = (if (isValid) PaylikeGray else PaylikeErrorRed))
+            Text(text = "XXX", color = (if (isValid) Color.Gray else PaylikeErrorRed))
         },
         modifier = modifier,
         value = securityCode,
@@ -154,9 +158,9 @@ private fun SecurityCode(
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         colors =
             TextFieldDefaults.textFieldColors(
-                textColor = if (isValid) PaylikeGray else PaylikeErrorRed,
+                textColor = if (isValid) Color.Gray else PaylikeErrorRed,
                 disabledTextColor = Color.Transparent,
-                backgroundColor = PaylikeWhite,
+                backgroundColor = Color.White,
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
                 disabledIndicatorColor = Color.Transparent
