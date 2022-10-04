@@ -1,7 +1,6 @@
 package com.github.paylike.kotlin_sdk.simplewhitelabel.view
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -17,9 +16,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.github.paylike.kotlin_sdk.CardBrands
 import com.github.paylike.kotlin_sdk.R
-import com.github.paylike.kotlin_sdk.simplewhitelabel.view.theme.*
+import com.github.paylike.kotlin_sdk.simplewhitelabel.view.theme.PaylikeErrorRed
+import com.github.paylike.kotlin_sdk.simplewhitelabel.view.theme.PaylikeGreen
+import com.github.paylike.kotlin_sdk.simplewhitelabel.view.theme.PaylikeTheme
 import com.github.paylike.kotlin_sdk.simplewhitelabel.viewmodel.WhiteLabelViewModel
-import com.steliospapamichail.creditcardmasker.viewtransformations.*
+import com.steliospapamichail.creditcardmasker.viewtransformations.CardNumberMask
+import com.steliospapamichail.creditcardmasker.viewtransformations.ExpirationDateMask
 
 @Composable
 fun WhiteLabelFormComposable(viewModel: WhiteLabelViewModel) {
@@ -30,7 +32,9 @@ fun WhiteLabelFormComposable(viewModel: WhiteLabelViewModel) {
             Column(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.fillMaxSize().padding(0.dp)
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(0.dp)
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -68,10 +72,10 @@ fun WhiteLabelFormComposable(viewModel: WhiteLabelViewModel) {
                 }
                 Button(
                     colors =
-                        ButtonDefaults.buttonColors(
-                            backgroundColor = PaylikeGreen,
-                            contentColor = Color.White
-                        ),
+                    ButtonDefaults.buttonColors(
+                        backgroundColor = PaylikeGreen,
+                        contentColor = Color.White
+                    ),
                     onClick = { viewModel.handleButtonClick() },
                     modifier = Modifier.size(144.dp, 48.dp),
                     shape = RoundedCornerShape(12)
@@ -79,7 +83,7 @@ fun WhiteLabelFormComposable(viewModel: WhiteLabelViewModel) {
                     Text(
                         "Pay",
                         fontSize = 18.sp,
-                        )
+                    )
                 }
             }
         }
@@ -107,14 +111,14 @@ private fun CardNumber(
         onValueChange = onValueChanged,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         colors =
-            TextFieldDefaults.textFieldColors(
-                textColor = if (isValid) Color.Gray else PaylikeErrorRed,
-                disabledTextColor = Color.Transparent,
-                backgroundColor = Color.White,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                disabledIndicatorColor = Color.Transparent
-            )
+        TextFieldDefaults.textFieldColors(
+            textColor = if (isValid) Color.Gray else PaylikeErrorRed,
+            disabledTextColor = Color.Transparent,
+            backgroundColor = Color.White,
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent,
+            disabledIndicatorColor = Color.Transparent
+        )
     )
 }
 
@@ -139,14 +143,14 @@ private fun Expiration(
         onValueChange = onValueChanged,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         colors =
-            TextFieldDefaults.textFieldColors(
-                textColor = if (isValid) Color.Gray else PaylikeErrorRed,
-                disabledTextColor = Color.Transparent,
-                backgroundColor = Color.White,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                disabledIndicatorColor = Color.Transparent
-            )
+        TextFieldDefaults.textFieldColors(
+            textColor = if (isValid) Color.Gray else PaylikeErrorRed,
+            disabledTextColor = Color.Transparent,
+            backgroundColor = Color.White,
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent,
+            disabledIndicatorColor = Color.Transparent
+        )
     )
 }
 
@@ -170,14 +174,14 @@ private fun SecurityCode(
         onValueChange = onValueChanged,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         colors =
-            TextFieldDefaults.textFieldColors(
-                textColor = if (isValid) Color.Gray else PaylikeErrorRed,
-                disabledTextColor = Color.Transparent,
-                backgroundColor = Color.White,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                disabledIndicatorColor = Color.Transparent
-            )
+        TextFieldDefaults.textFieldColors(
+            textColor = if (isValid) Color.Gray else PaylikeErrorRed,
+            disabledTextColor = Color.Transparent,
+            backgroundColor = Color.White,
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent,
+            disabledIndicatorColor = Color.Transparent
+        )
     )
 }
 
@@ -186,10 +190,12 @@ private fun VisaImage(highlightedCardBrand: CardBrands) {
     Image(
         painter = painterResource(R.drawable.ic_visa_icon),
         contentDescription = null,
-        modifier = Modifier.size(48.dp).padding(horizontal = 8.dp),
+        modifier = Modifier
+            .size(48.dp)
+            .padding(horizontal = 8.dp),
         colorFilter =
-            if (highlightedCardBrand == CardBrands.MASTERCARD) ColorFilter.tint(Color.LightGray)
-            else null
+        if (highlightedCardBrand == CardBrands.MASTERCARD) ColorFilter.tint(Color.LightGray)
+        else null
     )
 }
 
@@ -198,8 +204,10 @@ private fun MasterCardImage(highlightedCardBrand: CardBrands) {
     Image(
         painter = painterResource(R.drawable.ic_mastercard_icon),
         contentDescription = null,
-        modifier = Modifier.size(48.dp).padding(horizontal = 8.dp),
+        modifier = Modifier
+            .size(48.dp)
+            .padding(horizontal = 8.dp),
         colorFilter =
-            if (highlightedCardBrand == CardBrands.VISA) ColorFilter.tint(Color.LightGray) else null
+        if (highlightedCardBrand == CardBrands.VISA) ColorFilter.tint(Color.LightGray) else null
     )
 }
