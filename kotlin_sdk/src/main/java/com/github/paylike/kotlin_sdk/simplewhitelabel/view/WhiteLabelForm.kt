@@ -1,7 +1,9 @@
 package com.github.paylike.kotlin_sdk.simplewhitelabel.view
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -12,6 +14,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.github.paylike.kotlin_sdk.CardBrands
 import com.github.paylike.kotlin_sdk.R
 import com.github.paylike.kotlin_sdk.simplewhitelabel.view.theme.*
@@ -54,13 +57,13 @@ fun WhiteLabelFormComposable(viewModel: WhiteLabelViewModel) {
                         uiState.expiryDate,
                         uiState.isExpiryDateValid,
                         { viewModel.handleExpirationInputChange(it) },
-                        Modifier.weight(2f)
+                        Modifier.weight(65f)
                     )
                     SecurityCode(
                         uiState.securityCode,
                         uiState.isSecurityCodeValid,
                         { viewModel.handleSecurityCodeChange(it) },
-                        Modifier.weight(1f)
+                        Modifier.weight(35f)
                     )
                 }
                 Button(
@@ -70,11 +73,12 @@ fun WhiteLabelFormComposable(viewModel: WhiteLabelViewModel) {
                             contentColor = Color.White
                         ),
                     onClick = { viewModel.handleButtonClick() },
-                    modifier = Modifier.size(100.dp, 32.dp)
+                    modifier = Modifier.size(144.dp, 48.dp),
+                    shape = RoundedCornerShape(12)
                 ) {
                     Text(
                         "Pay",
-                        //                    fontSize = 12.sp,
+                        fontSize = 18.sp,
                         )
                 }
             }
@@ -93,7 +97,8 @@ private fun CardNumber(
         placeholder = {
             Text(
                 text = "0000 0000 0000 0000",
-                color = (if (isValid) Color.Gray else PaylikeErrorRed)
+                color = (if (isValid) Color.Gray else PaylikeErrorRed),
+                fontSize = 18.sp
             )
         },
         value = number,
@@ -122,7 +127,11 @@ private fun Expiration(
 ) {
     TextField(
         placeholder = {
-            Text(text = "MM/YY", color = (if (isValid) Color.Gray else PaylikeErrorRed))
+            Text(
+                text = "MM/YY",
+                color = (if (isValid) Color.Gray else PaylikeErrorRed),
+                fontSize = 18.sp
+            )
         },
         value = date,
         visualTransformation = ExpirationDateMask(),
@@ -150,7 +159,11 @@ private fun SecurityCode(
 ) {
     TextField(
         placeholder = {
-            Text(text = "XXX", color = (if (isValid) Color.Gray else PaylikeErrorRed))
+            Text(
+                text = "XXX",
+                color = (if (isValid) Color.Gray else PaylikeErrorRed),
+                fontSize = 18.sp
+            )
         },
         modifier = modifier,
         value = securityCode,
@@ -173,7 +186,7 @@ private fun VisaImage(highlightedCardBrand: CardBrands) {
     Image(
         painter = painterResource(R.drawable.ic_visa_icon),
         contentDescription = null,
-        modifier = Modifier.size(40.dp).padding(horizontal = 8.dp),
+        modifier = Modifier.size(48.dp).padding(horizontal = 8.dp),
         colorFilter =
             if (highlightedCardBrand == CardBrands.MASTERCARD) ColorFilter.tint(Color.LightGray)
             else null
@@ -185,7 +198,7 @@ private fun MasterCardImage(highlightedCardBrand: CardBrands) {
     Image(
         painter = painterResource(R.drawable.ic_mastercard_icon),
         contentDescription = null,
-        modifier = Modifier.size(40.dp).padding(horizontal = 8.dp),
+        modifier = Modifier.size(48.dp).padding(horizontal = 8.dp),
         colorFilter =
             if (highlightedCardBrand == CardBrands.VISA) ColorFilter.tint(Color.LightGray) else null
     )
