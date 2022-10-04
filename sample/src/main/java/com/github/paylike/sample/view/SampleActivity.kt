@@ -10,7 +10,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import com.github.paylike.kotlin_sdk.simplewhitelabel.view.WhiteLabelFormComposable
 import com.github.paylike.kotlin_sdk.simplewhitelabel.view.theme.*
+import com.github.paylike.kotlin_sdk.viewmodel.BasicViewModel
 import com.github.paylike.sample.viewmodel.SampleViewModel
 
 class SampleActivity : ComponentActivity() {
@@ -20,9 +22,9 @@ class SampleActivity : ComponentActivity() {
 
         actionBar?.hide()
 
-        val model: SampleViewModel by viewModels()
+        val model: BasicViewModel by viewModels()
 
-        setContent { SampleComposable(model) }
+        setContent { WhiteLabelFormComposable(model) }
     }
 }
 

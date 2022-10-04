@@ -1,4 +1,4 @@
-package com.github.paylike.kotlin_sdk.simplewhitelabel.viewmodel
+package com.github.paylike.kotlin_sdk.viewmodel
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.github.paylike.kotlin_luhn.PaylikeLuhn
 import com.github.paylike.kotlin_sdk.CardBrands
 
-class WhiteLabelViewModel : ViewModel() {
+class BasicViewModel : ViewModel() {
     var uiState by mutableStateOf(UIState())
         private set
 

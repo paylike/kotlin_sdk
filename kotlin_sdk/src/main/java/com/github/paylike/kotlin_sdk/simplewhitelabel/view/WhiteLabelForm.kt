@@ -19,12 +19,12 @@ import com.github.paylike.kotlin_sdk.R
 import com.github.paylike.kotlin_sdk.simplewhitelabel.view.theme.PaylikeErrorRed
 import com.github.paylike.kotlin_sdk.simplewhitelabel.view.theme.PaylikeGreen
 import com.github.paylike.kotlin_sdk.simplewhitelabel.view.theme.PaylikeTheme
-import com.github.paylike.kotlin_sdk.simplewhitelabel.viewmodel.WhiteLabelViewModel
+import com.github.paylike.kotlin_sdk.viewmodel.BasicViewModel
 import com.steliospapamichail.creditcardmasker.viewtransformations.CardNumberMask
 import com.steliospapamichail.creditcardmasker.viewtransformations.ExpirationDateMask
 
 @Composable
-fun WhiteLabelFormComposable(viewModel: WhiteLabelViewModel) {
+fun WhiteLabelFormComposable(viewModel: BasicViewModel) {
     val uiState = viewModel.uiState
 
     PaylikeTheme {
