@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.github.paylike.kotlin_luhn.PaylikeLuhn
 import com.github.paylike.kotlin_sdk.CardBrands
 
-class BasicViewModel : ViewModel() {
+open class BasicViewModel : ViewModel() {
     var uiState by mutableStateOf(UIState())
         private set
 
@@ -27,7 +27,7 @@ class BasicViewModel : ViewModel() {
         setSecurityCode(input)
     }
 
-    fun handleButtonClick() {
+    open fun handleButtonClick() {
         if (uiState.cardNumber.length < 16 || !PaylikeLuhn.isValid(uiState.cardNumber))
             setIsCardNumberValid(false)
         if (
