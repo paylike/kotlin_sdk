@@ -16,7 +16,7 @@ import com.github.paylike.kotlin_sdk.viewmodel.BasicViewModel
 
 @Composable
 fun WhiteLabelFormComposable(viewModel: BasicViewModel) {
-    val uiState = viewModel.uiState
+    val uiState = viewModel.BasicUIState
 
     PaylikeTheme {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {

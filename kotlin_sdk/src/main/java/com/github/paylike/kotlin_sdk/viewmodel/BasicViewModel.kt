@@ -8,7 +8,7 @@ import com.github.paylike.kotlin_luhn.PaylikeLuhn
 import com.github.paylike.kotlin_sdk.CardBrands
 
 open class BasicViewModel : ViewModel() {
-    var uiState by mutableStateOf(UIState())
+    var BasicUIState by mutableStateOf(BasicUIState())
         private set
 
     fun handleCardInputChange(newValue: String) {
@@ -28,23 +28,23 @@ open class BasicViewModel : ViewModel() {
     }
 
     open fun handleButtonClick() {
-        if (uiState.cardNumber.length < 16 || !PaylikeLuhn.isValid(uiState.cardNumber))
+        if (BasicUIState.cardNumber.length < 16 || !PaylikeLuhn.isValid(BasicUIState.cardNumber))
             setIsCardNumberValid(false)
         if (
-            uiState.expiryDate.length < 4 || uiState.expiryDate.substring(0, 2).toIntOrNull()!! > 12
+            BasicUIState.expiryDate.length < 4 || BasicUIState.expiryDate.substring(0, 2).toIntOrNull()!! > 12
         )
             setExpiryDateValid(false)
-        if (uiState.securityCode.length < 3) setSecurityCodeValid(false)
+        if (BasicUIState.securityCode.length < 3) setSecurityCodeValid(false)
     }
 
     private fun setCardNumber(newValue: String) {
         if (newValue.length <= 16 && !newValue.endsWith(' ') && !newValue.endsWith('\n'))
-            uiState = uiState.copy(cardNumber = newValue)
+            BasicUIState = BasicUIState.copy(cardNumber = newValue)
     }
 
     private fun setHighlightedCardBrand(cardNumberInput: String) {
-        uiState =
-            uiState.copy(
+        BasicUIState =
+            BasicUIState.copy(
                 highlightedCardBrand =
                     if (cardNumberInput.isEmpty()) CardBrands.NONE
                     else if (cardNumberInput[0].digitToIntOrNull() == 4) CardBrands.VISA
@@ -54,25 +54,25 @@ open class BasicViewModel : ViewModel() {
     }
 
     private fun setIsCardNumberValid(newValue: Boolean) {
-        uiState = uiState.copy(isCardNumberValid = newValue)
+        BasicUIState = BasicUIState.copy(isCardNumberValid = newValue)
     }
 
     private fun setExpiryDateValid(newValue: Boolean) {
-        uiState = uiState.copy(isExpiryDateValid = newValue)
+        BasicUIState = BasicUIState.copy(isExpiryDateValid = newValue)
     }
 
     private fun setExpiryDate(newValue: String) {
         if (newValue.length <= 4 && !newValue.endsWith(' ') && !newValue.endsWith('\n')) {
-            uiState = uiState.copy(expiryDate = newValue)
+            BasicUIState = BasicUIState.copy(expiryDate = newValue)
         }
     }
 
     private fun setSecurityCodeValid(newValue: Boolean) {
-        uiState = uiState.copy(isSecurityCodeValid = newValue)
+        BasicUIState = BasicUIState.copy(isSecurityCodeValid = newValue)
     }
 
     private fun setSecurityCode(newValue: String) {
         if (newValue.length <= 3 && !newValue.endsWith(' ') && !newValue.endsWith('\n'))
-            uiState = uiState.copy(securityCode = newValue)
+            BasicUIState = BasicUIState.copy(securityCode = newValue)
     }
 }

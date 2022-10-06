@@ -2,7 +2,7 @@ package com.github.paylike.kotlin_sdk.viewmodel
 
 import com.github.paylike.kotlin_sdk.CardBrands
 
-data class UIState(
+data class BasicUIState(
     val cardNumber: String = "",
     val isCardNumberValid: Boolean = true,
     val expiryDate: String = "",
