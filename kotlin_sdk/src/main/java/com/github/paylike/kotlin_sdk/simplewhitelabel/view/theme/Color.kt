@@ -10,17 +10,16 @@ internal val PaylikeDarkGreen = Color(0xFF006000)
 internal val PaylikeRed = Color(0xFFb82d28)
 internal val PaylikeLightRed = Color(0xFFf06051)
 internal val PaylikeDarkRed = Color(0xFF810000)
-
 internal val PaylikeErrorRed = Color(0xFFB00020)
 
 internal val PaylikeDarkColorPalette =
     darkColors(
         primary = PaylikeDarkGreen,
         primaryVariant = PaylikeGreen,
-        onPrimary = Color.Black,
+        onPrimary = Color.White,
         secondary = PaylikeDarkRed,
         secondaryVariant = PaylikeRed,
-        onSecondary = Color.Black,
+        onSecondary = Color.White,
         //        surface = Color.Black,
         //        onSurface = Color.White,
         //        background = Color.Black,
@@ -33,14 +32,14 @@ internal val PaylikeLightColorPalette =
     lightColors(
         primary = PaylikeLightGreen,
         primaryVariant = PaylikeGreen,
-        onPrimary = Color.White,
+        onPrimary = Color.Black,
         secondary = PaylikeLightRed,
         secondaryVariant = PaylikeRed,
-        onSecondary = Color.White,
+        onSecondary = Color.Black,
         //        surface = Color.White,
         //        onSurface = Color.Black,
         //        background = Color.White,
         //        onBackground = Color.Black,
         error = PaylikeErrorRed,
-        onError = Color.White,
+        onError = Color.Black,
     )

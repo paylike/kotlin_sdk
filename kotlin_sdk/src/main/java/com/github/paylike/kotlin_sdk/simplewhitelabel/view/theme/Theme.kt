@@ -19,7 +19,7 @@ fun PaylikeTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composabl
         }
     systemUiController.setSystemBarsColor(
         color = systemRespectedColorPalette.primaryVariant,
-        darkIcons = darkTheme,
+        darkIcons = !darkTheme,
     )
 
     CompositionLocalProvider(
