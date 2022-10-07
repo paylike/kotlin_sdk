@@ -1,14 +1,19 @@
 package com.github.paylike.kotlin_sdk.simplewhitelabel.view
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -19,8 +24,26 @@ import com.github.paylike.kotlin_sdk.simplewhitelabel.viewmodel.WhiteLabelViewMo
 import com.steliospapamichail.creditcardmasker.viewtransformations.*
 
 @Composable
-fun WhiteLabelFormComposable(viewModel: WhiteLabelViewModel) {
+fun WhiteLabelFormComposable(
+    viewModel: WhiteLabelViewModel,
+    scaffoldState: ScaffoldState,
+) {
     val uiState = viewModel.uiState
+    val webView = remember { mutableStateOf(viewModel.webView) }
+    val isSuccess = remember { mutableStateOf(uiState.isSuccess) }
+
+    if (uiState.isSuccess) {
+        Toast.makeText(LocalContext.current, "The transactionId is: ${viewModel.engine.repository.transactionId}", Toast.LENGTH_LONG).show()
+    }
+    if (uiState.isSuccess) {
+        LaunchedEffect(scaffoldState.snackbarHostState) {
+            scaffoldState.snackbarHostState.showSnackbar(
+                message = "The transactionId is: ${viewModel.engine.repository.transactionId}",
+                duration = SnackbarDuration.Long,
+            )
+            viewModel.resetIsSuccess()
+        }
+    }
 
     PaylikeTheme {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
@@ -29,6 +52,9 @@ fun WhiteLabelFormComposable(viewModel: WhiteLabelViewModel) {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.fillMaxSize().padding(0.dp)
             ) {
+                webView.value.WebViewComposable(
+                    modifier = Modifier.fillMaxWidth(1f).height(300.dp)
+                )
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
@@ -65,17 +91,16 @@ fun WhiteLabelFormComposable(viewModel: WhiteLabelViewModel) {
                 }
                 Button(
                     colors =
-                        ButtonDefaults.buttonColors(
-                            backgroundColor = PaylikeGreen,
-                            contentColor = Color.White
-                        ),
+                    ButtonDefaults.buttonColors(
+                        backgroundColor = PaylikeGreen,
+                        contentColor = Color.White
+                    ),
                     onClick = { viewModel.handleButtonClick() },
                     modifier = Modifier.size(100.dp, 32.dp)
                 ) {
                     Text(
                         "Pay",
-                        //                    fontSize = 12.sp,
-                        )
+                    )
                 }
             }
         }
@@ -102,14 +127,14 @@ private fun CardNumber(
         onValueChange = onValueChanged,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         colors =
-            TextFieldDefaults.textFieldColors(
-                textColor = if (isValid) Color.Gray else PaylikeErrorRed,
-                disabledTextColor = Color.Transparent,
-                backgroundColor = Color.White,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                disabledIndicatorColor = Color.Transparent
-            )
+        TextFieldDefaults.textFieldColors(
+            textColor = if (isValid) Color.Gray else PaylikeErrorRed,
+            disabledTextColor = Color.Transparent,
+            backgroundColor = Color.White,
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent,
+            disabledIndicatorColor = Color.Transparent
+        )
     )
 }
 
@@ -130,14 +155,14 @@ private fun Expiration(
         onValueChange = onValueChanged,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         colors =
-            TextFieldDefaults.textFieldColors(
-                textColor = if (isValid) Color.Gray else PaylikeErrorRed,
-                disabledTextColor = Color.Transparent,
-                backgroundColor = Color.White,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                disabledIndicatorColor = Color.Transparent
-            )
+        TextFieldDefaults.textFieldColors(
+            textColor = if (isValid) Color.Gray else PaylikeErrorRed,
+            disabledTextColor = Color.Transparent,
+            backgroundColor = Color.White,
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent,
+            disabledIndicatorColor = Color.Transparent
+        )
     )
 }
 
@@ -157,14 +182,14 @@ private fun SecurityCode(
         onValueChange = onValueChanged,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         colors =
-            TextFieldDefaults.textFieldColors(
-                textColor = if (isValid) Color.Gray else PaylikeErrorRed,
-                disabledTextColor = Color.Transparent,
-                backgroundColor = Color.White,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                disabledIndicatorColor = Color.Transparent
-            )
+        TextFieldDefaults.textFieldColors(
+            textColor = if (isValid) Color.Gray else PaylikeErrorRed,
+            disabledTextColor = Color.Transparent,
+            backgroundColor = Color.White,
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent,
+            disabledIndicatorColor = Color.Transparent
+        )
     )
 }
 
@@ -175,8 +200,8 @@ private fun VisaImage(highlightedCardBrand: CardBrands) {
         contentDescription = null,
         modifier = Modifier.size(40.dp).padding(horizontal = 8.dp),
         colorFilter =
-            if (highlightedCardBrand == CardBrands.MASTERCARD) ColorFilter.tint(Color.LightGray)
-            else null
+        if (highlightedCardBrand == CardBrands.MASTERCARD) ColorFilter.tint(Color.LightGray)
+        else null
     )
 }
 
@@ -187,6 +212,6 @@ private fun MasterCardImage(highlightedCardBrand: CardBrands) {
         contentDescription = null,
         modifier = Modifier.size(40.dp).padding(horizontal = 8.dp),
         colorFilter =
-            if (highlightedCardBrand == CardBrands.VISA) ColorFilter.tint(Color.LightGray) else null
+        if (highlightedCardBrand == CardBrands.VISA) ColorFilter.tint(Color.LightGray) else null
     )
 }
