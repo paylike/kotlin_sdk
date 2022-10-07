@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">App de ejemplo de Paylike</string>
+    <string name="top_app_bar_title">Demostración de formas de pago Paylike</string>
+
+    <string name="example_description_text">Descripción</string>
+    <string name="example_show_button_text">Ver ejemplo</string>
+    <string name="example_pay_button_text">Pagar</string>
+
+    <string name="simple_white_label_example_title">"Ejemplo sencillo de marca blanca "</string>
+    <string name="simple_white_label_example_description">asdf</string>
+
+<!--    <string name="extendable_white_label_example_title">asdf</string>-->
+<!--    <string name="extendable_white_label_example_description">asdf</string>-->
+
+<!--    <string name="override_white_label_example_title">asdf</string>-->
+<!--    <string name="override_white_label_example_description">asdf</string>-->
+
+<!--    <string name="paylike_style_example_title">asdf</string>-->
+<!--    <string name="paylike_style_example_description">asdf</string>-->
+</resources>
