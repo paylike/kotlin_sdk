@@ -1,10 +1,10 @@
-package com.github.paylike.kotlin_sdk.extendablewhitelabel.viewmodel
+package com.github.paylike.kotlin_sdk.whitelabel.extendable.viewmodel
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.github.paylike.kotlin_engine.viewmodel.PaylikeEngine
-import com.github.paylike.kotlin_sdk.simplewhitelabel.viewmodel.WhiteLabelViewModel
+import com.github.paylike.kotlin_sdk.whitelabel.simple.viewmodel.WhiteLabelViewModel
 
 class ExtendableWhiteLabelViewModel(
     engine: PaylikeEngine,
@@ -14,7 +14,7 @@ class ExtendableWhiteLabelViewModel(
         cvc: String,
         expiryMonth: Int,
         expiryYear: Int,
-    ) -> Unit)
+    ) -> Unit),
 ) : WhiteLabelViewModel(
     engine = engine,
     onPayButton = onPayButton,

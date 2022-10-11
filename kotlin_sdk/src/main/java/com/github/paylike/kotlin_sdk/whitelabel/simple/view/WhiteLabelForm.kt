@@ -1,23 +1,52 @@
-package com.github.paylike.kotlin_sdk.extendablewhitelabel.view
+package com.github.paylike.kotlin_sdk.simplewhitelabel.view
 
+import android.widget.Toast
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.github.paylike.kotlin_sdk.extendablewhitelabel.viewmodel.ExtendableWhiteLabelViewModel
-import com.github.paylike.kotlin_sdk.simplewhitelabel.view.theme.PaylikeErrorRed
-import com.github.paylike.kotlin_sdk.simplewhitelabel.view.theme.PaylikeGreen
-import com.github.paylike.kotlin_sdk.simplewhitelabel.view.theme.PaylikeTheme
-import com.github.paylike.kotlin_sdk.view.*
+import com.github.paylike.kotlin_sdk.CardBrands
+import com.github.paylike.kotlin_sdk.R
+import com.github.paylike.kotlin_sdk.whitelabel.simple.viewmodel.WhiteLabelViewModel
+import com.github.paylike.kotlin_sdk.theme.PaylikeErrorRed
+import com.github.paylike.kotlin_sdk.theme.PaylikeGreen
+import com.github.paylike.kotlin_sdk.theme.PaylikeTheme
+import com.steliospapamichail.creditcardmasker.viewtransformations.*
 
 @Composable
-fun ExtendableWhiteLabelFormComposable(viewModel: ExtendableWhiteLabelViewModel) {
-    val uiState = viewModel.BasicUIState
+fun WhiteLabelFormComposable(
+    viewModel: WhiteLabelViewModel,
+    scaffoldState: ScaffoldState,
+) {
+    val uiState = viewModel.uiState
+    val webView = remember { mutableStateOf(viewModel.webView) }
+    val isSuccess = remember { mutableStateOf(uiState.isSuccess) }
+
+    if (uiState.isSuccess) {
+        Toast.makeText(LocalContext.current, "The transactionId is: ${viewModel.engine.repository.transactionId}", Toast.LENGTH_LONG).show()
+    }
+    if (uiState.isSuccess) {
+        LaunchedEffect(scaffoldState.snackbarHostState) {
+            scaffoldState.snackbarHostState.showSnackbar(
+                message = "The transactionId is: ${viewModel.engine.repository.transactionId}",
+                duration = SnackbarDuration.Long,
+            )
+            viewModel.resetIsSuccess()
+        }
+    }
 
     PaylikeTheme {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
@@ -28,40 +57,9 @@ fun ExtendableWhiteLabelFormComposable(viewModel: ExtendableWhiteLabelViewModel)
                     .fillMaxSize()
                     .padding(0.dp)
             ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth().padding(bottom = 0.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                ) {
-                    Text("First name",
-                        Modifier
-                            .weight(1f)
-                            .padding(horizontal = 15.dp)
-                    )
-                    Text("Last name",
-                        Modifier
-                            .weight(1f)
-                            .padding(horizontal = 16.dp)
-                    )
-                }
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                ) {
-                    FirstNameInput(
-                        viewModel.FirstName,
-                        viewModel.isFirstNameInputValid,
-                        { viewModel.handleFirstNameInputChange(it) },
-                        Modifier.weight(1f)
-                    )
-                    LastNameInput(
-                        viewModel.LastName,
-                        viewModel.isLastNameInputValid,
-                        { viewModel.handleLastNameInputChange(it) },
-                        Modifier.weight(1f)
-                    )
-                }
+                webView.value.WebViewComposable(
+                    modifier = Modifier.fillMaxWidth(1f).height(300.dp)
+                )
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
@@ -96,16 +94,6 @@ fun ExtendableWhiteLabelFormComposable(viewModel: ExtendableWhiteLabelViewModel)
                         Modifier.weight(35f)
                     )
                 }
-                Row(
-                    modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Start
-                ) {
-                    NoteInput(
-                        viewModel.Note,
-                        onValueChanged = { viewModel.handleNoteInputChange(it) }
-                    )
-                }
                 Button(
                     colors =
                     ButtonDefaults.buttonColors(
@@ -118,7 +106,6 @@ fun ExtendableWhiteLabelFormComposable(viewModel: ExtendableWhiteLabelViewModel)
                 ) {
                     Text(
                         "Pay",
-                        fontSize = 18.sp,
                     )
                 }
             }
@@ -126,10 +113,9 @@ fun ExtendableWhiteLabelFormComposable(viewModel: ExtendableWhiteLabelViewModel)
     }
 }
 
-
 @Composable
-fun FirstNameInput(
-    firstName: String,
+private fun CardNumber(
+    number: String,
     isValid: Boolean,
     onValueChanged: (String) -> Unit,
     modifier: Modifier,
@@ -137,14 +123,15 @@ fun FirstNameInput(
     TextField(
         placeholder = {
             Text(
-                text = "John",
-                color = (if (isValid) Color.Gray else PaylikeErrorRed),
-                fontSize = 18.sp
+                text = "0000 0000 0000 0000",
+                color = (if (isValid) Color.Gray else PaylikeErrorRed)
             )
         },
-        value = firstName,
+        value = number,
+        visualTransformation = CardNumberMask(),
         modifier = modifier,
         onValueChange = onValueChanged,
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         colors =
         TextFieldDefaults.textFieldColors(
             textColor = if (isValid) Color.Gray else PaylikeErrorRed,
@@ -158,23 +145,21 @@ fun FirstNameInput(
 }
 
 @Composable
-fun LastNameInput(
-    lastName: String,
+private fun Expiration(
+    date: String,
     isValid: Boolean,
     onValueChanged: (String) -> Unit,
-    modifier: Modifier,
+    modifier: Modifier
 ) {
     TextField(
         placeholder = {
-            Text(
-                text = "Doe",
-                color = (if (isValid) Color.Gray else PaylikeErrorRed),
-                fontSize = 18.sp
-            )
+            Text(text = "MM/YY", color = (if (isValid) Color.Gray else PaylikeErrorRed))
         },
-        value = lastName,
+        value = date,
+        visualTransformation = ExpirationDateMask(),
         modifier = modifier,
         onValueChange = onValueChanged,
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         colors =
         TextFieldDefaults.textFieldColors(
             textColor = if (isValid) Color.Gray else PaylikeErrorRed,
@@ -188,27 +173,51 @@ fun LastNameInput(
 }
 
 @Composable
-fun NoteInput(
-    note: String,
+private fun SecurityCode(
+    securityCode: String,
+    isValid: Boolean,
     onValueChanged: (String) -> Unit,
+    modifier: Modifier
 ) {
     TextField(
         placeholder = {
-            Text(
-                text = "Note (optional)",
-                fontSize = 18.sp
-            )
+            Text(text = "XXX", color = (if (isValid) Color.Gray else PaylikeErrorRed))
         },
-        value = note,
+        modifier = modifier,
+        value = securityCode,
         onValueChange = onValueChanged,
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         colors =
         TextFieldDefaults.textFieldColors(
-            textColor = Color.Gray,
+            textColor = if (isValid) Color.Gray else PaylikeErrorRed,
             disabledTextColor = Color.Transparent,
             backgroundColor = Color.White,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent
         )
+    )
+}
+
+@Composable
+private fun VisaImage(highlightedCardBrand: CardBrands) {
+    Image(
+        painter = painterResource(R.drawable.ic_visa_icon),
+        contentDescription = null,
+        modifier = Modifier.size(40.dp).padding(horizontal = 8.dp),
+        colorFilter =
+        if (highlightedCardBrand == CardBrands.MASTERCARD) ColorFilter.tint(Color.LightGray)
+        else null
+    )
+}
+
+@Composable
+private fun MasterCardImage(highlightedCardBrand: CardBrands) {
+    Image(
+        painter = painterResource(R.drawable.ic_mastercard_icon),
+        contentDescription = null,
+        modifier = Modifier.size(40.dp).padding(horizontal = 8.dp),
+        colorFilter =
+        if (highlightedCardBrand == CardBrands.VISA) ColorFilter.tint(Color.LightGray) else null
     )
 }

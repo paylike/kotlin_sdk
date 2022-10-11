@@ -1,4 +1,4 @@
-package com.github.paylike.kotlin_sdk.simplewhitelabel.view.theme
+package com.github.paylike.kotlin_sdk.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

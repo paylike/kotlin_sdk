@@ -17,9 +17,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.github.paylike.kotlin_sdk.CardBrands
 import com.github.paylike.kotlin_sdk.R
-import com.github.paylike.kotlin_sdk.simplewhitelabel.view.theme.PaylikeErrorRed
+import com.github.paylike.kotlin_sdk.theme.PaylikeErrorRed
 import com.steliospapamichail.creditcardmasker.viewtransformations.CardNumberMask
 import com.steliospapamichail.creditcardmasker.viewtransformations.ExpirationDateMask
+
+
+
+
+
+
+
+
 
 @Composable
 fun CardNumber(

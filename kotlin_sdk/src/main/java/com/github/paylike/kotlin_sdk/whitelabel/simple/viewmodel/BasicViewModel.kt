@@ -1,9 +1,7 @@
-package com.github.paylike.kotlin_sdk.simplewhitelabel.viewmodel
+package com.github.paylike.kotlin_sdk.whitelabel.simple.viewmodel
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.github.paylike.kotlin_engine.error.exceptions.WrongTypeOfObservableListened
@@ -13,7 +11,6 @@ import com.github.paylike.kotlin_engine.viewmodel.EngineState
 import com.github.paylike.kotlin_engine.viewmodel.PaylikeEngine
 import com.github.paylike.kotlin_luhn.PaylikeLuhn
 import com.github.paylike.kotlin_sdk.CardBrands
-import com.github.paylike.kotlin_sdk.viewmodel.UiState
 import java.util.*
 
 open class WhiteLabelViewModel(

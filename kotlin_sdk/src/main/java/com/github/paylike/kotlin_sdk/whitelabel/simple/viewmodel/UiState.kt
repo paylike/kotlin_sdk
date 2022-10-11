@@ -1,4 +1,4 @@
-package com.github.paylike.kotlin_sdk.viewmodel
+package com.github.paylike.kotlin_sdk.whitelabel.simple.viewmodel
 
 import com.github.paylike.kotlin_sdk.CardBrands
 
