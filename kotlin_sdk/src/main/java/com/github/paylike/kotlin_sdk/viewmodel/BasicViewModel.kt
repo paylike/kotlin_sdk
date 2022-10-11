@@ -13,9 +13,10 @@ import com.github.paylike.kotlin_engine.viewmodel.EngineState
 import com.github.paylike.kotlin_engine.viewmodel.PaylikeEngine
 import com.github.paylike.kotlin_luhn.PaylikeLuhn
 import com.github.paylike.kotlin_sdk.CardBrands
+import com.github.paylike.kotlin_sdk.viewmodel.UiState
 import java.util.*
 
-class WhiteLabelViewModel(
+open class WhiteLabelViewModel(
     val engine: PaylikeEngine,
     private val onPayButton:
     ((
@@ -57,7 +58,7 @@ class WhiteLabelViewModel(
         setSecurityCode(input)
     }
 
-    fun handleButtonClick() {
+    open fun handleButtonClick() {
         var canExecute = true
         if (uiState.cardNumber.length < 16 || !PaylikeLuhn.isValid(uiState.cardNumber)) {
             setIsCardNumberValid(false)

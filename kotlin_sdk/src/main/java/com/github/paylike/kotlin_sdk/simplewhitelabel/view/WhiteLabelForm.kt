@@ -3,6 +3,7 @@ package com.github.paylike.kotlin_sdk.simplewhitelabel.view
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -50,7 +51,9 @@ fun WhiteLabelFormComposable(
             Column(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.fillMaxSize().padding(0.dp)
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(0.dp)
             ) {
                 webView.value.WebViewComposable(
                     modifier = Modifier.fillMaxWidth(1f).height(300.dp)
@@ -80,13 +83,13 @@ fun WhiteLabelFormComposable(
                         uiState.expiryDate,
                         uiState.isExpiryDateValid,
                         { viewModel.handleExpirationInputChange(it) },
-                        Modifier.weight(2f)
+                        Modifier.weight(65f)
                     )
                     SecurityCode(
                         uiState.securityCode,
                         uiState.isSecurityCodeValid,
                         { viewModel.handleSecurityCodeChange(it) },
-                        Modifier.weight(1f)
+                        Modifier.weight(35f)
                     )
                 }
                 Button(
@@ -96,7 +99,8 @@ fun WhiteLabelFormComposable(
                         contentColor = Color.White
                     ),
                     onClick = { viewModel.handleButtonClick() },
-                    modifier = Modifier.size(100.dp, 32.dp)
+                    modifier = Modifier.size(144.dp, 48.dp),
+                    shape = RoundedCornerShape(12)
                 ) {
                     Text(
                         "Pay",
