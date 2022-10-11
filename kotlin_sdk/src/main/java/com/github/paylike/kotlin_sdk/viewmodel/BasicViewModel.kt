@@ -1,15 +1,46 @@
-package com.github.paylike.kotlin_sdk.viewmodel
+package com.github.paylike.kotlin_sdk.simplewhitelabel.viewmodel
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import com.github.paylike.kotlin_engine.error.exceptions.WrongTypeOfObservableListened
+import com.github.paylike.kotlin_engine.error.exceptions.WrongTypeOfObserverUpdateArg
+import com.github.paylike.kotlin_engine.view.PaylikeWebView
+import com.github.paylike.kotlin_engine.viewmodel.EngineState
+import com.github.paylike.kotlin_engine.viewmodel.PaylikeEngine
 import com.github.paylike.kotlin_luhn.PaylikeLuhn
 import com.github.paylike.kotlin_sdk.CardBrands
+import com.github.paylike.kotlin_sdk.viewmodel.UiState
+import java.util.*
 
-open class BasicViewModel : ViewModel() {
-    var BasicUIState by mutableStateOf(BasicUIState())
+open class WhiteLabelViewModel(
+    val engine: PaylikeEngine,
+    private val onPayButton:
+    ((
+        cardNumber: String,
+        cvc: String,
+        expiryMonth: Int,
+        expiryYear: Int,
+    ) -> Unit)
+) : ViewModel(), Observer {
+    var uiState by mutableStateOf(UiState())
         private set
+
+    val webView = PaylikeWebView(engine)
+
+    init {
+        engine.addObserver(this)
+    }
+
+    fun resetIsSuccess() {
+        uiState = uiState.copy(
+            isSuccess = false
+        )
+        engine.resetEngineStates()
+    }
 
     fun handleCardInputChange(newValue: String) {
         setIsCardNumberValid(true)
@@ -28,51 +59,89 @@ open class BasicViewModel : ViewModel() {
     }
 
     open fun handleButtonClick() {
-        if (BasicUIState.cardNumber.length < 16 || !PaylikeLuhn.isValid(BasicUIState.cardNumber))
+        var canExecute = true
+        if (uiState.cardNumber.length < 16 || !PaylikeLuhn.isValid(uiState.cardNumber)) {
             setIsCardNumberValid(false)
+            canExecute = false
+        }
         if (
-            BasicUIState.expiryDate.length < 4 || BasicUIState.expiryDate.substring(0, 2).toIntOrNull()!! > 12
-        )
+            uiState.expiryDate.length < 4 || uiState.expiryDate.substring(0, 2).toIntOrNull()!! > 12
+        ) {
             setExpiryDateValid(false)
-        if (BasicUIState.securityCode.length < 3) setSecurityCodeValid(false)
+            canExecute = false
+        }
+        if (uiState.securityCode.length < 3) {
+            setSecurityCodeValid(false)
+            canExecute = false
+        }
+        if (canExecute) {
+            onPayButton.invoke(
+                uiState.cardNumber,
+                uiState.securityCode,
+                uiState.expiryDate.substring(0, 2).toInt(),
+                uiState.expiryDate.substring(2, 4).toInt(),
+            )
+        }
     }
 
     private fun setCardNumber(newValue: String) {
         if (newValue.length <= 16 && !newValue.endsWith(' ') && !newValue.endsWith('\n'))
-            BasicUIState = BasicUIState.copy(cardNumber = newValue)
+            uiState = uiState.copy(cardNumber = newValue)
     }
 
     private fun setHighlightedCardBrand(cardNumberInput: String) {
-        BasicUIState =
-            BasicUIState.copy(
+        uiState =
+            uiState.copy(
                 highlightedCardBrand =
-                    if (cardNumberInput.isEmpty()) CardBrands.NONE
-                    else if (cardNumberInput[0].digitToIntOrNull() == 4) CardBrands.VISA
-                    else if (cardNumberInput[0].digitToIntOrNull() == 5) CardBrands.MASTERCARD
-                    else CardBrands.NONE
+                if (cardNumberInput.isEmpty()) CardBrands.NONE
+                else if (cardNumberInput[0].digitToIntOrNull() == 4) CardBrands.VISA
+                else if (cardNumberInput[0].digitToIntOrNull() == 5) CardBrands.MASTERCARD
+                else CardBrands.NONE
             )
     }
 
     private fun setIsCardNumberValid(newValue: Boolean) {
-        BasicUIState = BasicUIState.copy(isCardNumberValid = newValue)
+        uiState = uiState.copy(isCardNumberValid = newValue)
     }
 
     private fun setExpiryDateValid(newValue: Boolean) {
-        BasicUIState = BasicUIState.copy(isExpiryDateValid = newValue)
+        uiState = uiState.copy(isExpiryDateValid = newValue)
     }
 
     private fun setExpiryDate(newValue: String) {
         if (newValue.length <= 4 && !newValue.endsWith(' ') && !newValue.endsWith('\n')) {
-            BasicUIState = BasicUIState.copy(expiryDate = newValue)
+            uiState = uiState.copy(expiryDate = newValue)
         }
     }
 
     private fun setSecurityCodeValid(newValue: Boolean) {
-        BasicUIState = BasicUIState.copy(isSecurityCodeValid = newValue)
+        uiState = uiState.copy(isSecurityCodeValid = newValue)
     }
 
     private fun setSecurityCode(newValue: String) {
         if (newValue.length <= 3 && !newValue.endsWith(' ') && !newValue.endsWith('\n'))
-            BasicUIState = BasicUIState.copy(securityCode = newValue)
+            uiState = uiState.copy(securityCode = newValue)
+    }
+
+    override fun update(o: Observable?, arg: Any?) {
+        if (o !is PaylikeEngine) {
+            throw WrongTypeOfObservableListened(
+                observer = this::class.simpleName!!,
+                observable =
+                if (o != null) {
+                    o::class.simpleName!!
+                } else {
+                    "Anonymous"
+                },
+            )
+        }
+        if (arg !is EngineState) {
+            throw WrongTypeOfObserverUpdateArg(arg)
+        }
+        if (arg == EngineState.SUCCESS) {
+            uiState = uiState.copy(
+                isSuccess = true
+            )
+        }
     }
 }

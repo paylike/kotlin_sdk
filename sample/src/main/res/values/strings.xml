@@ -1,3 +1,20 @@
 <resources>
-    <string name="app_name">sample</string>
+    <string name="app_name">Paylike Android Sample App</string>
+    <string name="top_app_bar_title">Paylike Payment Forms Demo</string>
+
+    <string name="example_description_text">Description</string>
+    <string name="example_show_button_text">See example</string>
+    <string name="example_pay_button_text">Pay</string>
+
+    <string name="simple_white_label_example_title">Simple white label example</string>
+    <string name="simple_white_label_example_description">Example to showcase the most simple functionality of our white label composable. This is the quickest way to integrate payments.</string>
+
+<!--    <string name="extendable_white_label_example_title">Extendable white label example</string>-->
+<!--    <string name="extendable_white_label_example_description">TODO</string>-->
+
+<!--    <string name="override_white_label_example_title">Override white label example</string>-->
+<!--    <string name="override_white_label_example_description">TODO</string>-->
+
+<!--    <string name="paylike_style_example_title">Paylike style example</string>-->
+<!--    <string name="paylike_style_example_description">TODO</string>-->
 </resources>

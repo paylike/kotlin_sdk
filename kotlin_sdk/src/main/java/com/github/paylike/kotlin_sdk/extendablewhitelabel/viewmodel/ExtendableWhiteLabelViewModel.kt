@@ -3,9 +3,22 @@ package com.github.paylike.kotlin_sdk.extendablewhitelabel.viewmodel
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import com.github.paylike.kotlin_sdk.viewmodel.BasicViewModel
+import com.github.paylike.kotlin_engine.viewmodel.PaylikeEngine
+import com.github.paylike.kotlin_sdk.simplewhitelabel.viewmodel.WhiteLabelViewModel
 
-class ExtendableWhiteLabelViewModel : BasicViewModel() {
+class ExtendableWhiteLabelViewModel(
+    engine: PaylikeEngine,
+    onPayButton:
+    ((
+        cardNumber: String,
+        cvc: String,
+        expiryMonth: Int,
+        expiryYear: Int,
+    ) -> Unit)
+) : WhiteLabelViewModel(
+    engine = engine,
+    onPayButton = onPayButton,
+) {
     var FirstName by mutableStateOf("")
         private set
     var isFirstNameInputValid by mutableStateOf(true)
