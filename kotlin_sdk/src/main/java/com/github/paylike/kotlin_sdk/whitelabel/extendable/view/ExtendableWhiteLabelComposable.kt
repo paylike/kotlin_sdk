@@ -10,17 +10,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.github.paylike.kotlin_sdk.whitelabel.extendable.viewmodel.ExtendableWhiteLabelViewModel
-import com.github.paylike.kotlin_sdk.theme.PaylikeErrorRed
 import com.github.paylike.kotlin_sdk.theme.PaylikeGreen
 import com.github.paylike.kotlin_sdk.theme.PaylikeTheme
 import com.github.paylike.kotlin_sdk.view.*
 
 @Composable
-fun ExtendableWhiteLabelFormComposable(
+fun ExtendableWhiteLabelComposable(
     viewModel: ExtendableWhiteLabelViewModel,
-    extendingContent: List<@Composable () -> Unit>,
+    scaffoldState: ScaffoldState,
+    extendingContent: List<@Composable () -> Unit> = listOf(),
 ) {
-    val uiState = viewModel.uiState
+    val uiState = viewModel.paymentFormState
+
+
 
     PaylikeTheme {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
@@ -32,7 +34,9 @@ fun ExtendableWhiteLabelFormComposable(
                     .padding(0.dp)
             ) {
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(bottom = 0.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 0.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween,
                 ) {
@@ -77,8 +81,7 @@ fun ExtendableWhiteLabelFormComposable(
                         Modifier.weight(55f)
                     )
                     Row(horizontalArrangement = Arrangement.End, modifier = Modifier.weight(45f)) {
-                        MasterCardImage(uiState.highlightedCardBrand)
-                        VisaImage(uiState.highlightedCardBrand)
+                        CardProviderImage(highlightedCardBrand = uiState.highlightedCardBrand)
                     }
                 }
                 Row(
@@ -100,7 +103,9 @@ fun ExtendableWhiteLabelFormComposable(
                     )
                 }
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 8.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Start
                 ) {
@@ -127,91 +132,4 @@ fun ExtendableWhiteLabelFormComposable(
             }
         }
     }
-}
-
-
-@Composable
-fun FirstNameInput(
-    firstName: String,
-    isValid: Boolean,
-    onValueChanged: (String) -> Unit,
-    modifier: Modifier,
-) {
-    TextField(
-        placeholder = {
-            Text(
-                text = "John",
-                color = (if (isValid) Color.Gray else PaylikeErrorRed),
-                fontSize = 18.sp
-            )
-        },
-        value = firstName,
-        modifier = modifier,
-        onValueChange = onValueChanged,
-        colors =
-        TextFieldDefaults.textFieldColors(
-            textColor = if (isValid) Color.Gray else PaylikeErrorRed,
-            disabledTextColor = Color.Transparent,
-            backgroundColor = Color.White,
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent,
-            disabledIndicatorColor = Color.Transparent
-        )
-    )
-}
-
-@Composable
-fun LastNameInput(
-    lastName: String,
-    isValid: Boolean,
-    onValueChanged: (String) -> Unit,
-    modifier: Modifier,
-) {
-    TextField(
-        placeholder = {
-            Text(
-                text = "Doe",
-                color = (if (isValid) Color.Gray else PaylikeErrorRed),
-                fontSize = 18.sp
-            )
-        },
-        value = lastName,
-        modifier = modifier,
-        onValueChange = onValueChanged,
-        colors =
-        TextFieldDefaults.textFieldColors(
-            textColor = if (isValid) Color.Gray else PaylikeErrorRed,
-            disabledTextColor = Color.Transparent,
-            backgroundColor = Color.White,
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent,
-            disabledIndicatorColor = Color.Transparent
-        )
-    )
-}
-
-@Composable
-fun NoteInput(
-    note: String,
-    onValueChanged: (String) -> Unit,
-) {
-    TextField(
-        placeholder = {
-            Text(
-                text = "Note (optional)",
-                fontSize = 18.sp
-            )
-        },
-        value = note,
-        onValueChange = onValueChanged,
-        colors =
-        TextFieldDefaults.textFieldColors(
-            textColor = Color.Gray,
-            disabledTextColor = Color.Transparent,
-            backgroundColor = Color.White,
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent,
-            disabledIndicatorColor = Color.Transparent
-        )
-    )
 }
