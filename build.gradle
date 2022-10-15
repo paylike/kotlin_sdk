@@ -23,4 +23,4 @@ spotless {
 		endWithNewline()
 	}
 }
-build.dependsOn 'spotlessApply'
+assemble.dependsOn 'spotlessApply'
