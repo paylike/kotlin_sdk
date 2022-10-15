@@ -1,13 +1,19 @@
 package com.github.paylike.kotlin_sdk.whitelabel.extendable.viewmodel
 
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import com.github.paylike.kotlin_engine.view.PaylikeWebView
 import com.github.paylike.kotlin_engine.viewmodel.PaylikeEngine
+import com.github.paylike.kotlin_sdk.whitelabel.simple.viewmodel.SimplePaymentFormStateModel
 import com.github.paylike.kotlin_sdk.whitelabel.simple.viewmodel.WhiteLabelViewModel
+import java.util.*
 
 class ExtendableWhiteLabelViewModel(
     engine: PaylikeEngine,
+    webView: PaylikeWebView = PaylikeWebView(engine),
+    extenderFieldList: List<ExtenderFieldModel> = listOf(),
     onPayButton:
     ((
         cardNumber: String,
@@ -17,42 +23,35 @@ class ExtendableWhiteLabelViewModel(
     ) -> Unit),
 ) : WhiteLabelViewModel(
     engine = engine,
+    webView = webView,
     onPayButton = onPayButton,
 ) {
-    var FirstName by mutableStateOf("")
-        private set
-    var isFirstNameInputValid by mutableStateOf(true)
-        private set
 
-    var LastName by mutableStateOf("")
-        private set
-    var isLastNameInputValid by mutableStateOf(true)
-        private set
+    /**
+     * Variable UI states
+     */
+//    var extenderPaymentFormState by mutableStateOf(SimplePaymentFormStateModel())
+//        private set
 
-    var Note by mutableStateOf("")
-        private set
 
-    fun handleFirstNameInputChange(newValue: String) {
-        isFirstNameInputValid = true
-        FirstName = newValue
+
+    init {
+        // TODO Here maybe do the initial ordering of the extender stuff
     }
 
-    fun handleLastNameInputChange(newValue: String) {
-        isLastNameInputValid = true
-        LastName = newValue
+    override fun resetPaymentFormState() {
+        super.resetPaymentFormState()
     }
 
-    fun handleNoteInputChange(newValue: String) {
-        Note = newValue
+    override fun onPayButtonClick() {
+        super.onPayButtonClick()
+
+        // TODO handle new payment check and pay mechanics
     }
 
-    override fun handleButtonClick() {
-        super.handleButtonClick()
+    override fun update(o: Observable?, arg: Any?) {
+        super.update(o, arg)
 
-        if (FirstName.isEmpty())
-            isFirstNameInputValid = false
-
-        if (LastName.isEmpty())
-            isLastNameInputValid = false
+        // TODO handle any new ui stuff
     }
 }

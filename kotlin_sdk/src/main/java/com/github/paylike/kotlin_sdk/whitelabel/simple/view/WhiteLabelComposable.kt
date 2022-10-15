@@ -1,25 +1,20 @@
 package com.github.paylike.kotlin_sdk.whitelabel.simple.view
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.github.paylike.kotlin_sdk.whitelabel.simple.viewmodel.WhiteLabelViewModel
-import com.github.paylike.kotlin_sdk.theme.PaylikeGreen
 import com.github.paylike.kotlin_sdk.theme.PaylikeTheme
-import com.github.paylike.kotlin_sdk.view.CardNumber
-import com.github.paylike.kotlin_sdk.view.CardProviderImage
-import com.github.paylike.kotlin_sdk.view.Expiration
-import com.github.paylike.kotlin_sdk.view.SecurityCode
-import com.github.paylike.kotlin_sdk.R
+import com.github.paylike.kotlin_engine.viewmodel.EngineState
+import com.github.paylike.kotlin_sdk.*
+import com.github.paylike.kotlin_sdk.theme.PaylikeMaterialTheme
 
 /**
  * Whole coherent UI composition
@@ -27,25 +22,31 @@ import com.github.paylike.kotlin_sdk.R
 @Composable
 fun WhiteLabelComposable(
     viewModel: WhiteLabelViewModel,
-    scaffoldState: ScaffoldState,
+    /*theme: MaterialTheme = PaylikeMaterialTheme,*/ // TODO("make it theme parametrised")
 ) {
     /**
+     * Necessary webView to assist the TDS flow.
+     * It is responsible to show the catch hints,
+     * show challenge,
+     * and send challenge response.
      *
+     * Contains the logic if it needs to be shown.
      */
     val webView = remember { mutableStateOf(viewModel.webView) }
 
-//
-//    if (uiState.isSuccess) {
-//        Toast.makeText(LocalContext.current, "The transactionId is: ${viewModel.engine.repository.transactionId}", Toast.LENGTH_LONG).show()
-//    }
+    /**
+     * Debug purposes, shows message that the flow has come to a final state
+     *
+     * [EngineState.SUCCESS] or [EngineState.SUCCESS]
+     */
     if (viewModel.paymentFormState.isFinished) {
-        LaunchedEffect(scaffoldState.snackbarHostState) {
-            scaffoldState.snackbarHostState.showSnackbar(
-                message = "Finished",
-                duration = SnackbarDuration.Long,
+        Toast
+            .makeText(
+                LocalContext.current,
+                "Payment flow has finished.",
+                Toast.LENGTH_SHORT
             )
-            viewModel.resetPaymentFormState()
-        }
+            .show()
     }
 
     /**
@@ -58,17 +59,13 @@ fun WhiteLabelComposable(
                 .imePadding(),
             color = MaterialTheme.colors.background
         ) {
-
-
             /**
              * Wraps every field
              */
             Column(
+                modifier = Modifier,
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(0.dp)
             ) {
 
                 /**
@@ -77,70 +74,103 @@ fun WhiteLabelComposable(
                 webView.value.WebViewComposable(
                     modifier = Modifier
                         .fillMaxWidth(1f)
-                        .height(300.dp)
+                        .height(200.dp)
                 )
-
                 /**
-                 * Number and icon
+                 * Form that contains the fields
                  */
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                ) {
-                    CardNumber(
-                        viewModel.paymentFormState.cardNumber,
-                        viewModel.paymentFormState.isCardNumberValid,
-                        { viewModel.handleCardInputChange(it) },
-                        Modifier.weight(55f)
-                    )
-                    Row(horizontalArrangement = Arrangement.End, modifier = Modifier.weight(45f)) {
-                        CardProviderImage(highlightedCardBrand = viewModel.paymentFormState.highlightedCardBrand)
-                    }
-                }
-
-                /**
-                 * Expiration date and cvc
-                 */
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Start
-                ) {
-                    Expiration(
-                        viewModel.paymentFormState.expiryDate,
-                        viewModel.paymentFormState.isExpiryDateValid,
-                        { viewModel.handleExpirationInputChange(it) },
-                        Modifier.weight(65f)
-                    )
-                    SecurityCode(
-                        viewModel.paymentFormState.securityCode,
-                        viewModel.paymentFormState.isSecurityCodeValid,
-                        { viewModel.handleSecurityCodeChange(it) },
-                        Modifier.weight(35f)
-                    )
-                }
+                SimpleWhiteLabelFormComposable(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    viewModel = viewModel,
+                )
 
                 /**
                  * Pay button
                  */
-                if (viewModel.paymentFormState.isPayButtonVisible) {
-                    Button(
-                        colors =
-                        ButtonDefaults.buttonColors(
-                            backgroundColor = PaylikeGreen,
-                            contentColor = Color.White
-                        ),
-                        onClick = { viewModel.handleButtonClick() },
-                        modifier = Modifier.size(144.dp, 48.dp),
-                        shape = RoundedCornerShape(12)
-                    ) {
-                        Text(
-                            LocalContext.current.getString(R.string.PayButton),
-                        )
-                    }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceAround
+                ) {
+                    PayButton(
+                        modifier = Modifier,
+                        onClick = { viewModel.onPayButtonClick() },
+                        isVisible = viewModel.paymentFormState.isInitialState,
+                    )
                 }
             }
+        }
+    }
+}
+
+/**
+ * Contains the bare minimum fields the payment need to successfully finish.
+ *
+ * These are:
+ *
+ * [CardNumberField],
+ *
+ * [ExpiryDateField],
+ *
+ * [CardVerificationCodeField],
+ *
+ * [PayButton].
+ */
+@Composable
+fun SimpleWhiteLabelFormComposable(
+    modifier: Modifier = Modifier,
+    viewModel: WhiteLabelViewModel,
+) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        /**
+         * Card number and icon
+         */
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Start,
+        ) {
+            CardNumberField(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                value = viewModel.paymentFormState.cardNumber,
+                isValid = viewModel.paymentFormState.isCardNumberValid,
+                isEnabled = viewModel.paymentFormState.isInitialState,
+                onValueChanged = { viewModel.onCardNumberChanged(it) },
+                highlightedCardProvider = viewModel.paymentFormState.highlightedCardProvider
+            )
+        }
+
+        /**
+         * Expiration date and CVC
+         */
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            ExpiryDateField(
+                modifier = Modifier,
+                value = viewModel.paymentFormState.expiryDate,
+                isValid = viewModel.paymentFormState.isExpiryDateValid,
+                isEnabled = viewModel.paymentFormState.isInitialState,
+                onValueChanged = { viewModel.onExpiryDateChanged(it) },
+            )
+            CardVerificationCodeField(
+                modifier = Modifier,
+                value = viewModel.paymentFormState.cardVerificationCode,
+                isValid = viewModel.paymentFormState.isCardVerificationCodeValid,
+                isEnabled = viewModel.paymentFormState.isInitialState,
+                onValueChanged = { viewModel.onCardVerificationCodeChanged(it) },
+            )
         }
     }
 }
