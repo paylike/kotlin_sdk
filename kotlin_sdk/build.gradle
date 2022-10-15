@@ -46,7 +46,6 @@ dependencies {
 	api "androidx.compose.ui:ui:$compose_version"
 	api "androidx.compose.material:material:$compose_version"
 	api "com.google.accompanist:accompanist-systemuicontroller:0.23.1"
-	api 'com.github.SteliosPapamichail:CreditCardHelper:v1.0.0' // set it to impl
 	api 'com.github.paylike:kotlin_engine:1.0.2'
 
 	api 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
