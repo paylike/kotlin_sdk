@@ -1,31 +1,37 @@
 package com.github.paylike.kotlin_sdk
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.github.paylike.kotlin_sdk.cardprovider.CardProviderIconMap
 import com.github.paylike.kotlin_sdk.cardprovider.SupportedCardProviders
-import com.github.paylike.kotlin_sdk.theme.PaylikeErrorRed
-import com.github.paylike.kotlin_sdk.theme.PaylikeMaterialTheme
+import com.github.paylike.kotlin_sdk.theme.LocalPaylikePaddings
+import com.github.paylike.kotlin_sdk.theme.PaylikeTheme
 import com.github.paylike.kotlin_sdk.visualformatter.CardNumberVisualTransformation
 import com.github.paylike.kotlin_sdk.visualformatter.CardVerificationCodeVisualTransformation
 import com.github.paylike.kotlin_sdk.visualformatter.ExpirationDateVisualTransformation
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 /**
- *
  */
 @Composable
 fun CardNumberField(
@@ -48,26 +54,30 @@ fun CardNumberField(
                 highlightedCardProvider = highlightedCardProvider,
             )
         },
-        visualTransformation = CardNumberVisualTransformation(
-            validColor = PaylikeMaterialTheme.colors.onBackground,
-            invalidColor = PaylikeMaterialTheme.colors.error,
-            isValid = isValid,
-        ),
+        visualTransformation =
+            CardNumberVisualTransformation(
+                validColor = PaylikeTheme.colors.onBackground,
+                invalidColor = PaylikeTheme.colors.error,
+                isValid = isValid,
+            ),
         singleLine = true,
         enabled = isEnabled, // TODO if its good
-        isError = !isValid, //TODO if its good
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal,),
-        colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = PaylikeMaterialTheme.colors.background,
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent,
-            disabledIndicatorColor = Color.Transparent
-        )
+        isError = !isValid, // TODO if its good
+        keyboardOptions =
+            KeyboardOptions(
+                keyboardType = KeyboardType.Decimal,
+            ),
+        colors =
+            TextFieldDefaults.textFieldColors(
+                backgroundColor = PaylikeTheme.colors.background,
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                disabledIndicatorColor = Color.Transparent
+            )
     )
 }
 
 /**
- *
  */
 @Composable
 fun ExpiryDateField(
@@ -83,26 +93,27 @@ fun ExpiryDateField(
         value = value,
         onValueChange = onValueChanged,
         textStyle = textStyle,
-        visualTransformation = ExpirationDateVisualTransformation(
-            validColor = PaylikeMaterialTheme.colors.onBackground,
-            invalidColor = PaylikeMaterialTheme.colors.error,
-            isValid = isValid,
-        ),
+        visualTransformation =
+            ExpirationDateVisualTransformation(
+                validColor = PaylikeTheme.colors.onBackground,
+                invalidColor = PaylikeTheme.colors.error,
+                isValid = isValid,
+            ),
         singleLine = true,
         enabled = isEnabled, // TODO if its good
-        isError = !isValid, //TODO if its good
+        isError = !isValid, // TODO if its good
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
-        colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = PaylikeMaterialTheme.colors.background,
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent,
-            disabledIndicatorColor = Color.Transparent
-        )
+        colors =
+            TextFieldDefaults.textFieldColors(
+                backgroundColor = PaylikeTheme.colors.background,
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                disabledIndicatorColor = Color.Transparent
+            )
     )
 }
 
 /**
- *
  */
 @Composable
 fun CardVerificationCodeField(
@@ -118,25 +129,26 @@ fun CardVerificationCodeField(
         value = value,
         onValueChange = onValueChanged,
         textStyle = textStyle,
-        visualTransformation = CardVerificationCodeVisualTransformation(
-            validColor = PaylikeMaterialTheme.colors.onBackground,
-            invalidColor = PaylikeMaterialTheme.colors.error,
-            isValid = isValid,
-        ),
+        visualTransformation =
+            CardVerificationCodeVisualTransformation(
+                validColor = PaylikeTheme.colors.onBackground,
+                invalidColor = PaylikeTheme.colors.error,
+                isValid = isValid,
+            ),
         enabled = isEnabled, // TODO if its good
-        isError = !isValid, //TODO if its good
+        isError = !isValid, // TODO if its good
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
-        colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = PaylikeMaterialTheme.colors.background,
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent,
-            disabledIndicatorColor = Color.Transparent
-        )
+        colors =
+            TextFieldDefaults.textFieldColors(
+                backgroundColor = PaylikeTheme.colors.background,
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                disabledIndicatorColor = Color.Transparent
+            )
     )
 }
 
 /**
- *
  */
 @Composable
 fun FirstNameField(
@@ -157,22 +169,22 @@ fun FirstNameField(
                 modifier = modifier,
                 text = "John",
                 style = textStyle,
-                color = (if (isValid) Color.LightGray else PaylikeMaterialTheme.colors.error),
+                color = (if (isValid) Color.LightGray else PaylikeTheme.colors.error),
             )
         },
         enabled = isEnabled, // TODO if its good
-        isError = !isValid, //TODO if its good
-        colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = PaylikeMaterialTheme.colors.background,
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent,
-            disabledIndicatorColor = Color.Transparent
-        )
+        isError = !isValid, // TODO if its good
+        colors =
+            TextFieldDefaults.textFieldColors(
+                backgroundColor = PaylikeTheme.colors.background,
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                disabledIndicatorColor = Color.Transparent
+            )
     )
 }
 
 /**
- *
  */
 @Composable
 fun LastNameField(
@@ -193,22 +205,22 @@ fun LastNameField(
                 modifier = modifier,
                 text = "Doe",
                 style = textStyle,
-                color = (if (isValid) Color.LightGray else PaylikeMaterialTheme.colors.error),
+                color = (if (isValid) Color.LightGray else PaylikeTheme.colors.error),
             )
         },
         enabled = isEnabled, // TODO if its good
-        isError = !isValid, //TODO if its good
-        colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = PaylikeMaterialTheme.colors.background,
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent,
-            disabledIndicatorColor = Color.Transparent
-        )
+        isError = !isValid, // TODO if its good
+        colors =
+            TextFieldDefaults.textFieldColors(
+                backgroundColor = PaylikeTheme.colors.background,
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                disabledIndicatorColor = Color.Transparent
+            )
     )
 }
 
 /**
- *
  */
 @Composable
 fun NoteField(
@@ -232,17 +244,17 @@ fun NoteField(
             )
         },
         enabled = isEnabled, // TODO if its good
-        colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = PaylikeMaterialTheme.colors.background,
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent,
-            disabledIndicatorColor = Color.Transparent
-        )
+        colors =
+            TextFieldDefaults.textFieldColors(
+                backgroundColor = PaylikeTheme.colors.background,
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                disabledIndicatorColor = Color.Transparent
+            )
     )
 }
 
 /**
- *
  */
 @Composable
 fun CardProviderIcon(
@@ -252,14 +264,15 @@ fun CardProviderIcon(
 ) {
     Image(
         modifier = modifier,
-        painter = painterResource(CardProviderIconMap[showedCardProviderIcon]!!),
-        contentDescription = null,
+        painter = painterResource(id = CardProviderIconMap[showedCardProviderIcon]!!),
+        contentDescription =
+            null, // TODO do we need description to be able to support accessibility features such
+        // as reading out loud any icon
         colorFilter = if (isHighlighted) null else ColorFilter.tint(Color.Gray),
     )
 }
 
 /**
- *
  */
 @Composable
 fun CardProviderIcons(
@@ -270,38 +283,108 @@ fun CardProviderIcons(
         modifier = modifier,
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically,
-    ){
+    ) {
         CardProviderIcon(
-            modifier = Modifier
-                .size(48.dp)
-                .padding(horizontal = 8.dp),
+            modifier = Modifier.size(48.dp).padding(horizontal = 8.dp),
             showedCardProviderIcon = SupportedCardProviders.MAESTRO,
             isHighlighted = highlightedCardProvider == SupportedCardProviders.MAESTRO,
         )
         CardProviderIcon(
-            modifier = Modifier
-                .size(48.dp)
-                .padding(horizontal = 8.dp),
+            modifier = Modifier.size(48.dp).padding(horizontal = 8.dp),
             showedCardProviderIcon = SupportedCardProviders.MASTERCARD,
             isHighlighted = highlightedCardProvider == SupportedCardProviders.MASTERCARD,
         )
         CardProviderIcon(
-            modifier = Modifier
-                .size(48.dp)
-                .padding(horizontal = 8.dp),
+            modifier = Modifier.size(48.dp).padding(horizontal = 8.dp),
             showedCardProviderIcon = SupportedCardProviders.VISA,
             isHighlighted = highlightedCardProvider == SupportedCardProviders.VISA,
         )
     }
 }
 
+@Composable
+fun SecurePaymentLabel(
+    modifier: Modifier = Modifier,
+    textStyle: TextStyle = LocalTextStyle.current,
+) {
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Image(
+            modifier = Modifier.padding(LocalPaylikePaddings.current.smallPadding),
+            painter = painterResource(R.drawable.ic_paylike_logo),
+            contentDescription =
+                null, // TODO do we need description to be able to support accessibility features
+            // such as reading out loud any icon
+            )
+        Text(
+            modifier = Modifier,
+            style = textStyle,
+            text = stringResource(id = R.string.SecurePayment),
+        )
+    }
+}
+
+@Composable
+fun SuccessAnimation(
+    modifier: Modifier = Modifier,
+    delay: Long = 600,
+) {
+    var visible by remember { mutableStateOf(false) }
+    SideEffect {
+        CoroutineScope(Dispatchers.IO).launch {
+            delay(delay)
+            visible = true
+        }
+    }
+    Box(
+        modifier = modifier,
+        contentAlignment = Alignment.Center,
+    ) {
+        Image(
+            modifier = Modifier.fillMaxSize(1f),
+            painter =
+                painterResource(
+                    id = com.github.paylike.kotlin_sdk.R.drawable.ic_successful_payment_background
+                ),
+            contentDescription =
+                null, // TODO do we need description to be able to support accessibility features
+            // such as reading out loud any icon
+            )
+        Image(
+            modifier = Modifier.fillMaxSize(0.8f),
+            painter =
+                painterResource(
+                    id = com.github.paylike.kotlin_sdk.R.drawable.ic_successful_payment_circle
+                ),
+            contentDescription = null
+        )
+        val density = LocalDensity.current
+        AnimatedVisibility(
+            visible = visible,
+            enter = slideInVertically { with(density) { -400.dp.roundToPx() } }
+        ) {
+            Image(
+                modifier =
+                    Modifier.fillMaxSize(0.5f)
+                        .padding(25.dp, 0.dp, 0.dp, 0.dp), // TODO csoves megoldas
+                painter = painterResource(id = R.drawable.ic_successful_payment_checkmark),
+                contentDescription = null
+            )
+        }
+    }
+}
+
+@Composable fun ErrorAnimation() {}
+
 /**
- *
  */
 @Composable
 fun PayButton(
     modifier: Modifier = Modifier,
-    shape: Shape = PaylikeMaterialTheme.shapes.medium,
+    shape: Shape = PaylikeTheme.shapes.medium,
     onClick: () -> Unit,
     isVisible: Boolean = true,
     content: @Composable RowScope.() -> Unit = {
