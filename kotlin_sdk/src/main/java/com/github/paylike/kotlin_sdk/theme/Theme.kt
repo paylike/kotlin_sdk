@@ -8,33 +8,41 @@ import androidx.compose.material.Typography
 import androidx.compose.runtime.*
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
+/**
+ * Basically inherited [@Composable MaterialTheme(...) {}] function and uses it with the overridden
+ * Paylike style parameters.
+ */
 @Composable
-fun PaylikeTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
+fun PaylikeTheme(
+    colors: Colors =
+        if (isSystemInDarkTheme()) PaylikeDarkColorPalette else PaylikeLightColorPalette,
+    typography: Typography = PaylikeTypography,
+    shapes: Shapes = PaylikeShapes,
+    isSystemUiControllerIncluded: Boolean = false,
+    content: @Composable () -> Unit
+) {
     val systemUiController = rememberSystemUiController()
-    val systemRespectedColorPalette =
-        if (darkTheme) {
-            PaylikeDarkColorPalette
-        } else {
-            PaylikeLightColorPalette
-        }
-    systemUiController.setSystemBarsColor(
-        color = systemRespectedColorPalette.primaryVariant,
-        darkIcons = !darkTheme,
-    )
-
+    if (isSystemUiControllerIncluded) {
+        systemUiController.setSystemBarsColor(
+            color = colors.primaryVariant,
+            darkIcons = !isSystemInDarkTheme(),
+        )
+    }
     CompositionLocalProvider(
         LocalPaylikePaddings provides PaylikePaddings(),
     ) {
         MaterialTheme(
-            colors = systemRespectedColorPalette,
-            typography = PaylikeTypography,
-            shapes = PaylikeShapes,
+            colors = colors,
+            typography = typography,
+            shapes = shapes,
             content = content,
         )
     }
 }
 
-object PaylikeMaterialTheme {
+/** Created based on [MaterialTheme] object */
+object PaylikeTheme /* : MaterialTheme*/ { // TODO find out how to inherit [MaterialTheme]
+    // the way we supposed to
     val colors: Colors
         @Composable @ReadOnlyComposable get() = MaterialTheme.colors
 
