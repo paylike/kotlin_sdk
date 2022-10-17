@@ -11,53 +11,50 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 
 /**
- *
  */
 class CardVerificationCodeVisualTransformation(
     private val mask: Char = '\u2022',
     private val validColor: Color,
     private val invalidColor: Color,
     private val isValid: Boolean,
-): VisualTransformation {
+) : VisualTransformation {
     private val placeholderColor: Color = Color.LightGray
     private val disabledColor: Color = Color.Gray // TODO maybe delete it
 
     override fun filter(text: AnnotatedString): TransformedText {
-        /**
-         * Define placeholder
-         */
+        /** Define placeholder */
         val placeholder = "***"
         val placeholderLength = placeholder.length
 
-        /**
-         * Generate the typed part
-         */
+        /** Generate the typed part */
         val typedInPart = mask.toString().repeat(text.text.length)
 
-        /**
-         * Create [AnnotatedString] so be able to color the text partially
-         */
-        val typedInPartAnnotatedString = AnnotatedString(
-            text = typedInPart,
-            spanStyle = SpanStyle(
-                color = if (isValid) validColor else invalidColor,
-            ),
-        )
+        /** Create [AnnotatedString] so be able to color the text partially */
+        val typedInPartAnnotatedString =
+            AnnotatedString(
+                text = typedInPart,
+                spanStyle =
+                    SpanStyle(
+                        color = if (isValid) validColor else invalidColor,
+                    ),
+            )
 
         /**
-         * Trim the unnecessary part of the placeholder then make [AnnotatedString] to be able to color the text partially
+         * Trim the unnecessary part of the placeholder then make [AnnotatedString] to be able to
+         * color the text partially
          */
-        val trimmedPlaceholder = placeholder.substring((0 + text.text.length) until placeholderLength)
-        val placeholderAnnotatedString = AnnotatedString(
-            text = trimmedPlaceholder,
-            spanStyle = SpanStyle(
-                color = placeholderColor,
-            ),
-        )
+        val trimmedPlaceholder =
+            placeholder.substring((0 + text.text.length) until placeholderLength)
+        val placeholderAnnotatedString =
+            AnnotatedString(
+                text = trimmedPlaceholder,
+                spanStyle =
+                    SpanStyle(
+                        color = placeholderColor,
+                    ),
+            )
 
-        /**
-         * Concatenate the part then add a [ParagraphStyle] to align them together
-         */
+        /** Concatenate the part then add a [ParagraphStyle] to align them together */
         val finalText = typedInPartAnnotatedString + placeholderAnnotatedString
         finalText.paragraphStyles.plus(
             ParagraphStyle(
@@ -65,10 +62,7 @@ class CardVerificationCodeVisualTransformation(
             )
         )
 
-        return TransformedText(
-            finalText,
-            OffsetMapping.Identity
-        )
+        return TransformedText(finalText, OffsetMapping.Identity)
     }
 
     override fun equals(other: Any?): Boolean {

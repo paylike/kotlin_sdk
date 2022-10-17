@@ -1,96 +1,72 @@
 package com.github.paylike.kotlin_sdk.whitelabel.simple.view
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.github.paylike.kotlin_sdk.whitelabel.simple.viewmodel.WhiteLabelViewModel
-import com.github.paylike.kotlin_sdk.theme.PaylikeTheme
-import com.github.paylike.kotlin_engine.viewmodel.EngineState
 import com.github.paylike.kotlin_sdk.*
-import com.github.paylike.kotlin_sdk.theme.PaylikeMaterialTheme
+import com.github.paylike.kotlin_sdk.whitelabel.simple.viewmodel.WhiteLabelViewModel
 
-/**
- * Whole coherent UI composition
- */
+/** Whole coherent UI composition */
 @Composable
 fun WhiteLabelComposable(
+    modifier: Modifier = Modifier,
     viewModel: WhiteLabelViewModel,
-    /*theme: MaterialTheme = PaylikeMaterialTheme,*/ // TODO("make it theme parametrised")
+    theme:
+        @Composable
+        (
+            content: @Composable () -> Unit,
+        ) -> Unit =
+        { content ->
+            MaterialTheme { content.invoke() }
+        },
 ) {
+    //    /**
+    //     * TODO delete it when finished. Debug purposes, shows message that the flow has come to a
+    // final
+    //     * state
+    //     *
+    //     * [EngineState.SUCCESS] or [EngineState.SUCCESS]
+    //     */
+    //    if (viewModel.paymentFormState.isFinished) {
+    //        Toast.makeText(LocalContext.current, "Payment flow has finished.", Toast.LENGTH_SHORT)
+    //            .show()
+    //    }
+
     /**
-     * Necessary webView to assist the TDS flow.
-     * It is responsible to show the catch hints,
-     * show challenge,
-     * and send challenge response.
+     * Necessary webView to assist the TDS flow. It is responsible to show the catch hints, show
+     * challenge, and send challenge response.
      *
      * Contains the logic if it needs to be shown.
      */
     val webView = remember { mutableStateOf(viewModel.webView) }
 
-    /**
-     * Debug purposes, shows message that the flow has come to a final state
-     *
-     * [EngineState.SUCCESS] or [EngineState.SUCCESS]
-     */
-    if (viewModel.paymentFormState.isFinished) {
-        Toast
-            .makeText(
-                LocalContext.current,
-                "Payment flow has finished.",
-                Toast.LENGTH_SHORT
-            )
-            .show()
-    }
-
-    /**
-     * Wrapped in predefined theme
-     */
-    PaylikeTheme {
-        Surface(
-            modifier = Modifier
-                .fillMaxSize()
-                .imePadding(),
-            color = MaterialTheme.colors.background
-        ) {
-            /**
-             * Wraps every field
-             */
+    /** Wrapped in predefined theme */
+    theme {
+        Surface(modifier = modifier.imePadding(), color = MaterialTheme.colors.background) {
+            /** Wraps every field */
             Column(
                 modifier = Modifier,
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
 
-                /**
-                 * WebView to help TDS flow
-                 */
-                webView.value.WebViewComposable(
-                    modifier = Modifier
-                        .fillMaxWidth(1f)
-                        .height(200.dp)
-                )
-                /**
-                 * Form that contains the fields
-                 */
+                /** WebView to help TDS flow */
+                webView.value.WebViewComposable(modifier = Modifier.fillMaxWidth(1f).height(200.dp))
+                /** Form that contains the fields */
                 SimpleWhiteLabelFormComposable(
-                    modifier = Modifier
-                        .fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth(),
                     viewModel = viewModel,
                 )
 
-                /**
-                 * Pay button
-                 */
+                /** Pay button */
                 Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceAround
                 ) {
@@ -128,18 +104,14 @@ fun SimpleWhiteLabelFormComposable(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        /**
-         * Card number and icon
-         */
+        /** Card number and icon */
         Row(
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start,
         ) {
             CardNumberField(
-                modifier = Modifier
-                    .fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth(),
                 value = viewModel.paymentFormState.cardNumber,
                 isValid = viewModel.paymentFormState.isCardNumberValid,
                 isEnabled = viewModel.paymentFormState.isInitialState,
@@ -148,12 +120,9 @@ fun SimpleWhiteLabelFormComposable(
             )
         }
 
-        /**
-         * Expiration date and CVC
-         */
+        /** Expiration date and CVC */
         Row(
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {

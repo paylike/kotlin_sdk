@@ -29,10 +29,10 @@ android {
 					"String",
 					"PaylikeMerchantApiKey",
 					(localProperties.containsKey("PaylikeMerchantApiKey")
-							? localProperties.getProperty("PaylikeMerchantApiKey")
-							: "new String()"
+					? localProperties.getProperty("PaylikeMerchantApiKey")
+					: "new String()"
 					)
-			)
+					)
 		}
 		release {
 			localProperties.load(new FileInputStream(rootProject.file("local.properties")))
@@ -40,10 +40,10 @@ android {
 					"String",
 					"PaylikeMerchantApiKey",
 					(localProperties.containsKey("PaylikeMerchantApiKey")
-							? localProperties.getProperty("PaylikeMerchantApiKey")
-							: "new String()"
+					? localProperties.getProperty("PaylikeMerchantApiKey")
+					: "new String()"
 					)
-			)
+					)
 		}
 	}
 	compileOptions {
