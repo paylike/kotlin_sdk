@@ -10,6 +10,8 @@
     <string name="simple_white_label_example_description">Example to showcase the most simple functionality of our white label composable. This is the quickest way to integrate payments.</string>
     <string name="extendable_white_label_example_title">Extendable white label example</string>
     <string name="extendable_white_label_example_description">Extendable white label description</string>
-    <string name="paylike_style_example_title">Paylike style example</string>
-    <string name="paylike_style_example_description">Paylike style description</string>
+    <string name="paylike_style_white_label_example_title">Paylike style example</string>
+    <string name="paylike_style_white_label_example_description">Paylike style description</string>
+    <string name="paylike_style_extendable_white_label_example_title">Paylike style extendable white label example</string>
+    <string name="paylike_style_extendable_white_label_example_description">Paylike style extendable white label example description</string>
 </resources>

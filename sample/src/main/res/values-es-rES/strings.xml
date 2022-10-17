@@ -11,6 +11,8 @@
     <string name="simple_white_label_example_description">asdf</string>
     <string name="extendable_white_label_example_title">szar</string>
     <string name="extendable_white_label_example_description">leírás</string>
-    <string name="paylike_style_example_title">bazdmeg</string>
-    <string name="paylike_style_example_description">dsfasfdjékléadfsl</string>
+    <string name="paylike_style_white_label_example_title">bazdmeg</string>
+    <string name="paylike_style_white_label_example_description">dsfasfdjékléadfsl</string>
+    <string name="paylike_style_extendable_white_label_example_title">fdsa</string>
+    <string name="paylike_style_extendable_white_label_example_description">asdf</string>
 </resources>

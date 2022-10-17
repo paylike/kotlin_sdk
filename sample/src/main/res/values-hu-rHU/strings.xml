@@ -11,6 +11,8 @@
     <string name="simple_white_label_example_description">Ez a példa fizetőform bemutatja a legegyszerűbb módját a fizetési funkció felhasználói felületének implementálásához.</string>
     <string name="extendable_white_label_example_title">Bővíthetó egyszerű fizetési form példa</string>
     <string name="extendable_white_label_example_description">leírás</string>
-    <string name="paylike_style_example_description">leírás</string>
-    <string name="paylike_style_example_title">Pélylájk stílusú fizetési form példa</string>
+    <string name="paylike_style_white_label_example_description">leírás</string>
+    <string name="paylike_style_white_label_example_title">Pélylájk stílusú fizetési form példa</string>
+    <string name="paylike_style_extendable_white_label_example_title">Pélylájk stílusú bővíthető fizetési form példa</string>
+    <string name="paylike_style_extendable_white_label_example_description">leírás</string>
 </resources>
