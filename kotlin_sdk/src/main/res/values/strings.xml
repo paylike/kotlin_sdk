@@ -1,3 +1,4 @@
 <resources>
     <string name="PayButton">Pay</string>
+    <string name="SecurePayment">Secure payment by Paylike</string>
 </resources>

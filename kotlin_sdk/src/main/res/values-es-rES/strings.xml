@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="PayButton">Pagar</string>
+    <string name="SecurePayment">Pago seguro por Paylike</string>
 </resources>
