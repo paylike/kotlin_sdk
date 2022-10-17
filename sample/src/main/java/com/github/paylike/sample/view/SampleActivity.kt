@@ -26,10 +26,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.github.paylike.kotlin_sdk.simplewhitelabel.view.theme.*
+import com.github.paylike.kotlin_sdk.theme.PaylikeTheme
 import com.github.paylike.sample.R
-import com.github.paylike.sample.viewmodel.SdkExampleModel
 import com.github.paylike.sample.viewmodel.SampleViewModel
+import com.github.paylike.sample.viewmodel.SdkExampleModel
 
 class SampleActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterialApi::class)
@@ -42,7 +42,8 @@ class SampleActivity : ComponentActivity() {
         val model: SampleViewModel by viewModels()
 
         setContent {
-            PaylikeTheme {
+            //            PaylikeTheme {
+            MaterialTheme {
                 SampleAppComposable(
                     model,
                 )
@@ -74,9 +75,23 @@ fun SampleAppComposable(
                             viewModel,
                             navController,
                         )
+                        SideEffect { viewModel.engine.resetEngineStates() }
                     }
                     viewModel.sdkExampleModelMap.forEach { (keyAsRoute, model) ->
-                        composable(keyAsRoute) { model.exampleComposable.invoke() }
+                        composable(keyAsRoute) {
+                            Column {
+                                Text(
+                                    modifier =
+                                        Modifier.fillMaxWidth()
+                                            .fillMaxHeight(0.1f)
+                                            .padding(PaylikeTheme.paddings.smallPadding),
+                                    text = LocalContext.current.getString(model.titleId),
+                                    style = PaylikeTheme.typography.h6,
+                                    textAlign = TextAlign.Center,
+                                )
+                                model.exampleComposable.invoke()
+                            }
+                        }
                     }
                 }
             },
@@ -88,8 +103,8 @@ fun SampleAppComposable(
 @Composable
 fun TopBarContentComposable() {
     TopAppBar(
-        backgroundColor = PaylikeMaterialTheme.colors.primary,
-        contentColor = PaylikeMaterialTheme.colors.onPrimary,
+        backgroundColor = PaylikeTheme.colors.primary,
+        contentColor = PaylikeTheme.colors.onPrimary,
         title = {
             Box(
                 modifier = Modifier.fillMaxSize(),
@@ -97,7 +112,7 @@ fun TopBarContentComposable() {
                 content = {
                     Text(
                         text = LocalContext.current.getString(R.string.top_app_bar_title),
-                        style = PaylikeMaterialTheme.typography.h6,
+                        style = PaylikeTheme.typography.h5,
                         textAlign = TextAlign.Center,
                     )
                 },
@@ -147,27 +162,31 @@ fun ExampleCard(
     /** Holds the [SdkExampleModel] and formats it to the user */
     Card(
         modifier = Modifier.fillMaxWidth().padding(0.dp, 0.dp, 0.dp, 0.dp),
-        backgroundColor = PaylikeMaterialTheme.colors.secondary,
+        backgroundColor = PaylikeTheme.colors.secondary,
         onClick = { onClick.invoke() },
         content = {
             Column(
-                modifier =
-                    Modifier.fillMaxSize(),
+                modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.SpaceEvenly,
                 horizontalAlignment = Alignment.Start,
             ) {
                 Row(
-                    modifier = Modifier
-                        .height(50.dp)
-                        .fillMaxWidth()
-                        .background(PaylikeMaterialTheme.colors.secondaryVariant),
+                    modifier =
+                        Modifier.height(50.dp)
+                            .fillMaxWidth()
+                            .background(PaylikeTheme.colors.secondaryVariant),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Text(text = LocalContext.current.getString(exampleModel.titleId), style = PaylikeMaterialTheme.typography.button)
+                    Text(
+                        modifier = Modifier.padding(PaylikeTheme.paddings.smallPadding),
+                        text = LocalContext.current.getString(exampleModel.titleId),
+                        style = PaylikeTheme.typography.button
+                    )
                     Icon(
                         imageVector = Icons.Rounded.ArrowDropDown,
-                        modifier = Modifier.rotate(rotate),
+                        modifier =
+                            Modifier.padding(PaylikeTheme.paddings.smallPadding).rotate(rotate),
                         contentDescription = null,
                     )
                 }
@@ -199,25 +218,30 @@ fun ExampleCard(
                 ) { targetExpanded ->
                     if (targetExpanded) {
                         Column(
-                            modifier = Modifier.fillMaxSize(),
+                            modifier =
+                                Modifier.fillMaxSize().padding(PaylikeTheme.paddings.smallPadding),
                             Arrangement.Top,
                             Alignment.CenterHorizontally,
                         ) {
                             Text(
                                 text = LocalContext.current.getString(exampleModel.descriptionId),
-                                style = PaylikeMaterialTheme.typography.body1
+                                style = PaylikeTheme.typography.body1
                             )
                             Button(
                                 onClick = {
                                     navController.navigate(
                                         route = route,
-//                                        navOptions = NavOptions(),
+                                        //                                        navOptions =
+                                        // NavOptions(),
                                         )
                                 },
                             ) {
                                 Text(
-                                    text = LocalContext.current.getString(exampleModel.exampleButtonTextId),
-                                    style = PaylikeMaterialTheme.typography.button,
+                                    text =
+                                        LocalContext.current.getString(
+                                            exampleModel.exampleButtonTextId
+                                        ),
+                                    style = PaylikeTheme.typography.button,
                                 )
                             }
                         }
@@ -225,47 +249,5 @@ fun ExampleCard(
                 }
             }
         },
-    )
-}
-
-@OptIn(ExperimentalAnimationApi::class)
-@ExperimentalMaterialApi
-@Composable
-fun LowEffortExampleCard(
-) {
-    var isUnfolded by remember { mutableStateOf(false) }
-    Card(
-        modifier =
-            Modifier.fillMaxSize()
-                //            .animateContentSize(animationSpec = tween(1000, easing = Ease))
-                .padding(),
-        backgroundColor = PaylikeMaterialTheme.colors.error,
-        onClick = { isUnfolded = !isUnfolded },
-        content = {
-            Column(
-                Modifier.animateContentSize(animationSpec = tween(1000, easing = Ease))
-                    .animateContentSize { initialValue, targetValue ->
-                        fadeIn(animationSpec = tween(500, easing = LinearEasing)) with
-                            fadeOut(animationSpec = tween(500, easing = LinearEasing))
-                        if (isUnfolded) {
-                            keyframes {
-                                IntSize(targetValue.width, initialValue.height) at 600
-                                durationMillis = 300
-                            }
-                        } else {
-                            keyframes {
-                                IntSize(initialValue.width, targetValue.height) at 600
-                                durationMillis = 300
-                            }
-                        }
-                    }
-            ) {
-                //                Text(text = sdkExampleModel.title)
-                //                if (isUnfolded) {
-                //                    Text(text = sdkExampleModel.description)
-                //                    sdkExampleModel.exampleComposable(sdkExampleModel.title)
-                //                }
-            }
-        }
     )
 }
