@@ -1,28 +1,32 @@
 package com.github.paylike.kotlin_sdk.whitelabel.extendable.viewmodel
 
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
+
 /**
  */
 data class ExtenderFieldModel(
-    /** field itself */
-    var extenderFieldState: ExtenderFieldState = ExtenderFieldState(),
+    /** State */
+    //    val extenderFieldState: MutableState<ExtenderFieldState>,
 
-    /** callback */
-    var onExtenderFieldChanged: ((newValue: String) -> Unit) = { newValue ->
-        extenderFieldState.field = newValue /* extenderFieldState.copy(
-            field = newValue,
-        )*/
-    } /* = null*/,
-
-    /** flag setter */
-    internal var setIsExtenderFieldValid: ((newValue: Boolean) -> Unit)? /* = { newValue ->
-        extenderFieldState = extenderFieldState.copy(
-            isFieldValid = newValue
-        )
-    }*/ = null,
-
-    // modifier
-    // where to put
+    val extenderFieldState: MutableState<String>,
+    val isExtenderFieldStateValid: MutableState<Boolean>,
+    val onChangedPipeLineFunction: (String) -> String = { newValue -> newValue },
 
     /** UI composable */
-    var extenderFieldComposable: /*@Composable () -> */ Unit,
-)
+    val extenderFieldComposable:
+        @Composable
+        (
+            modifier: Modifier,
+            value: String,
+            textStyle: TextStyle,
+            isEnabled: Boolean, // TODO
+            onValueChanged: (String) -> Unit,
+        ) -> Unit,
+) {
+    fun onExtenderFieldChanged(newValue: String, onChangedPipeLineFunction: (String) -> String) {
+        extenderFieldState.value = onChangedPipeLineFunction(newValue)
+    }
+}

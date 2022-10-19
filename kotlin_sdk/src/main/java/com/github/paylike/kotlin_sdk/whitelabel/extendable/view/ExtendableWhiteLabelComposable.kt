@@ -13,6 +13,7 @@ import com.github.paylike.kotlin_sdk.*
 import com.github.paylike.kotlin_sdk.whitelabel.extendable.viewmodel.ExtendableWhiteLabelViewModel
 import com.github.paylike.kotlin_sdk.whitelabel.simple.view.SimpleWhiteLabelFormComposable
 import com.github.paylike.kotlin_sdk.whitelabel.simple.viewmodel.WhiteLabelViewModel
+import kotlinx.serialization.json.JsonNull.content
 
 @Composable
 fun ExtendableWhiteLabelComposable(
@@ -54,16 +55,29 @@ fun ExtendableWhiteLabelComposable(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-
                 /** WebView to help TDS flow */
                 webView.value.WebViewComposable(modifier = Modifier.fillMaxWidth(1f).height(200.dp))
 
                 /** Previous */
-                if (
-                    viewModel.extenderPaymentFormStateList.isNotEmpty()
-                ) { // TODO not exactly what we need
+                // TODO extender shit to render
+                if (viewModel.extenderPaymentFormStateList.isNotEmpty()) {
                     viewModel.extenderPaymentFormStateList.forEach { extenderField ->
-                        //                        extenderField.extenderFieldComposable.invoke()
+                        ExtenderWrap(
+                            modifier = Modifier.fillMaxWidth().height(40.dp),
+                        ) {
+                            extenderField.extenderFieldComposable.invoke(
+                                modifier = Modifier,
+                                value = extenderField.extenderFieldState.value,
+                                textStyle = LocalTextStyle.current,
+                                isEnabled = viewModel.paymentFormState.isInitialState,
+                                onValueChanged = {
+                                    extenderField.onExtenderFieldChanged(
+                                        it,
+                                        extenderField.onChangedPipeLineFunction
+                                    )
+                                },
+                            )
+                        }
                     }
                 }
 
@@ -74,7 +88,6 @@ fun ExtendableWhiteLabelComposable(
                 )
 
                 /** Latter */
-                //                extendingContent[2](viewModel)
 
                 /** Pay button */
                 Row(
@@ -93,6 +106,22 @@ fun ExtendableWhiteLabelComposable(
     }
 }
 
+@Composable
+fun ExtenderWrap(
+    modifier: Modifier = Modifier,
+    content: @Composable (modifier: Modifier) -> Unit,
+) {
+    Box(
+        modifier = Modifier,
+        contentAlignment = Alignment.Center,
+    ) {
+        content.invoke(
+            modifier = modifier,
+        )
+    }
+}
+
+/** Later to be deleted */
 @Composable
 fun ExtendedWhiteLabelFormExampleComposable(
     modifier: Modifier = Modifier,
