@@ -42,7 +42,6 @@ class SampleActivity : ComponentActivity() {
         val model: SampleViewModel by viewModels()
 
         setContent {
-            //            PaylikeTheme {
             MaterialTheme {
                 SampleAppComposable(
                     model,
@@ -57,7 +56,6 @@ class SampleActivity : ComponentActivity() {
 fun SampleAppComposable(
     viewModel: SampleViewModel,
 ) {
-    val scaffoldState by remember { mutableStateOf(viewModel.scaffoldState) }
 
     Surface(modifier = Modifier.systemBarsPadding()) {
         val navController = rememberNavController()
@@ -95,7 +93,6 @@ fun SampleAppComposable(
                     }
                 }
             },
-            scaffoldState = scaffoldState
         )
     }
 }

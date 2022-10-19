@@ -1,7 +1,6 @@
 package com.github.paylike.sample.viewmodel
 
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.*
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModel
@@ -9,10 +8,12 @@ import com.github.paylike.kotlin_client.domain.dto.payment.request.money.Payment
 import com.github.paylike.kotlin_client.domain.dto.payment.request.test.PaymentTestDto
 import com.github.paylike.kotlin_engine.model.service.ApiMode
 import com.github.paylike.kotlin_engine.viewmodel.PaylikeEngine
+import com.github.paylike.kotlin_sdk.NoteField
 import com.github.paylike.kotlin_sdk.paylikeStyle.view.PaylikeStyleExtendableWhiteLabelComposable
 import com.github.paylike.kotlin_sdk.paylikeStyle.view.PaylikeStyleSimpleWhiteLabelComposable
 import com.github.paylike.kotlin_sdk.whitelabel.extendable.view.ExtendableWhiteLabelComposable
 import com.github.paylike.kotlin_sdk.whitelabel.extendable.viewmodel.ExtendableWhiteLabelViewModel
+import com.github.paylike.kotlin_sdk.whitelabel.extendable.viewmodel.ExtenderFieldModel
 import com.github.paylike.kotlin_sdk.whitelabel.simple.view.WhiteLabelComposable
 import com.github.paylike.kotlin_sdk.whitelabel.simple.viewmodel.WhiteLabelViewModel
 import com.github.paylike.sample.BuildConfig
@@ -39,11 +40,23 @@ class SampleViewModel : ViewModel() {
             "PaylikeStyleWhiteLabelExample",
             "PaylikeStyleExtendableWhiteLabelExample"
         )
-
-    val scaffoldState = ScaffoldState(DrawerState(DrawerValue.Closed), SnackbarHostState())
-
     /** Start route of the sample application for the Navigation implementation */
     val rootRoute: String = "ExampleList"
+
+    private var extenderContentNote =
+        ExtenderFieldModel(
+            extenderFieldState = mutableStateOf(""),
+            isExtenderFieldStateValid = mutableStateOf(true),
+            extenderFieldComposable = { modifier, value, textStyle, isEnabled, onValueChanged ->
+                NoteField(
+                    modifier = modifier,
+                    value = value,
+                    textStyle = textStyle,
+                    isEnabled = isEnabled,
+                    onValueChanged = onValueChanged,
+                )
+            }
+        )
 
     /** Stores every example usage and their needed data for the library "kotlin_sdk" */
     val sdkExampleModelMap: Map<String, SdkExampleModel> =
@@ -109,28 +122,14 @@ class SampleViewModel : ViewModel() {
                                     engine = engine,
                                     extenderFieldList =
                                         mutableListOf(
-                                            //
-                                            // ExtenderFieldModel(
-                                            //
-                                            // extenderFieldComposable = /*{*/
-                                            //
-                                            // NoteField()/*(
-                                            //
-                                            // modifier = Modifier.fillMaxWidth(),
-                                            //                                                value
-                                            // = ,
-                                            //
-                                            // onValueChanged = {},
-                                            //                                            )*/
-                                            //                                        /*}*/,
-                                            //                                    ),
-                                            ),
+                                            extenderContentNote,
+                                        ),
                                     onExtendedPayButton = {
                                         cardNumber,
                                         cvc,
                                         expiryMonth,
                                         expiryYear,
-                                        extenderFields -> // TODO extender fields
+                                        extenderFields ->
                                         CoroutineScope(Dispatchers.IO).launch {
                                             engine.initializePaymentData(
                                                 cardNumber,
@@ -218,13 +217,16 @@ class SampleViewModel : ViewModel() {
                             viewModel =
                                 ExtendableWhiteLabelViewModel(
                                     engine = engine,
-                                    //                                extenderFieldList = , // TODO
+                                    extenderFieldList =
+                                        mutableListOf(
+                                            extenderContentNote,
+                                        ),
                                     onExtendedPayButton = {
                                         cardNumber,
                                         cvc,
                                         expiryMonth,
                                         expiryYear,
-                                        extenderFields -> // TODO extender fields
+                                        extenderFields ->
                                         CoroutineScope(Dispatchers.IO).launch {
                                             engine.initializePaymentData(
                                                 cardNumber,
