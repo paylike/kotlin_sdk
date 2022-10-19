@@ -48,10 +48,10 @@ fun WhiteLabelComposable(
 
     /** Wrapped in predefined theme */
     theme {
-        Surface(modifier = modifier.imePadding(), color = MaterialTheme.colors.background) {
+        Surface(modifier = modifier, color = MaterialTheme.colors.background) {
             /** Wraps every field */
             Column(
-                modifier = Modifier,
+                modifier = Modifier.imePadding(),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
