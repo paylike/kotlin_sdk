@@ -1,9 +1,12 @@
 package com.github.paylike.kotlin_sdk
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.*
 import androidx.compose.animation.slideInVertically
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.progressSemantics
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -11,13 +14,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.PaintingStyle.Companion.Stroke
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.github.paylike.kotlin_sdk.cardprovider.CardProviderIconMap
 import com.github.paylike.kotlin_sdk.cardprovider.SupportedCardProviders
@@ -314,7 +321,7 @@ fun SecurePaymentLabel(
     ) {
         Image(
             modifier = Modifier.padding(LocalPaylikePaddings.current.smallPadding),
-            painter = painterResource(R.drawable.ic_paylike_logo),
+            painter = painterResource(R.drawable.ic_paylike),
             contentDescription =
                 null, // TODO do we need description to be able to support accessibility features
             // such as reading out loud any icon
@@ -323,6 +330,41 @@ fun SecurePaymentLabel(
             modifier = Modifier,
             style = textStyle,
             text = stringResource(id = R.string.SecurePayment),
+        )
+    }
+}
+
+@Composable
+fun LoadingSpinner(
+    modifier: Modifier = Modifier,
+    color: Color = LocalContentColor.current,
+) {
+    val sweepAngle: Float = 90f
+    val strokeWidth: Dp = ProgressIndicatorDefaults.StrokeWidth
+    val transition = rememberInfiniteTransition()
+    val currentArcStartAngle by
+        transition.animateValue(
+            0,
+            360,
+            Int.VectorConverter,
+            infiniteRepeatable(animation = tween(durationMillis = 1100, easing = LinearEasing))
+        )
+    val stroke =
+        with(LocalDensity.current) { Stroke(width = strokeWidth.toPx(), cap = StrokeCap.Square) }
+    Canvas(modifier.progressSemantics().padding(strokeWidth / 2)) {
+        drawArc(
+            color,
+            startAngle = currentArcStartAngle.toFloat() - 90,
+            sweepAngle = sweepAngle,
+            useCenter = false,
+            style = stroke
+        )
+        drawArc(
+            color,
+            startAngle = currentArcStartAngle.toFloat() + 90,
+            sweepAngle = sweepAngle,
+            useCenter = false,
+            style = stroke
         )
     }
 }
@@ -347,17 +389,17 @@ fun SuccessAnimation(
             modifier = Modifier.fillMaxSize(1f),
             painter =
                 painterResource(
-                    id = com.github.paylike.kotlin_sdk.R.drawable.ic_successful_payment_background
+                    id = R.drawable.bg_successful_payment
                 ),
             contentDescription =
                 null, // TODO do we need description to be able to support accessibility features
-            // such as reading out loud any icon
+                      // such as reading out loud any icon
             )
         Image(
             modifier = Modifier.fillMaxSize(0.8f),
             painter =
                 painterResource(
-                    id = com.github.paylike.kotlin_sdk.R.drawable.ic_successful_payment_circle
+                    id = R.drawable.ic_successful_payment_circle
                 ),
             contentDescription = null
         )
