@@ -1,5 +1,6 @@
 package com.github.paylike.sample.view
 
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -30,70 +31,83 @@ import com.github.paylike.kotlin_sdk.theme.PaylikeTheme
 import com.github.paylike.sample.R
 import com.github.paylike.sample.viewmodel.SampleViewModel
 import com.github.paylike.sample.viewmodel.SdkExampleModel
+import java.util.*
 
+/** Example application single activity */
 class SampleActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterialApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        /** Disables the default action bar and default padding values */
         actionBar?.hide()
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
+        /** Sample VM to manage sample application states and predefined example data */
         val model: SampleViewModel by viewModels()
 
+        /** Renders the example application */
         setContent {
-            MaterialTheme {
-                SampleAppComposable(
-                    model,
-                )
-            }
+            SampleAppComposable(
+                model,
+            )
         }
     }
 }
 
+/** Wrapper composable responsible for scaffold and navigation hosting */
 @ExperimentalMaterialApi
 @Composable
 fun SampleAppComposable(
     viewModel: SampleViewModel,
 ) {
+    val scaffoldState by remember { mutableStateOf(viewModel.scaffoldState) }
 
-    Surface(modifier = Modifier.systemBarsPadding()) {
-        val navController = rememberNavController()
-        Scaffold(
-            modifier = Modifier.fillMaxSize(),
-            topBar = { TopBarContentComposable() },
-            content = { padding ->
-                NavHost(
-                    modifier = Modifier.systemBarsPadding().padding(padding),
-                    navController = navController,
-                    startDestination = viewModel.rootRoute,
-                ) {
-                    composable(viewModel.rootRoute) {
-                        ExampleListComposable(
-                            viewModel,
-                            navController,
-                        )
-                        SideEffect { viewModel.engine.resetEngineStates() }
-                    }
-                    viewModel.sdkExampleModelMap.forEach { (keyAsRoute, model) ->
-                        composable(keyAsRoute) {
-                            Column {
-                                Text(
-                                    modifier =
-                                        Modifier.fillMaxWidth()
-                                            .fillMaxHeight(0.1f)
-                                            .padding(PaylikeTheme.paddings.smallPadding),
-                                    text = LocalContext.current.getString(model.titleId),
-                                    style = PaylikeTheme.typography.h6,
-                                    textAlign = TextAlign.Center,
-                                )
-                                model.exampleComposable.invoke()
+    MaterialTheme {
+        Surface(modifier = Modifier.systemBarsPadding()) {
+            val navController = rememberNavController()
+            Scaffold(
+                modifier = Modifier.fillMaxSize(),
+                topBar = { TopBarContentComposable() },
+                content = { padding ->
+                    NavHost(
+                        modifier = Modifier.systemBarsPadding().padding(padding),
+                        navController = navController,
+                        startDestination = viewModel.rootRoute,
+                    ) {
+                        composable(viewModel.rootRoute) {
+                            /** Root composable */
+                            ExampleListComposable(
+                                viewModel,
+                                navController,
+                            )
+                        }
+                        viewModel.sdkExampleModelMap.forEach { (keyAsRoute, model) ->
+                            composable(keyAsRoute) {
+                                Column(verticalArrangement = Arrangement.Top) {
+                                    /** To show the title of the example */
+                                    Text(
+                                        modifier =
+                                            Modifier.fillMaxWidth()
+                                                .fillMaxHeight(0.1f)
+                                                .padding(PaylikeTheme.paddings.smallPadding),
+                                        text = LocalContext.current.getString(model.titleId),
+                                        style = PaylikeTheme.typography.h6,
+                                        textAlign = TextAlign.Center,
+                                    )
+                                    /** Form composable */
+                                    model.exampleComposable.invoke(
+                                        model.exampleViewModel,
+                                        model.paymentData
+                                    )
+                                }
                             }
                         }
                     }
-                }
-            },
-        )
+                },
+                scaffoldState = scaffoldState,
+            )
+        }
     }
 }
 
@@ -118,6 +132,7 @@ fun TopBarContentComposable() {
     )
 }
 
+/** Renders one card for each defined example case in the [SampleViewModel] */
 @ExperimentalMaterialApi
 @Composable
 private fun ExampleListComposable(viewModel: SampleViewModel, navController: NavHostController) {
@@ -134,9 +149,18 @@ private fun ExampleListComposable(viewModel: SampleViewModel, navController: Nav
                 navController = navController,
             )
         }
+        /** Language picker located at the end of the example list */
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            LocalePicker()
+        }
     }
 }
 
+/**
+ * Holds one example each
+ *
+ * Displays basic information about the example and has a button to navigate to the example usage.
+ */
 @OptIn(ExperimentalAnimationApi::class)
 @ExperimentalMaterialApi
 @Composable
