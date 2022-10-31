@@ -17,7 +17,6 @@ class ExpirationDateVisualTransformation(
     private val isValid: Boolean,
 ) : VisualTransformation {
     private val placeholderColor: Color = Color.LightGray
-    private val disabledColor: Color = Color.Gray // TODO maybe delete it
 
     override fun filter(text: AnnotatedString): TransformedText {
         /** Define placeholder */

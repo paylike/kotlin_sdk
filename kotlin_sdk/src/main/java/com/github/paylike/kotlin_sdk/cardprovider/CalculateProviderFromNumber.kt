@@ -5,6 +5,8 @@ import java.util.regex.Pattern
 /**
  * Paylike ecosystem only accepts the following cards defined in [SupportedCardProviders] enum class
  * so we only check these.
+ *
+ * @see <a href="https://www.bindb.com/card-schemes">Source</a>
  */
 fun calculateProviderFromNumber(number: String): SupportedCardProviders {
     if (

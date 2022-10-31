@@ -25,7 +25,7 @@ fun CardNumberField(
     value: String,
     textStyle: TextStyle = LocalTextStyle.current,
     isValid: Boolean,
-    isEnabled: Boolean = true, // TODO
+    isEnabled: Boolean = true,
     onValueChanged: (String) -> Unit,
     highlightedCardProvider: SupportedCardProviders,
 ) {
@@ -47,8 +47,8 @@ fun CardNumberField(
                 isValid = isValid,
             ),
         singleLine = true,
-        enabled = isEnabled, // TODO if its good
-        isError = !isValid, // TODO if its good
+        enabled = isEnabled,
+        isError = !isValid,
         keyboardOptions =
             KeyboardOptions(
                 keyboardType = KeyboardType.Decimal,
@@ -71,7 +71,7 @@ fun ExpiryDateField(
     value: String,
     textStyle: TextStyle = LocalTextStyle.current,
     isValid: Boolean,
-    isEnabled: Boolean = true, // TODO
+    isEnabled: Boolean = true,
     onValueChanged: (String) -> Unit,
 ) {
     TextField(
@@ -86,8 +86,8 @@ fun ExpiryDateField(
                 isValid = isValid,
             ),
         singleLine = true,
-        enabled = isEnabled, // TODO if its good
-        isError = !isValid, // TODO if its good
+        enabled = isEnabled,
+        isError = !isValid,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
         colors =
             TextFieldDefaults.textFieldColors(
@@ -107,7 +107,7 @@ fun CardVerificationCodeField(
     value: String,
     textStyle: TextStyle = LocalTextStyle.current,
     isValid: Boolean,
-    isEnabled: Boolean = true, // TODO
+    isEnabled: Boolean = true,
     onValueChanged: (String) -> Unit,
 ) {
     TextField(
@@ -121,8 +121,8 @@ fun CardVerificationCodeField(
                 invalidColor = PaylikeTheme.colors.error,
                 isValid = isValid,
             ),
-        enabled = isEnabled, // TODO if its good
-        isError = !isValid, // TODO if its good
+        enabled = isEnabled,
+        isError = !isValid,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
         colors =
             TextFieldDefaults.textFieldColors(
@@ -142,7 +142,7 @@ fun FirstNameField(
     value: String,
     textStyle: TextStyle = LocalTextStyle.current,
     isValid: Boolean,
-    isEnabled: Boolean = true, // TODO
+    isEnabled: Boolean = true,
     onValueChanged: (String) -> Unit,
 ) {
     // TODO First name text above
@@ -159,8 +159,8 @@ fun FirstNameField(
                 color = (if (isValid) Color.LightGray else PaylikeTheme.colors.error),
             )
         },
-        enabled = isEnabled, // TODO if its good
-        isError = !isValid, // TODO if its good
+        enabled = isEnabled,
+        isError = !isValid,
         colors =
             TextFieldDefaults.textFieldColors(
                 backgroundColor = PaylikeTheme.colors.background,
@@ -179,7 +179,7 @@ fun LastNameField(
     value: String,
     textStyle: TextStyle = LocalTextStyle.current,
     isValid: Boolean,
-    isEnabled: Boolean = true, // TODO
+    isEnabled: Boolean = true,
     onValueChanged: (String) -> Unit,
 ) {
     // TODO Last name text above
@@ -196,8 +196,8 @@ fun LastNameField(
                 color = (if (isValid) Color.LightGray else PaylikeTheme.colors.error),
             )
         },
-        enabled = isEnabled, // TODO if its good
-        isError = !isValid, // TODO if its good
+        enabled = isEnabled,
+        isError = !isValid,
         colors =
             TextFieldDefaults.textFieldColors(
                 backgroundColor = PaylikeTheme.colors.background,
@@ -215,7 +215,7 @@ fun NoteField(
     modifier: Modifier = Modifier,
     value: String,
     textStyle: TextStyle = LocalTextStyle.current,
-    isEnabled: Boolean = true, // TODO
+    isEnabled: Boolean = true,
     onValueChanged: (String) -> Unit,
 ) {
     TextField(
@@ -231,7 +231,7 @@ fun NoteField(
                 color = Color.LightGray,
             )
         },
-        enabled = isEnabled, // TODO if its good
+        enabled = isEnabled,
         colors =
             TextFieldDefaults.textFieldColors(
                 backgroundColor = PaylikeTheme.colors.background,
