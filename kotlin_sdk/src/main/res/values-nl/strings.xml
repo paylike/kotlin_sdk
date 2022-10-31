@@ -1,0 +1,23 @@
+<resources>
+    <string name="POPUP_HEADER_PAYMENT">Betaling</string>
+    <string name="POPUP_HEADER_SUBSEQUENT">Aanmelden</string>
+    <string name="CARD_NUMBER">Kaartnummer</string>
+    <string name="CARD_EXPIRY">Verloopt op maand/jaar</string>
+    <string name="CARD_CODE">CVC</string>
+    <string name="PAY">Betaal</string>
+    <string name="PAYING">Betalen…</string>
+    <string name="SAVE_CARD">Bewaar kaart</string>
+    <string name="SAVING">Opslaan…</string>
+    <string name="POWERED_BY">Veilige betaling door Paylike</string>
+    <string name="TDS_FULL_SCREEN_TEXT">Probleem om het scherm te zien?</string>
+    <string name="TDS_FULL_SCREEN_LINK">Open volledig scherm.</string>
+    <string name="ERROR_INVALID_CARD_NUMBER">Ongeldig kaartnummer\nControleer uw kaartnummer. Als dit probleem blijft terugkomen, neem contact op met uw bank.</string>
+    <string name="ERROR_CARD_SCHEME_UNKNOWN">Ongeldig kaartnummer of ongeldige kaart\nHet kaartnummer is niet correct of deze kaart deze kaart wordt niet ondersteunt.</string>
+    <string name="ERROR_CARD_SECURITY_CODE_INVALID">Ongeldige CVC (beveiligings code)\nControleer CVC (beveiligings code), deze code vind u op de achterkant van uw kaart. Als dit probleem blijft terugkomen, neem contact op met uw bank.</string>
+    <string name="ERROR_CARD_EXPIRED">Uw kaart is verlopen\nUw kaart is verlopen. Gebruik andere kaart.</string>
+    <string name="ERROR_CARD_DISABLED">De kaart is beperkt\nDeze kaart is beperkt, neem contact op met uw bank voor meer informatie.</string>
+    <string name="ERROR_CARD_LOST">Kaart is verloren of gestolen\nDeze kaart is geblokkeerd  and staat te boek als verloren of gestolen, neem contact op met uw bank voor meer informatie.</string>
+    <string name="ERROR_AMOUNT_LIMIT">Kaart limiet overschreden\nKaart limiet is overschreden. Neem contact op met uw bank om limiet aan te passen.</string>
+    <string name="ERROR_INSUFFICIENT_FUNDS">Onvoldoende saldo op uw kaart\nEr is onvoldoende saldo op uw kaart om aan het bedrag te kunnnen voldoen. Gebruik andere kaart of stort geld op kaart account. Als dit probleem blijft terugkomen, neem contact op met uw bank.</string>
+    <string name="ERROR_REJECTED_BY_ISSUER">De kaart is geweigert\nDe kaart is geweigert door uw bank. Neem contact op met uw bank AUB.</string>
+</resources>

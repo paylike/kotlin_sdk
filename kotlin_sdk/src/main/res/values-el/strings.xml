@@ -1,0 +1,23 @@
+<resources>
+    <string name="POPUP_HEADER_PAYMENT">Πληρωμή</string>
+    <string name="POPUP_HEADER_SUBSEQUENT">Εγγραφή</string>
+    <string name="CARD_NUMBER">Αριθμός κάρτας</string>
+    <string name="CARD_EXPIRY">Λήξη (ΜΜ/ΕΕ)</string>
+    <string name="CARD_CODE">CVC</string>
+    <string name="PAY">Πληρωμή</string>
+    <string name="PAYING">Πληρωμή σε εξέλιξη...</string>
+    <string name="SAVE_CARD">Αποθήκευση Κάρτας</string>
+    <string name="SAVING">Γίνεται Αποθήκευση...</string>
+    <string name="POWERED_BY">Ασφαλής πληρωμή μέσω Paylike</string>
+    <string name="TDS_FULL_SCREEN_TEXT">Δεν εμφανίζεται το παράθυρο;</string>
+    <string name="TDS_FULL_SCREEN_LINK">Πλήρης οθόνη</string>
+    <string name="ERROR_INVALID_CARD_NUMBER">Μη έγκυρος αριθμός κάρτας\nΠαρακαλούμε ελέγξτε τον αριθμό της κάρτας. Εάν το πρόβλημα επιμείνει, επικοινωνήστε με την τράπεζά σας.</string>
+    <string name="ERROR_CARD_SCHEME_UNKNOWN">Μη έγκυρος αριθμός κάρτας ή η κάρτα δεν υποστηρίζεται\nΟ αριθμός κάρτας είναι λανθασμένος ή η επωνυμία της κάρτας δεν υποστηρίζεται.</string>
+    <string name="ERROR_CARD_SECURITY_CODE_INVALID">Μη έγκυρος κωδικός ασφαλείας CVC\nΠαρακαλούμε ελέγξτε τον κωδικό ασφαλεία CVC, που βρίσκεται συνήθως στο πίσω μέρος της κάρτας σας. Εάν το πρόβλημα επιμείνει, επικοινωνήστε με την τράπεζά σας.</string>
+    <string name="ERROR_CARD_EXPIRED">Η κάρτα έχει λήξει\nΗ κάρτα σας έχει λήξει. Παρακαλούμε δοκιμάστε μία άλλη.</string>
+    <string name="ERROR_CARD_DISABLED">Η κάρτα είναι περιορισμένη\nΑυτή η κάρτα είναι περιορισμένη, παρακαλούμε επικοινωνήστε με την τράπεζά σας για περισσότερες πληροφορίες.</string>
+    <string name="ERROR_CARD_LOST">Η κάρτα χάθηκε ή εκλάπη\nΗ κάρτα έχει αποκλειστεί και δηλωθεί ως χαμένη ή κλεμμένη, παρακαλούμε επικοινωνήστε με την τράπεζά σας για περισσότερες πληροφορίες.</string>
+    <string name="ERROR_AMOUNT_LIMIT">Υπέρβαση χρηματικού ορίου κάρτας\nΤο χρηματικό όριο στην κάρτα σας έχει παρέλθει. Παρακαλούμε επικοινωνήστε με την τράπεζά σας για επαναφορά ή αύξηση του ορίου.</string>
+    <string name="ERROR_INSUFFICIENT_FUNDS">Δεν υπάρχουν αρκετά χρήματα\nΔεν υπάρχουν αρκετά διαθέσιμα χρήματα για την κάλυψη της αγοράς σας. Παρακαλούμε δοκιμάστε μια άλλη κάρτα ή προσθέστε χρήματα στο λογαριασμό σας. Εάν το πρόβλημα επιμείνει, επικοινωνήστε με την τράπεζά σας.</string>
+    <string name="ERROR_REJECTED_BY_ISSUER">Η κάρτα απορρίφθηκε\nΗ κάρτα απορρίφθηκε από την τράπεζά σας. Παρακαλούμε επικοινωνήστε με την τράπεζά σας.</string>
+</resources>

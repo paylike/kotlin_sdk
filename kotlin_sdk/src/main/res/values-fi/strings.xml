@@ -1,0 +1,23 @@
+<resources>
+    <string name="POPUP_HEADER_PAYMENT">Maksu</string>
+    <string name="POPUP_HEADER_SUBSEQUENT">Kirjaudu</string>
+    <string name="CARD_NUMBER">Kortin numero</string>
+    <string name="CARD_EXPIRY">Voimassaoloaika</string>
+    <string name="CARD_CODE">CVC</string>
+    <string name="PAY">Maksa</string>
+    <string name="PAYING">Maksetaan…</string>
+    <string name="SAVE_CARD">Tallenna kortti</string>
+    <string name="SAVING">Tallennetaan…</string>
+    <string name="POWERED_BY">Turvallisen maksun tuottaa Paylike</string>
+    <string name="TDS_FULL_SCREEN_TEXT">Ongelmia ikkunan avaamisessa?</string>
+    <string name="TDS_FULL_SCREEN_LINK">Avaa koko näytölle.</string>
+    <string name="ERROR_INVALID_CARD_NUMBER">Virheellinen kortin numero\nVirheellinen kortin numero. Mikäli ongelma jatkuu, ota yhteys pankkiisi.</string>
+    <string name="ERROR_CARD_SCHEME_UNKNOWN">Virheellinen kortin numero, tai korttia ei tueta\nKortin numero on virheellinen, tai valitsemaasi korttityyppiä ei tueta.</string>
+    <string name="ERROR_CARD_SECURITY_CODE_INVALID">Virheellinen CVC (turvakoodi)\nTarkista CVC (turvakoodi). Se löytyy yleensä kortin takapuolelta. Mikäli ongelma jatkuu, ota yhteys pankkiisi.</string>
+    <string name="ERROR_CARD_EXPIRED">Kortti on vanhentunut\nKorttisi on vanhentunut. Käytä toista korttia.</string>
+    <string name="ERROR_CARD_DISABLED">Kortti on rajoitettu\nKortti on rajoitettu, ota yhteyttä pankkiisi lisätietojen saamiseksi.</string>
+    <string name="ERROR_CARD_LOST">Kortti on hävinnyt tai varastettu\nKortti on peruutettu ja listattu varastetuksi tai kadonneeksi, ota yhteyttä pankkiisi lisätietojen saamiseksi.</string>
+    <string name="ERROR_AMOUNT_LIMIT">Kortin raja saavutettu\nKortin maksuraja on täynnä. Ota yhteys pankkiisi muuttaaksesi rajaa.</string>
+    <string name="ERROR_INSUFFICIENT_FUNDS">Kortilla ei ole katetta\nKortilla ei ole riittävästi varoja maksutapahtuman suorittamiseen. Käytä toista korttia, tai siirrä tilille rahaa. Mikäli ongelma jatkuu, ota yhteyttä pankkiisi.</string>
+    <string name="ERROR_REJECTED_BY_ISSUER">Kortti hylättiin\nMaksutapahtuma hylättiin pankkisi toimesta. Ota yhteyttä pankkiisi.</string>
+</resources>

@@ -1,4 +1,54 @@
-<resources>
-    <string name="PayButton">Pay</string>
-    <string name="SecurePayment">Secure payment by Paylike</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <string name="PAYLIKE_ICON" tools:ignore="MissingTranslation">Paylike icon</string>
+
+    <string name="MAESTRO_ICON" tools:ignore="MissingTranslation">Maestro icon</string>
+    <string name="MASTERCARD_ICON" tools:ignore="MissingTranslation">Mastercard icon</string>
+    <string name="VISA_ICON" tools:ignore="MissingTranslation">Visa icon</string>
+
+    <string name="POPUP_HEADER_PAYMENT">Payment</string>
+    <string name="POPUP_HEADER_SUBSEQUENT">Sign up</string>
+    <string name="CARD_NUMBER">Card number</string>
+    <string name="CARD_EXPIRY">Expiry month/year</string>
+    <string name="CARD_CODE">CVC</string>
+    <string name="PAY">Pay</string>
+    <string name="PAYING">Paying…</string>
+    <string name="SAVE_CARD">Save card</string>
+    <string name="SAVING">Saving…</string>
+    <string name="POWERED_BY">Secure payment by Paylike</string>
+    <string name="TDS_FULL_SCREEN_TEXT">Trouble seeing the window?</string>
+    <string name="TDS_FULL_SCREEN_LINK">Expand to full-screen.</string>
+
+<!--    servererror exception-->
+    <string name="ERROR_TIMEOUT" tools:ignore="MissingTranslation">Unexpected issue\nCould there be an issue with your internet connection? Please try again a little later.</string>
+
+<!--    RateLimit exception-->
+    <string name="ERROR_RATE_LIMIT" tools:ignore="MissingTranslation">Unexpected issue\nWe are currently receiving too many payment requests. Please wait a few minutes before trying again.</string>
+
+<!--    paylike exception-->
+    <string name="ERROR_UNEXPECTED" tools:ignore="MissingTranslation">Unexpected problem\nPlease try again a little later or contact our support with the message: ${message}.</string>
+
+<!--    Integration errors-->
+    <string name="ERROR_PUBLIC_KEY_IS_NOT_TEST" tools:ignore="MissingTranslation">The payment popup is in test mode, but the public key provided is for a live account. Please use a public key for a test account.</string>
+    <string name="ERROR_PUBLIC_KEY_IS_TEST" tools:ignore="MissingTranslation">The payment popup is in live mode, but the public key provided is for a test account. Please use a public key for a live account.</string>
+    <string name="ERROR_PUBLIC_KEY_UNKNOWN" tools:ignore="MissingTranslation">The provided public key is not associated with a Paylike account. Update the public key and try again.</string>
+    <string name="ERROR_PUBLIC_KEY_PAYMENTS_NOT_ALLOWED" tools:ignore="MissingTranslation">The public key is not allowed to accept payments.</string>
+
+<!--    Card data errors-->
+    <string name="ERROR_INVALID_CARD_NUMBER">Invalid card number\nPlease check the card number. If the problem persists, please contact your bank.</string>
+    <string name="ERROR_CARD_SCHEME_UNKNOWN" tools:ignore="MissingTranslation">Invalid card number or card not supported\nThe card number is incorrect or the card brand is not supported. Supported cards: ${supported}.</string>
+    <string name="ERROR_CARD_SCHEME_UNSUPPORTED" tools:ignore="MissingTranslation">${scheme} cards are not supported\n${scheme} cards are unfortunately not supported. Please use one of: ${supported}.</string>
+    <string name="ERROR_CARD_SECURITY_CODE_INVALID">Invalid CVC (security code)\nPlease check the CVC (security code), typically found on the back of your card. If the problem persists, please contact your bank.</string>
+    <string name="ERROR_CARD_EXPIRED">The card has expired\nYour card has expired. Please try another one.</string>
+    <string name="ERROR_CARD_DISABLED">The card is blocked\nThis card is blocked, please contact your bank for further information.</string>
+    <string name="ERROR_CARD_LOST">Card blocked\nThe card has been listed as lost or stolen, please contact your bank for further information.</string>
+    <string name="ERROR_AMOUNT_LIMIT">Card amount limit exceeded\nThe amount limit on your card has been reached. Please contact your bank to reset or increase the limit.</string>
+    <string name="ERROR_INSUFFICIENT_FUNDS">Insufficient funds\nThere are not enough funds available to cover the purchase. Please try another card or add funds to your account. If the problem persists, please contact your bank.</string>
+    <string name="ERROR_RECEIVER_BLOCKED" tools:ignore="MissingTranslation">Merchant blocked\nThe payment was rejected by your bank due to the merchant being blocked. Please contact your bank.</string>
+    <string name="ERROR_REJECTED_BY_ISSUER">The card was rejected\nThe card has been rejected by your bank. Please contact your bank.</string>
+    <string name="ERROR_REJECTED" tools:ignore="MissingTranslation">The payment was rejected\nPlease try again in a little while or contact our support if the problem persists.</string>
+
+<!--    TDSecure errors-->
+    <string name="ERROR_TDSECURE_REQUIRED" tools:ignore="MissingTranslation">3-D Secure required\n3-D Secure (Visa Secure/Mastercard Identity Check) was required to accept this payment, but it was not possible to obtain. Try again in a little while or contact your bank.</string>
+    <string name="ERROR_TDSECURE_FAILED" tools:ignore="MissingTranslation">3-D Secure failed\n3-D Secure (Visa Secure/Mastercard Identity Check) is required but failed to obtain authentication. Please try again or contact your bank.</string>
 </resources>
