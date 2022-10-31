@@ -28,16 +28,6 @@ fun ExtendableWhiteLabelComposable(
             MaterialTheme { content.invoke() }
         },
 ) {
-    //    /**
-    //     * Debug purposes, shows message that the flow has come to a final state
-    //     *
-    //     * [EngineState.SUCCESS] or [EngineState.SUCCESS]
-    //     */
-    //    if (viewModel.paymentFormState.isFinished) {
-    //        Toast.makeText(LocalContext.current, "Payment flow has finished.", Toast.LENGTH_SHORT)
-    //            .show()
-    //    }
-
     /**
      * Necessary webView to assist the TDS flow. It is responsible to show the catch hints, show
      * challenge, and send challenge response.
@@ -59,25 +49,20 @@ fun ExtendableWhiteLabelComposable(
                 webView.value.WebViewComposable(modifier = Modifier.fillMaxWidth(1f).height(200.dp))
 
                 /** Previous */
-                // TODO extender shit to render
                 if (viewModel.extenderPaymentFormStateList.isNotEmpty()) {
                     viewModel.extenderPaymentFormStateList.forEach { extenderField ->
-                        ExtenderWrap(
-                            modifier = Modifier.fillMaxWidth().height(40.dp),
-                        ) {
-                            extenderField.extenderFieldComposable.invoke(
-                                modifier = Modifier,
-                                value = extenderField.extenderFieldState.value,
-                                textStyle = LocalTextStyle.current,
-                                isEnabled = viewModel.paymentFormState.isInitialState,
-                                onValueChanged = {
-                                    extenderField.onExtenderFieldChanged(
-                                        it,
-                                        extenderField.onChangedPipeLineFunction
-                                    )
-                                },
-                            )
-                        }
+                        extenderField.extenderFieldComposable.invoke(
+                            modifier = Modifier.fillMaxWidth(),
+                            value = extenderField.extenderFieldState.value,
+                            textStyle = LocalTextStyle.current,
+                            isEnabled = viewModel.paymentFormState.isInitialState,
+                            onValueChanged = {
+                                extenderField.onExtenderFieldChanged(
+                                    it,
+                                    extenderField.onChangedPipeLineFunction
+                                )
+                            },
+                        )
                     }
                 }
 
@@ -98,7 +83,9 @@ fun ExtendableWhiteLabelComposable(
                     PayButton(
                         modifier = Modifier,
                         onClick = { viewModel.onPayButtonClick() },
-                        isVisible = viewModel.paymentFormState.isInitialState,
+                        isVisible =
+                            viewModel.paymentFormState.isInitialState &&
+                                !viewModel.paymentFormState.isPaymentFlowInitiated,
                     )
                 }
             }
@@ -118,53 +105,5 @@ fun ExtenderWrap(
         content.invoke(
             modifier = modifier,
         )
-    }
-}
-
-/** Later to be deleted */
-@Composable
-fun ExtendedWhiteLabelFormExampleComposable(
-    modifier: Modifier = Modifier,
-    viewModel: ViewModel,
-) {
-    Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Row(
-            modifier = modifier,
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-        ) {
-            Text("First name", Modifier.weight(1f).padding(horizontal = 15.dp))
-            Text("Last name", Modifier.weight(1f).padding(horizontal = 16.dp))
-        }
-        Row(
-            modifier = modifier,
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-        ) {
-            //            FirstNameField(
-            //
-            //            )
-            //            LastNameField(
-            //
-            //            )
-        }
-
-        SimpleWhiteLabelFormComposable(
-            viewModel = viewModel as WhiteLabelViewModel,
-        )
-
-        Row(
-            modifier = modifier,
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Start
-        ) {
-            //            NoteField(
-            //                onValueChanged = { viewModel.handleNoteInputChange(it) }
-            //            )
-        }
     }
 }

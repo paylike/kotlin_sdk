@@ -6,13 +6,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 
 /**
+ * Stores any extender field:
+ *
+ * - [extenderFieldState]
+ * - state that keeps the VM consistent
+ *
+ * - [onChangedPipeLineFunction]
+ * - optional callback function for when [extenderFieldState] changes
+ *
+ * - [extenderFieldComposable]
+ * - Predefined paylike composable from paylike ecosystem
+ * completely arbitrary
  */
 data class ExtenderFieldModel(
-    /** State */
-    //    val extenderFieldState: MutableState<ExtenderFieldState>,
 
+    /** Field state */
     val extenderFieldState: MutableState<String>,
-    val isExtenderFieldStateValid: MutableState<Boolean>,
+    /** Optional [onExtenderFieldChanged] logic */
     val onChangedPipeLineFunction: (String) -> String = { newValue -> newValue },
 
     /** UI composable */
@@ -22,10 +32,11 @@ data class ExtenderFieldModel(
             modifier: Modifier,
             value: String,
             textStyle: TextStyle,
-            isEnabled: Boolean, // TODO
+            isEnabled: Boolean,
             onValueChanged: (String) -> Unit,
         ) -> Unit,
 ) {
+    /** Callback function for [extenderFieldState] */
     fun onExtenderFieldChanged(newValue: String, onChangedPipeLineFunction: (String) -> String) {
         extenderFieldState.value = onChangedPipeLineFunction(newValue)
     }
