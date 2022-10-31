@@ -1,5 +1,6 @@
 package com.github.paylike.kotlin_sdk.whitelabel.simple.viewmodel
 
+import com.github.paylike.kotlin_engine.error.PaylikeEngineError
 import com.github.paylike.kotlin_sdk.CardNumberField
 import com.github.paylike.kotlin_sdk.CardVerificationCodeField
 import com.github.paylike.kotlin_sdk.ExpiryDateField
@@ -27,5 +28,9 @@ data class SimplePaymentFormStateModel(
      * [isFinished] can be successful and with error
      */
     val isInitialState: Boolean = true,
-    val isFinished: Boolean = false,
+    val isPaymentFlowInitiated: Boolean = false,
+    val isSuccess: Boolean = false,
+    val isError: Boolean = false,
+    /** Paylike engine locally stored to show if any */
+    val error: PaylikeEngineError? = null,
 )

@@ -5,6 +5,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.github.paylike.kotlin_client.domain.dto.payment.request.card.PaylikeCardDto
+import com.github.paylike.kotlin_client.domain.dto.payment.request.money.PaymentAmount
+import com.github.paylike.kotlin_client.domain.dto.payment.request.plan.PaymentPlanDto
+import com.github.paylike.kotlin_client.domain.dto.payment.request.test.PaymentTestDto
+import com.github.paylike.kotlin_client.domain.dto.payment.request.unplanned.PaymentUnplannedDto
 import com.github.paylike.kotlin_engine.error.exceptions.WrongTypeOfObservableListened
 import com.github.paylike.kotlin_engine.error.exceptions.WrongTypeOfObserverUpdateArg
 import com.github.paylike.kotlin_engine.view.PaylikeWebView
@@ -18,6 +22,10 @@ import com.github.paylike.kotlin_sdk.PayButton
 import com.github.paylike.kotlin_sdk.cardprovider.SupportedCardProviders
 import com.github.paylike.kotlin_sdk.cardprovider.calculateProviderFromNumber
 import java.util.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.serialization.json.JsonObject
 
 /**
  * Responsible to maintain the middleware functionality of the payment flow in Paylike's ecosystem
@@ -33,21 +41,28 @@ import java.util.*
  * - Callback function to execute when we press the [PayButton]
  */
 open class WhiteLabelViewModel(
-    private val engine: PaylikeEngine,
+    protected val engine: PaylikeEngine,
     val webView: PaylikeWebView = PaylikeWebView(engine),
-    val onPayButton:
-        ((
+    protected val onPayButton:
+        (suspend (
+            engine: PaylikeEngine,
             cardNumber: String,
             cvc: String,
             expiryMonth: Int,
             expiryYear: Int,
-            extenderFields: List<String>? // TODO() extender stuff, rather map
+            extenderFields: List<String>?
         ) -> Unit) =
-        { _, _, _, _, _ ->
-        }
+        { engine, cardNumber, cvc, expiryMonth, expiryYear, _ ->
+            engine.addEssentialPaymentData(
+                cardNumber,
+                cvc,
+                expiryMonth,
+                expiryYear,
+            )
+        },
 ) : ViewModel(), Observer {
     /** Logic fields */
-    protected var possibleCardNumberLength: Int = 16
+    private var possibleCardNumberLength: Int = 16
     companion object {
         protected const val expiryDateLength: Int = 4
         protected const val cardVerificationCodeLength: Int = 3
@@ -62,8 +77,46 @@ open class WhiteLabelViewModel(
         engine.addObserver(this)
     }
 
+    suspend fun addEssentialPaymentDataToEngine(
+        cardNumber: String,
+        cvc: String,
+        expiryMonth: Int,
+        expiryYear: Int
+    ) {
+        this.engine.addEssentialPaymentData(
+            cardNumber,
+            cvc,
+            expiryMonth,
+            expiryYear,
+        )
+    }
+
+    fun addDescriptionPaymentDataToEngine(
+        paymentTestData: PaymentTestDto? = null,
+        paymentAmount: PaymentAmount? = null,
+        paymentPlanDto: List<PaymentPlanDto>? = null,
+        paymentUnplannedDto: PaymentUnplannedDto? = null
+    ) {
+        engine.addDescriptionPaymentData(
+            paymentTestData = paymentTestData,
+            paymentAmount = paymentAmount,
+            paymentPlanDataList = paymentPlanDto,
+            paymentUnplannedData = paymentUnplannedDto,
+        )
+    }
+
+    fun addAdditionalPaymentDataToEngine(
+        textData: String? = null,
+        customData: JsonObject? = null,
+    ) {
+        engine.addAdditionalPaymentData(
+            textData = textData,
+            customData = customData,
+        )
+    }
+
     /** Resets every UI state */
-    open fun resetPaymentFormState() {
+    open fun resetViewModelAndEngine() {
         paymentFormState = SimplePaymentFormStateModel()
         engine.resetEngineStates()
     }
@@ -174,6 +227,28 @@ open class WhiteLabelViewModel(
         paymentFormState = paymentFormState.copy(isCardVerificationCodeValid = newValue)
     }
 
+    /** Checks if the fields are satisfactory then invokes [onPayButton] */
+    open fun onPayButtonClick() {
+        if (canExecute()) {
+            paymentFormState =
+                paymentFormState.copy(
+                    isPaymentFlowInitiated = true,
+                )
+            /** We load the collected [PaylikeCardDto] data to the callback */
+            CoroutineScope(Dispatchers.IO).launch {
+                onPayButton.invoke(
+                    engine,
+                    paymentFormState.cardNumber,
+                    paymentFormState.cardVerificationCode,
+                    paymentFormState.expiryDate.substring(0, 2).toInt(),
+                    paymentFormState.expiryDate.substring(2, 4).toInt() + 2000,
+                    null,
+                )
+                engine.startPayment()
+            }
+        }
+    }
+    /** Checks if the fields contain acceptable input, then if so executes [onPayButton] callback */
     protected fun canExecute(): Boolean {
         var canExecute = true
         if (
@@ -193,26 +268,12 @@ open class WhiteLabelViewModel(
         }
         return canExecute
     }
-    /** Checks if the fields are satisfactory then invokes [onPayButton] */
-    // TODO create a open wrapper for the check maybe?
-    open fun onPayButtonClick() {
-        if (canExecute()) {
-            /** We load the collected [PaylikeCardDto] data to the callback */
-            onPayButton.invoke(
-                paymentFormState.cardNumber,
-                paymentFormState.cardVerificationCode,
-                paymentFormState.expiryDate.substring(0, 2).toInt(),
-                paymentFormState.expiryDate.substring(2, 4).toInt(),
-                null
-            )
-        }
-    }
 
     /** Helper function to determine what state the UI has to be */
     protected fun isInitialState(state: EngineState): Boolean =
         state == EngineState.WAITING_FOR_INPUT
-    protected fun isFinalState(state: EngineState): Boolean =
-        state == EngineState.SUCCESS || state == EngineState.ERROR
+    protected fun isSuccess(state: EngineState): Boolean = state == EngineState.SUCCESS
+    protected fun isError(state: EngineState): Boolean = state == EngineState.ERROR
 
     /**
      * Check if we listen to the right object, receive the right argument and update UI state based
@@ -239,7 +300,10 @@ open class WhiteLabelViewModel(
         paymentFormState =
             paymentFormState.copy(
                 isInitialState = isInitialState(arg),
-                isFinished = isFinalState(arg),
+                isSuccess = isSuccess(arg),
+                isError = isError(arg),
+                isPaymentFlowInitiated = !(isInitialState(arg) || isSuccess(arg) || isError(arg)),
+                error = if (isError(arg)) o.error else null,
             )
     }
 }

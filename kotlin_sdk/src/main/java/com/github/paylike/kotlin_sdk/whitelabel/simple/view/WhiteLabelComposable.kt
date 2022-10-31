@@ -26,18 +26,6 @@ fun WhiteLabelComposable(
             MaterialTheme { content.invoke() }
         },
 ) {
-    //    /**
-    //     * TODO delete it when finished. Debug purposes, shows message that the flow has come to a
-    // final
-    //     * state
-    //     *
-    //     * [EngineState.SUCCESS] or [EngineState.SUCCESS]
-    //     */
-    //    if (viewModel.paymentFormState.isFinished) {
-    //        Toast.makeText(LocalContext.current, "Payment flow has finished.", Toast.LENGTH_SHORT)
-    //            .show()
-    //    }
-
     /**
      * Necessary webView to assist the TDS flow. It is responsible to show the catch hints, show
      * challenge, and send challenge response.
@@ -51,7 +39,7 @@ fun WhiteLabelComposable(
         Surface(modifier = modifier, color = MaterialTheme.colors.background) {
             /** Wraps every field */
             Column(
-                modifier = Modifier.imePadding(),
+                modifier = Modifier,
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
@@ -73,7 +61,9 @@ fun WhiteLabelComposable(
                     PayButton(
                         modifier = Modifier,
                         onClick = { viewModel.onPayButtonClick() },
-                        isVisible = viewModel.paymentFormState.isInitialState,
+                        isVisible =
+                            viewModel.paymentFormState.isInitialState &&
+                                !viewModel.paymentFormState.isPaymentFlowInitiated,
                     )
                 }
             }
