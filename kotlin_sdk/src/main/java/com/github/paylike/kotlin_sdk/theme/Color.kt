@@ -10,7 +10,7 @@ internal val PaylikeDarkGreen = Color(0xFF006000)
 internal val PaylikeRed = Color(0xFFb82d28)
 internal val PaylikeLightRed = Color(0xFFf06051)
 internal val PaylikeDarkRed = Color(0xFF810000)
-internal val PaylikeErrorRed = Color(0xFFB00020)
+internal val PaylikeErrorRed = Color(0xFFFF0000)
 
 internal val PaylikeDarkColorPalette =
     darkColors(
@@ -41,5 +41,5 @@ internal val PaylikeLightColorPalette =
         //        background = Color.White,
         //        onBackground = Color.Black,
         error = PaylikeErrorRed,
-        onError = Color.Black,
+        onError = Color.White,
     )
