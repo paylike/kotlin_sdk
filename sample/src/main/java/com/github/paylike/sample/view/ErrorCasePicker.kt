@@ -1,9 +1,5 @@
 package com.github.paylike.sample.view
 
-import android.app.LocaleManager
-import android.os.Build
-import android.os.LocaleList
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -11,29 +7,19 @@ import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.github.paylike.kotlin_sdk.supportedLocaleList
-import java.util.*
+import com.github.paylike.kotlin_client.domain.dto.payment.request.test.PaymentTestDto
+import com.github.paylike.sample.viewmodel.errorCases
 
-@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
-fun LocalePicker(
+fun ErrorCasePicker(
     modifier: Modifier = Modifier,
+    errorCase: Pair<String, PaymentTestDto>,
+    onErrorCaseChanged: (Pair<String, PaymentTestDto>) -> Unit,
 ) {
     var expanded by remember { mutableStateOf(false) }
-    val currentAppLocales: LocaleList =
-        LocalContext.current.getSystemService(LocaleManager::class.java).applicationLocales
-    val locale =
-        if (currentAppLocales.isEmpty) {
-            supportedLocaleList[4]
-        } else {
-            currentAppLocales[0]
-        }
-    var selectedLocale by remember { mutableStateOf(locale) }
-    LocalContext.current.getSystemService(LocaleManager::class.java).applicationLocales =
-        LocaleList(selectedLocale)
+
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.Bottom,
@@ -51,7 +37,7 @@ fun LocalePicker(
             ) {
                 Text(
                     modifier = Modifier,
-                    text = selectedLocale.displayName,
+                    text = errorCase.first,
                     textAlign = TextAlign.Start,
                     style = MaterialTheme.typography.button
                 )
@@ -67,15 +53,15 @@ fun LocalePicker(
             expanded = expanded,
             onDismissRequest = { expanded = false }
         ) {
-            for (i in 0 until supportedLocaleList.size()) {
+            errorCases.forEach { (key, value) ->
                 DropdownMenuItem(
                     onClick = {
-                        selectedLocale = supportedLocaleList.get(i)!!
+                        onErrorCaseChanged(Pair(key, value))
                         expanded = false
                     }
                 ) {
                     Text(
-                        text = supportedLocaleList.get(i)!!.displayName,
+                        text = key,
                         style = MaterialTheme.typography.button,
                     )
                 }

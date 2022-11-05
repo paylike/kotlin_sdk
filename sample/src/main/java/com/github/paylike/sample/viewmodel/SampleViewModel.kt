@@ -1,9 +1,7 @@
 package com.github.paylike.sample.viewmodel
 
-import android.annotation.SuppressLint
-import android.icu.text.NumberFormat
-import android.icu.util.Currency
 import android.os.Build
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -13,8 +11,6 @@ import androidx.lifecycle.ViewModel
 import com.github.paylike.kotlin_client.domain.dto.payment.request.PaymentData
 import com.github.paylike.kotlin_client.domain.dto.payment.request.money.PaymentAmount
 import com.github.paylike.kotlin_client.domain.dto.payment.request.test.PaymentTestDto
-import com.github.paylike.kotlin_client.domain.dto.payment.request.test.card.CardCodeOptions
-import com.github.paylike.kotlin_client.domain.dto.payment.request.test.card.TestCardDto
 import com.github.paylike.kotlin_engine.model.service.ApiMode
 import com.github.paylike.kotlin_engine.viewmodel.PaylikeEngine
 import com.github.paylike.kotlin_sdk.NoteField
@@ -27,10 +23,10 @@ import com.github.paylike.kotlin_sdk.whitelabel.simple.view.WhiteLabelComposable
 import com.github.paylike.kotlin_sdk.whitelabel.simple.viewmodel.WhiteLabelViewModel
 import com.github.paylike.sample.BuildConfig
 import com.github.paylike.sample.R
+import com.github.paylike.sample.view.ErrorCasePicker
 import com.github.paylike.sample.view.LocalePicker
 
 /** Sample application viewModel */
-@SuppressLint("RememberReturnType")
 class SampleViewModel : ViewModel() {
 
     /** Scaffold state stored for consistency between configuration changes */
@@ -47,6 +43,14 @@ class SampleViewModel : ViewModel() {
      * or [PaylikeStyleExtendableWhiteLabelComposable]
      */
     private var extenderContentNote: ExtenderFieldModel
+
+    private var paymentTestDtoEntry by
+        mutableStateOf(Pair("Unsupported card scheme", errorCases["Unsupported card scheme"]!!))
+
+    private fun onPaymentTestDtoEntryChanged(newValue: Pair<String, PaymentTestDto>) {
+        Log.d("hello", "onchanged")
+        paymentTestDtoEntry = newValue
+    }
 
     init {
         extenderContentNote =
@@ -298,13 +302,6 @@ class SampleViewModel : ViewModel() {
                         paymentData =
                             PaymentData(
                                 /** Included test object to imitate card data error */
-                                test =
-                                    PaymentTestDto(
-                                        card =
-                                            TestCardDto(
-                                                code = CardCodeOptions.INVALID,
-                                            )
-                                    ),
                                 amount =
                                     PaymentAmount(
                                         "EUR",
@@ -325,7 +322,7 @@ class SampleViewModel : ViewModel() {
                                 exampleViewModel.resetViewModelAndEngine()
 
                                 exampleViewModel.addDescriptionPaymentDataToEngine(
-                                    paymentTestData = paymentData.test,
+                                    paymentTestData = paymentTestDtoEntry.second,
                                     paymentAmount = paymentData.amount,
                                 )
                             }
@@ -337,8 +334,10 @@ class SampleViewModel : ViewModel() {
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                                     LocalePicker()
                                 }
-
-                                // TODO error selector implementation
+                                ErrorCasePicker(
+                                    errorCase = paymentTestDtoEntry,
+                                    onErrorCaseChanged = { onPaymentTestDtoEntryChanged(it) },
+                                )
 
                                 PaylikeStyleSimpleWhiteLabelComposable(
                                     modifier = Modifier.imePadding(),

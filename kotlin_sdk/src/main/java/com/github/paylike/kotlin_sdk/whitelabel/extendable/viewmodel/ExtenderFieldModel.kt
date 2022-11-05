@@ -15,8 +15,7 @@ import androidx.compose.ui.text.TextStyle
  * - optional callback function for when [extenderFieldState] changes
  *
  * - [extenderFieldComposable]
- * - Predefined paylike composable from paylike ecosystem
- * completely arbitrary
+ * - Predefined paylike composable from paylike ecosystem completely arbitrary
  */
 data class ExtenderFieldModel(
 

@@ -8,11 +8,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
 import com.github.paylike.kotlin_sdk.*
 import com.github.paylike.kotlin_sdk.whitelabel.extendable.viewmodel.ExtendableWhiteLabelViewModel
 import com.github.paylike.kotlin_sdk.whitelabel.simple.view.SimpleWhiteLabelFormComposable
-import com.github.paylike.kotlin_sdk.whitelabel.simple.viewmodel.WhiteLabelViewModel
 import kotlinx.serialization.json.JsonNull.content
 
 @Composable
