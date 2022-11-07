@@ -13,14 +13,14 @@
     <string name="TDS_FULL_SCREEN_LINK">Åben i fuld skærm.</string>
     <string name="ERROR_TIMEOUT">Betalingen kunne ikke gennemføres\nDer var et problem med forbindelsen til internettet. Vent venligst ét minut og prøv igen.</string>
     <string name="ERROR_RATE_LIMIT">Betalingen kunne ikke gennemføres\nVi modtager i øjeblikket for mange forespørgsler. Vent venligst to minutter og prøv igen.</string>
-    <string name="ERROR_UNEXPECTED">Betalingen kunne ikke gennemføres\nDer skete en uventet fejl. Prøv venligst igen lidt senere eller kontakt vores kundeservice med følgende besked: ${message}.</string>
+    <string name="ERROR_UNEXPECTED">Betalingen kunne ikke gennemføres\nDer skete en uventet fejl. Prøv venligst igen lidt senere eller kontakt vores kundeservice med følgende besked: %1$s.</string>
     <string name="ERROR_PUBLIC_KEY_IS_NOT_TEST">Betalingspopuppen er i test mode, men public key\'en tilhører en live-konto. Benyt i stedet en public key til en testkonto.</string>
     <string name="ERROR_PUBLIC_KEY_IS_TEST">Betalingspopuppen er i live mode, men public key\'en tilhører en testkonto. Benyt i stedet en public key til en live-konto.</string>
     <string name="ERROR_PUBLIC_KEY_UNKNOWN">Public key\'en der bruges tilhører ikke en Paylike konto. Opdater public key\'en og prøv igen.</string>
     <string name="ERROR_PUBLIC_KEY_PAYMENTS_NOT_ALLOWED">Public key\'en er ikke godkendt til at tage imod betalinger.</string>
     <string name="ERROR_INVALID_CARD_NUMBER">Ugyldigt kortnummer\nKontrollér venligst kortnummeret, og kontakt din bank, hvis problemet fortsætter.</string>
-    <string name="ERROR_CARD_SCHEME_UNKNOWN">Ugyldigt kortnummer eller kort-type\nKontrollér venligst kortnummeret samt at dit kort-type er en af følgende: ${supported}</string>
-    <string name="ERROR_CARD_SCHEME_UNSUPPORTED">${scheme} kort er ikke understøttet\n${scheme} kort er desværre ikke understøttet. Brug venligst et: ${supported}.</string>
+    <string name="ERROR_CARD_SCHEME_UNKNOWN">Ugyldigt kortnummer eller kort-type\nKontrollér venligst kortnummeret samt at dit kort-type er en af følgende: %1$s</string>
+    <string name="ERROR_CARD_SCHEME_UNSUPPORTED">%1$s kort er ikke understøttet\n%1$s kort er desværre ikke understøttet. Brug venligst et: %2$s.</string>
     <string name="ERROR_CARD_SECURITY_CODE_INVALID">Ugyldige kontrolcifre\nKontrollér kontrolcifrene (sikkerhedskode), som findes på bagsiden af dit kort. Kontakt din bank, hvis problemet fortsætter.</string>
     <string name="ERROR_CARD_EXPIRED">Kortet er udløbet\nDit kort er udløbet. Prøv venligst med et andet kort.</string>
     <string name="ERROR_CARD_DISABLED">Kortet er spærret\nKontakt din bank for nærmere information om årsagen.</string>

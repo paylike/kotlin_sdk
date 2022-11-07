@@ -13,14 +13,14 @@
     <string name="TDS_FULL_SCREEN_LINK">Megnyitás teljes képernyőn.</string>
     <string name="ERROR_TIMEOUT">Váratlan hiba\nLehetséges, hogy probléma lépett fel az internetkapcsolattal. Kérjük próbálja újra később.</string>
     <string name="ERROR_RATE_LIMIT">Váratlan hiba\nJelenleg az átlagnál jelentősen több tranzakció kerül feldolgozásra. Kérjük várjon néhány percet és próbálja újra.</string>
-    <string name="ERROR_UNEXPECTED">Váratlan hiba\nKérjük próbálja újra ismét vagy lépjen velünk kapcsolatba az alábbi üzenettel: ${message}.</string>
+    <string name="ERROR_UNEXPECTED">Váratlan hiba\nKérjük próbálja újra ismét vagy lépjen velünk kapcsolatba az alábbi üzenettel: %1$s.</string>
     <string name="ERROR_PUBLIC_KEY_IS_NOT_TEST">A fizetési ablak teszt módban üzemel de a megadott public key egy élő számlához tartozik. Kérjük használja egy teszt számla public key azonosítóját.</string>
     <string name="ERROR_PUBLIC_KEY_IS_TEST">A fizetési ablak élő módban üzemel de a megadott public key egy teszt számlához tartozik. Kérjük használja egy élő számla public key azonosítóját.</string>
     <string name="ERROR_PUBLIC_KEY_UNKNOWN">A megadott public key azonosítóhoz nem tartozik Paylike számla. Frissítse a public key mezőt és próbálja újra.</string>
     <string name="ERROR_PUBLIC_KEY_PAYMENTS_NOT_ALLOWED">A public key azonosítóhoz tartozó számla nincs engedélyezve tranzakciók fogadásához.</string>
     <string name="ERROR_INVALID_CARD_NUMBER">Érvénytelen kártyaszám\nKérjük ellenőrizze kártyája adatait. Ha a probléma továbbra is fennáll, kérjük lépjen kapcsolatba bankjával.</string>
-    <string name="ERROR_CARD_SCHEME_UNKNOWN">Érvénytelen kártyaszám vagy a kártya nem támogatott\nHibás kártyaszám vagy a kártya nem támogatott. Támogatott kártyák: ${supported}.</string>
-    <string name="ERROR_CARD_SCHEME_UNSUPPORTED">Nem támogatott kártya: ${scheme} \nSajnos ${scheme} által kiállított kártyákat jelenleg nem fogadunk el. Kérjük használja az itt látható szolgáltatók egyikét: ${supported}.</string>
+    <string name="ERROR_CARD_SCHEME_UNKNOWN">Érvénytelen kártyaszám vagy a kártya nem támogatott\nHibás kártyaszám vagy a kártya nem támogatott. Támogatott kártyák: %1$s.</string>
+    <string name="ERROR_CARD_SCHEME_UNSUPPORTED">Nem támogatott kártya: %1$s \nSajnos %1$s által kiállított kártyákat jelenleg nem fogadunk el. Kérjük használja az itt látható szolgáltatók egyikét: %2$s.</string>
     <string name="ERROR_CARD_SECURITY_CODE_INVALID">Hibás biztonsági kód (CVC)\nKérjük ellenőrizze biztonsági kódját (CVC), ami általában kártyája hátoldalán található. Ha a probléma továbbra is fennáll, kérjük lépjen kapcsolatba bankjával.</string>
     <string name="ERROR_CARD_EXPIRED">A kártya lejárt\nKártyája lejárt. Kérjük próbáljon meg egy másikat.</string>
     <string name="ERROR_CARD_DISABLED">A kártya korlátozva van\nA kártya korlátozva van, kérjük lépjen kapcsolatba bankjával további információért.</string>

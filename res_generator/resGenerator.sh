@@ -8,7 +8,7 @@
 
 ## create the generated files to ../kotlin_sdk/src/main/res/
 # touch ./../...
-array=('bg' 'cs' 'da' 'de' 'en' 'es' 'et' 'fi' 'fr' 'gr' 'hu' 'kl' 'nl' 'no' 'pl' 'ro' 'si' 'sk' 'sv')
+array=('bg' 'cs' 'da' 'de' 'en' 'es' 'et' 'fi' 'fr' 'el' 'hu' 'kl' 'nl' 'no' 'pl' 'ro' 'sl' 'sk' 'sv')
 for i in {1..$#array}; do mkdir "./../kotlin_sdk/src/main/res/values-$array[$i]"; done
 for i in {1..$#array}; do touch "./../kotlin_sdk/src/main/res/values-$array[$i]/strings.xml"; done
 

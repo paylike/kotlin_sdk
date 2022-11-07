@@ -13,14 +13,14 @@
     <string name="TDS_FULL_SCREEN_LINK">Otwórz na pełnym ekranie.</string>
     <string name="ERROR_TIMEOUT">Niespodziewany błąd\nPrawdopodobnie masz problemy z połączeniem internetowym. Spróbuj ponownie za jakiś czas.</string>
     <string name="ERROR_RATE_LIMIT">Niespodziewany błąd\nObsługujemy obecnie zbyt dużą ilość płatności. Spróbuj ponownie za kilka minut.</string>
-    <string name="ERROR_UNEXPECTED">Niespodziewany problem\nSpróbuj ponownie za chwilę lub napisz wiadomość do obsługi: ${message}.</string>
+    <string name="ERROR_UNEXPECTED">Niespodziewany problem\nSpróbuj ponownie za chwilę lub napisz wiadomość do obsługi: %1$s.</string>
     <string name="ERROR_PUBLIC_KEY_IS_NOT_TEST">Okno płatności jest w trybie „test”, ale podano klucz „public key” dla konta „live account”. Użyj klucza „public key” dla konta „test account”.</string>
     <string name="ERROR_PUBLIC_KEY_IS_TEST">Okno płatności jest w trybie „live”, ale podano klucz „public key” dla konta „test account”. Użyj klucza „public key” dla konta „live account”.</string>
     <string name="ERROR_PUBLIC_KEY_UNKNOWN">Podany klucz „public key” nie jest powiązany z kontem Paylike account”. Uzupełnij klucz „public key” i spróbuj ponownie.</string>
     <string name="ERROR_PUBLIC_KEY_PAYMENTS_NOT_ALLOWED">Ten klucz „public key” jest niedozwolony w celu przyjmowania płatności.</string>
     <string name="ERROR_INVALID_CARD_NUMBER">Nieprawidłowy numer karty\nProsimy sprawdzić wszystkie dane karty. Jeśli problem będzie się powtarzał, skontaktuj się ze swoim bankiem.</string>
     <string name="ERROR_CARD_SCHEME_UNKNOWN">Nieprawidłowy numer karty lub karta nie jest obsługiwana\nNumer karty jest nieprawidłowy lub typ karty nie jest obsługiwany.</string>
-    <string name="ERROR_CARD_SCHEME_UNSUPPORTED">Karty ${scheme} nie są obsługiwane\nNiestety, ale karty ${scheme} nie są obsługiwane. Użyj jednej z następujących kart: ${supported}.</string>
+    <string name="ERROR_CARD_SCHEME_UNSUPPORTED">Karty %1$s nie są obsługiwane\nNiestety, ale karty %1$s nie są obsługiwane. Użyj jednej z następujących kart: %2$s.</string>
     <string name="ERROR_CARD_SECURITY_CODE_INVALID">Nieprawidłowe CVC (kod zabezpieczający)\nProsimy sprawdzić CVC (kod zabezpieczający), zazwyczaj znajduje się on na odwrocie karty. Jeśli problem będzie się powtarzał, skontaktuj się ze swoim bankiem.</string>
     <string name="ERROR_CARD_EXPIRED">Karta straciła ważność\nTwoja karta straciła ważność. Prosimy spróbować z inną kartą.</string>
     <string name="ERROR_CARD_DISABLED">Karta została zastrzeżona\nTa karta została zastrzeżona. Skontaktuj się ze swoim bankiem, aby uzyskać dodatkowe informacje.</string>

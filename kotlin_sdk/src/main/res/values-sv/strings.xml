@@ -13,14 +13,14 @@
     <string name="TDS_FULL_SCREEN_LINK">Öppna i helskärmsläge.</string>
     <string name="ERROR_TIMEOUT">Oväntat problem\nKan det vara ett problem med din internetanslutning? Försök igen lite senare.</string>
     <string name="ERROR_RATE_LIMIT">Oväntat problem\nVi får just nu för många betalningsförfrågningar. Var god vänta några minuter innan du försöker igen.</string>
-    <string name="ERROR_UNEXPECTED">Oväntat problem\nVar god försök igen lite senare eller kontakta vår support med meddelandet: ${message}.</string>
+    <string name="ERROR_UNEXPECTED">Oväntat problem\nVar god försök igen lite senare eller kontakta vår support med meddelandet: %1$s.</string>
     <string name="ERROR_PUBLIC_KEY_IS_NOT_TEST">Popupen för betalning är i testläge, men den public key som angavs är för ett livekonto. Var god använd en public key för ett testkonto.</string>
     <string name="ERROR_PUBLIC_KEY_IS_TEST">Popupen för betalning är i liveläge, men den public key som angavs är för ett testkonto. Var god använd en public key för ett livekonto.</string>
     <string name="ERROR_PUBLIC_KEY_UNKNOWN">Den public key som angavs är inte kopplad till ett Paylike konto. Uppdatera denna public key och försök igen.</string>
     <string name="ERROR_PUBLIC_KEY_PAYMENTS_NOT_ALLOWED">Denna public key får inte acceptera betalningar.</string>
     <string name="ERROR_INVALID_CARD_NUMBER">Ogiltigt kortnummer\nVänligen kontrollera kortnumret. Kontakta din bank om problemet kvarstår.</string>
-    <string name="ERROR_CARD_SCHEME_UNKNOWN">Ogiltigt kortnummer eller stöd saknas\nKortnumret är felaktigt eller så stöds inte kortmärket. Kort som stöds: ${supported}.</string>
-    <string name="ERROR_CARD_SCHEME_UNSUPPORTED">${scheme}-kort stöds inte\n${scheme}-kort stöds tyvärr inte. Använd något av följande: ${supported}.</string>
+    <string name="ERROR_CARD_SCHEME_UNKNOWN">Ogiltigt kortnummer eller stöd saknas\nKortnumret är felaktigt eller så stöds inte kortmärket. Kort som stöds: %1$s.</string>
+    <string name="ERROR_CARD_SCHEME_UNSUPPORTED">%1$s-kort stöds inte\n%1$s-kort stöds tyvärr inte. Använd något av följande: %2$s.</string>
     <string name="ERROR_CARD_SECURITY_CODE_INVALID">Ogiltig CVC/CVV (säkerhetskod)\nKontrollera det CVC/CVV (säkerhetskod) som finns på baksidan av ditt kort. Kontakta din bank om problemet kvarstår.</string>
     <string name="ERROR_CARD_EXPIRED">Kortet har gått ut\nDitt kort är utgånget. Vänligen försök med ett annat kort.</string>
     <string name="ERROR_CARD_DISABLED">Kortet är spärrat\nDetta kort är spärrat, var god kontakta din bank för mer information.</string>

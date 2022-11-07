@@ -13,14 +13,14 @@
     <string name="TDS_FULL_SCREEN_LINK">Otvoriť na celú obrazovku.</string>
     <string name="ERROR_TIMEOUT">Neočakávaná chyba\nMôže to byť problém s internetovým pripojením? Prosím skúste znovu to o niečo neskôr.</string>
     <string name="ERROR_RATE_LIMIT">Neočakávaná chyba\nMomentálne prijímame príliš veľa žiadostí platbu. Pred opakovaním platby počkajte niekoľko minút.</string>
-    <string name="ERROR_UNEXPECTED">Neočakávaná chyba\nProsím skúste to o niečo neskôr, alebo kontaktujte našu podporu so správou: ${message}</string>
+    <string name="ERROR_UNEXPECTED">Neočakávaná chyba\nProsím skúste to o niečo neskôr, alebo kontaktujte našu podporu so správou: %1$s</string>
     <string name="ERROR_PUBLIC_KEY_IS_NOT_TEST">Platobné okno je v testovacom móde, ale použitý verejný kľúč patrí k produkčnému účtu. Prosím použite verejný kľúč patriaci k testovaciemu účtu.</string>
     <string name="ERROR_PUBLIC_KEY_IS_TEST">Platobné okno je v produkčnom móde, ale použitý verejný kľúč patrí k testovaciemu účtu. Prosím použite verejný kľúč patriaci k produkčnému účtu.</string>
     <string name="ERROR_PUBLIC_KEY_UNKNOWN">Zadaný verejný kľúč nepatrí k Paylike účtu. Zadajte správny verejný kľúč a skúste znova.</string>
     <string name="ERROR_PUBLIC_KEY_PAYMENTS_NOT_ALLOWED">Platby s verejným kľúčom nie su povolené.</string>
     <string name="ERROR_INVALID_CARD_NUMBER">Neplatné číslo karty\nProsím, skontrolujte číslo karty. Ak problém pretrváva, kontaktujte prosím svoju banku.</string>
-    <string name="ERROR_CARD_SCHEME_UNKNOWN">Neplatné číslo karty alebo nepodporovaná karta\nČíslo karty je nesprávne, alebo druh karty nie je podporovaný. Použite prosím: ${supported}.</string>
-    <string name="ERROR_CARD_SCHEME_UNSUPPORTED">${scheme} karty nie sú podporované\n${scheme} karty žiaľ nie sú podporované. Použite prosím: ${supported}.</string>
+    <string name="ERROR_CARD_SCHEME_UNKNOWN">Neplatné číslo karty alebo nepodporovaná karta\nČíslo karty je nesprávne, alebo druh karty nie je podporovaný. Použite prosím: %1$s.</string>
+    <string name="ERROR_CARD_SCHEME_UNSUPPORTED">%1$s karty nie sú podporované\n%1$s karty žiaľ nie sú podporované. Použite prosím: %2$s.</string>
     <string name="ERROR_CARD_SECURITY_CODE_INVALID">Neplatný CVC (bezpečnostný kód)\nProsím, skontrolujte si svoj CVC (bezpečnostný kód), zvyčajne ho nájdete na zadnej strane Vašej karty. Ak problém pretrváva, kontaktujte prosím svoju banku.</string>
     <string name="ERROR_CARD_EXPIRED">Vypršala platnosť karty\nVypršala platnosť Vašej karty. Prosím, vyskúšajte inú kartu.</string>
     <string name="ERROR_CARD_DISABLED">Karta je zablokovaná\nTáto karta je zablokovaná, kontaktujte prosím svoju banku pre viac informácií.</string>

@@ -26,7 +26,7 @@
     <string name="ERROR_RATE_LIMIT" tools:ignore="MissingTranslation">Unexpected issue\nWe are currently receiving too many payment requests. Please wait a few minutes before trying again.</string>
 
 <!--    paylike exception-->
-    <string name="ERROR_UNEXPECTED" tools:ignore="MissingTranslation">Unexpected problem\nPlease try again a little later or contact our support with the message: ${message}.</string>
+    <string name="ERROR_UNEXPECTED" tools:ignore="MissingTranslation">Unexpected problem\nPlease try again a little later or contact our support with the message: %1$s.</string>
 
 <!--    Integration errors-->
     <string name="ERROR_PUBLIC_KEY_IS_NOT_TEST" tools:ignore="MissingTranslation">The payment popup is in test mode, but the public key provided is for a live account. Please use a public key for a test account.</string>
@@ -36,8 +36,8 @@
 
 <!--    Card data errors-->
     <string name="ERROR_INVALID_CARD_NUMBER">Invalid card number\nPlease check the card number. If the problem persists, please contact your bank.</string>
-    <string name="ERROR_CARD_SCHEME_UNKNOWN" tools:ignore="MissingTranslation">Invalid card number or card not supported\nThe card number is incorrect or the card brand is not supported. Supported cards: ${supported}.</string>
-    <string name="ERROR_CARD_SCHEME_UNSUPPORTED" tools:ignore="MissingTranslation">${scheme} cards are not supported\n${scheme} cards are unfortunately not supported. Please use one of: ${supported}.</string>
+    <string name="ERROR_CARD_SCHEME_UNKNOWN" tools:ignore="MissingTranslation">Invalid card number or card not supported\nThe card number is incorrect or the card brand is not supported. Supported cards: %1$s.</string>
+    <string name="ERROR_CARD_SCHEME_UNSUPPORTED" tools:ignore="MissingTranslation">%1$s cards are not supported\n%1$s cards are unfortunately not supported. Please use one of: %2$s.</string>
     <string name="ERROR_CARD_SECURITY_CODE_INVALID">Invalid CVC (security code)\nPlease check the CVC (security code), typically found on the back of your card. If the problem persists, please contact your bank.</string>
     <string name="ERROR_CARD_EXPIRED">The card has expired\nYour card has expired. Please try another one.</string>
     <string name="ERROR_CARD_DISABLED">The card is blocked\nThis card is blocked, please contact your bank for further information.</string>
