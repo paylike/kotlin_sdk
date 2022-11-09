@@ -26,7 +26,7 @@ import com.github.paylike.kotlin_request.exceptions.PaylikeException
 import com.github.paylike.kotlin_request.exceptions.RateLimitException
 import com.github.paylike.kotlin_request.exceptions.ServerErrorException
 import com.github.paylike.kotlin_request.exceptions.VersionException
-import com.github.paylike.kotlin_request.exceptions.apistatuscodes.ApiCodesEnum
+import com.github.paylike.kotlin_request.exceptions.api.ApiCodes
 import com.github.paylike.kotlin_sdk.ErrorCodeToResourceStringMap
 import com.github.paylike.kotlin_sdk.R
 import com.github.paylike.kotlin_sdk.cardprovider.CardProviderDescriptionMap
@@ -51,7 +51,7 @@ fun CardProviderIcon(
         modifier = modifier,
         painter = painterResource(id = CardProviderIconMap[showedCardProviderIcon]!!),
         contentDescription =
-        stringResource(id = CardProviderDescriptionMap[showedCardProviderIcon]!!),
+            stringResource(id = CardProviderDescriptionMap[showedCardProviderIcon]!!),
         colorFilter = if (isHighlighted) null else ColorFilter.tint(Color.Gray),
     )
 }
@@ -118,12 +118,12 @@ fun LoadingSpinner(
     val strokeWidth: Dp = ProgressIndicatorDefaults.StrokeWidth
     val transition = rememberInfiniteTransition()
     val currentArcStartAngle by
-    transition.animateValue(
-        0,
-        360,
-        Int.VectorConverter,
-        infiniteRepeatable(animation = tween(durationMillis = 1100, easing = LinearEasing))
-    )
+        transition.animateValue(
+            0,
+            360,
+            Int.VectorConverter,
+            infiniteRepeatable(animation = tween(durationMillis = 1100, easing = LinearEasing))
+        )
     val stroke =
         with(LocalDensity.current) { Stroke(width = strokeWidth.toPx(), cap = StrokeCap.Square) }
     Canvas(modifier.progressSemantics().padding(strokeWidth / 2)) {
@@ -195,19 +195,20 @@ fun ErrorLog(
                 PaylikeException::class -> {
                     val pe = error.requestException as PaylikeException
                     stringResource(
-                        id =
-                        ErrorCodeToResourceStringMap[pe.code]!!,
+                        id = ErrorCodeToResourceStringMap[pe.code]!!,
                         (when (pe.code) {
-                            ApiCodesEnum.INTERNAL_ERROR -> pe.message
-                            ApiCodesEnum.PAYMENT_CARD_SCHEME_UNKNOWN -> "${SupportedCardProviders.MAESTRO.name}, ${SupportedCardProviders.MASTERCARD.name}, ${SupportedCardProviders.VISA.name}"
-                            ApiCodesEnum.PAYMENT_CARD_SCHEME_UNSUPPORTED -> "Unsupported"
+                            ApiCodes.INTERNAL_ERROR -> pe.message
+                            ApiCodes.PAYMENT_CARD_SCHEME_UNKNOWN ->
+                                "${SupportedCardProviders.MAESTRO.name}, ${SupportedCardProviders.MASTERCARD.name}, ${SupportedCardProviders.VISA.name}"
+                            ApiCodes.PAYMENT_CARD_SCHEME_UNSUPPORTED -> "Unsupported"
                             else -> ""
                         })!!,
                         when (pe.code) {
-                            ApiCodesEnum.PAYMENT_CARD_SCHEME_UNSUPPORTED -> "${SupportedCardProviders.MAESTRO.name}, ${SupportedCardProviders.MASTERCARD.name}, ${SupportedCardProviders.VISA.name}"
+                            ApiCodes.PAYMENT_CARD_SCHEME_UNSUPPORTED ->
+                                "${SupportedCardProviders.MAESTRO.name}, ${SupportedCardProviders.MASTERCARD.name}, ${SupportedCardProviders.VISA.name}"
                             else -> ""
                         },
-                        )
+                    )
                 }
                 ServerErrorException::class -> {
                     stringResource(
@@ -246,7 +247,7 @@ fun ErrorLog(
         ) {
             Text(
                 modifier =
-                Modifier.fillMaxWidth().padding(all = PaylikeTheme.paddings.defaultPadding),
+                    Modifier.fillMaxWidth().padding(all = PaylikeTheme.paddings.defaultPadding),
                 color = MaterialTheme.colors.onError,
                 text = message!!,
             )
