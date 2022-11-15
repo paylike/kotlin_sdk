@@ -1,5 +1,6 @@
 package com.github.paylike.kotlin_sdk.whitelabel.simple.viewmodel
 
+import android.util.Range
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -21,12 +22,12 @@ import com.github.paylike.kotlin_sdk.ExpiryDateField
 import com.github.paylike.kotlin_sdk.PayButton
 import com.github.paylike.kotlin_sdk.cardprovider.SupportedCardProviders
 import com.github.paylike.kotlin_sdk.cardprovider.calculateProviderFromNumber
+import java.time.YearMonth
+import java.util.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.JsonObject
-import java.time.YearMonth
-import java.util.*
 
 /**
  * Responsible to maintain the middleware functionality of the payment flow in Paylike's ecosystem
@@ -45,14 +46,14 @@ open class WhiteLabelViewModel(
     protected val engine: PaylikeEngine,
     val webView: PaylikeWebView = PaylikeWebView(engine),
     protected val onPayButton:
-    (suspend (
-        engine: PaylikeEngine,
-        cardNumber: String,
-        cvc: String,
-        expiryMonth: Int,
-        expiryYear: Int,
-        extenderFields: List<String>?
-    ) -> Unit) =
+        (suspend (
+            engine: PaylikeEngine,
+            cardNumber: String,
+            cvc: String,
+            expiryMonth: Int,
+            expiryYear: Int,
+            extenderFields: List<String>?
+        ) -> Unit) =
         { engine, cardNumber, cvc, expiryMonth, expiryYear, _ ->
             engine.addEssentialPaymentData(
                 cardNumber,
@@ -63,7 +64,7 @@ open class WhiteLabelViewModel(
         },
 ) : ViewModel(), Observer {
     /** Logic fields */
-    private var possibleCardNumberLength: Int = 16
+    private var possibleCardNumberLengthRange: Range<Int> = Range(16, 16)
     companion object {
         protected const val expiryDateLength: Int = 4
         protected const val cardVerificationCodeLength: Int = 3
@@ -139,26 +140,30 @@ open class WhiteLabelViewModel(
 
         /** Check for the actual possible provider */
         val noticedCardProvider = calculateProviderFromNumber(modulatedNewValue)
-        possibleCardNumberLength =
+        possibleCardNumberLengthRange =
             when (noticedCardProvider) {
-                SupportedCardProviders.NONE -> 16
-                SupportedCardProviders.MAESTRO -> 19
-                SupportedCardProviders.MASTERCARD -> 16
-                SupportedCardProviders.VISA -> 16
+                SupportedCardProviders.NONE -> Range(16, 16)
+                SupportedCardProviders.MAESTRO -> Range(16, 19)
+                SupportedCardProviders.MASTERCARD -> Range(16, 16)
+                SupportedCardProviders.VISA -> Range(16, 16)
             }
 
         /** Set provider to state */
         paymentFormState = paymentFormState.copy(highlightedCardProvider = noticedCardProvider)
 
         /** Trim input value based on provider */
-        if (modulatedNewValue.length > possibleCardNumberLength) {
-            modulatedNewValue = modulatedNewValue.substring(0, possibleCardNumberLength)
+        if (modulatedNewValue.length > possibleCardNumberLengthRange.upper) {
+            modulatedNewValue = modulatedNewValue.substring(0, possibleCardNumberLengthRange.upper)
         }
 
         /** Set the value and the validity flag */
         paymentFormState = paymentFormState.copy(cardNumber = modulatedNewValue)
-        if (modulatedNewValue.length > 15) {
-            setIsCardNumberValid(PaylikeLuhn.isValid(modulatedNewValue))
+        if (possibleCardNumberLengthRange.contains(modulatedNewValue.length)) {
+            if (paymentFormState.highlightedCardProvider != SupportedCardProviders.NONE) {
+                setIsCardNumberValid(PaylikeLuhn.isValid(modulatedNewValue))
+            } else {
+                setIsCardNumberValid(false)
+            }
         } else {
             setIsCardNumberValid(true)
         }
@@ -203,7 +208,8 @@ open class WhiteLabelViewModel(
     }
     protected fun isDateValid(inputMonthYear: String): Boolean {
         val rightNowYearMonth = YearMonth.now()
-        val inputYearMonth = YearMonth.parse("20${inputMonthYear.substring(2,4)}-${inputMonthYear.substring(0,2)}")
+        val inputYearMonth =
+            YearMonth.parse("20${inputMonthYear.substring(2,4)}-${inputMonthYear.substring(0,2)}")
         return inputYearMonth >= rightNowYearMonth
     }
 
@@ -262,13 +268,17 @@ open class WhiteLabelViewModel(
     protected fun canExecute(): Boolean {
         var canExecute = true
         if (
-            paymentFormState.cardNumber.length < possibleCardNumberLength ||
-            !PaylikeLuhn.isValid(paymentFormState.cardNumber)
+            !possibleCardNumberLengthRange.contains(paymentFormState.cardNumber.length) ||
+                !PaylikeLuhn.isValid(paymentFormState.cardNumber) ||
+                !paymentFormState.isCardNumberValid
         ) {
             setIsCardNumberValid(false)
             canExecute = false
         }
-        if (paymentFormState.expiryDate.length < expiryDateLength || !paymentFormState.isExpiryDateValid) {
+        if (
+            paymentFormState.expiryDate.length < expiryDateLength ||
+                !paymentFormState.isExpiryDateValid
+        ) {
             setIsExpiryDateValid(false)
             canExecute = false
         }
@@ -295,11 +305,11 @@ open class WhiteLabelViewModel(
             throw WrongTypeOfObservableListened(
                 observer = this::class.simpleName!!,
                 observable =
-                if (o != null) {
-                    o::class.simpleName!!
-                } else {
-                    "Anonymous"
-                },
+                    if (o != null) {
+                        o::class.simpleName!!
+                    } else {
+                        "Anonymous"
+                    },
             )
         }
         if (arg !is EngineState) {
@@ -318,8 +328,6 @@ open class WhiteLabelViewModel(
     }
 }
 
-
-
 fun main() {
 
     val rightNowTimeMonth = java.time.YearMonth.now()
@@ -329,5 +337,4 @@ fun main() {
     println(rightNowTimeMonth)
     println(inputYearMonth)
     println(inputYearMonth >= rightNowTimeMonth)
-
 }
