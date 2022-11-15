@@ -21,11 +21,12 @@ import com.github.paylike.kotlin_sdk.ExpiryDateField
 import com.github.paylike.kotlin_sdk.PayButton
 import com.github.paylike.kotlin_sdk.cardprovider.SupportedCardProviders
 import com.github.paylike.kotlin_sdk.cardprovider.calculateProviderFromNumber
-import java.util.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.JsonObject
+import java.time.YearMonth
+import java.util.*
 
 /**
  * Responsible to maintain the middleware functionality of the payment flow in Paylike's ecosystem
@@ -44,14 +45,14 @@ open class WhiteLabelViewModel(
     protected val engine: PaylikeEngine,
     val webView: PaylikeWebView = PaylikeWebView(engine),
     protected val onPayButton:
-        (suspend (
-            engine: PaylikeEngine,
-            cardNumber: String,
-            cvc: String,
-            expiryMonth: Int,
-            expiryYear: Int,
-            extenderFields: List<String>?
-        ) -> Unit) =
+    (suspend (
+        engine: PaylikeEngine,
+        cardNumber: String,
+        cvc: String,
+        expiryMonth: Int,
+        expiryYear: Int,
+        extenderFields: List<String>?
+    ) -> Unit) =
         { engine, cardNumber, cvc, expiryMonth, expiryYear, _ ->
             engine.addEssentialPaymentData(
                 cardNumber,
@@ -190,6 +191,9 @@ open class WhiteLabelViewModel(
         if (modulatedNewValue.length > 1) {
             val isMonthValid = (modulatedNewValue.substring(0, 2).toInt() in 1..12)
             setIsExpiryDateValid(isMonthValid)
+            if (modulatedNewValue.length == 4) {
+                setIsExpiryDateValid(isDateValid(modulatedNewValue))
+            }
         } else {
             setIsExpiryDateValid(true)
         }
@@ -197,6 +201,12 @@ open class WhiteLabelViewModel(
     protected fun setIsExpiryDateValid(newValue: Boolean) {
         paymentFormState = paymentFormState.copy(isExpiryDateValid = newValue)
     }
+    protected fun isDateValid(inputMonthYear: String): Boolean {
+        val rightNowYearMonth = YearMonth.now()
+        val inputYearMonth = YearMonth.parse("20${inputMonthYear.substring(2,4)}-${inputMonthYear.substring(0,2)}")
+        return inputYearMonth >= rightNowYearMonth
+    }
+
     /**
      * Responsible to sanitise input on [CardVerificationCodeField] and sets if CVC is acceptable
      */
@@ -252,13 +262,13 @@ open class WhiteLabelViewModel(
     protected fun canExecute(): Boolean {
         var canExecute = true
         if (
-            paymentFormState.cardNumber.length < possibleCardNumberLength &&
-                !PaylikeLuhn.isValid(paymentFormState.cardNumber)
+            paymentFormState.cardNumber.length < possibleCardNumberLength ||
+            !PaylikeLuhn.isValid(paymentFormState.cardNumber)
         ) {
             setIsCardNumberValid(false)
             canExecute = false
         }
-        if (paymentFormState.expiryDate.length < expiryDateLength) {
+        if (paymentFormState.expiryDate.length < expiryDateLength || !paymentFormState.isExpiryDateValid) {
             setIsExpiryDateValid(false)
             canExecute = false
         }
@@ -285,11 +295,11 @@ open class WhiteLabelViewModel(
             throw WrongTypeOfObservableListened(
                 observer = this::class.simpleName!!,
                 observable =
-                    if (o != null) {
-                        o::class.simpleName!!
-                    } else {
-                        "Anonymous"
-                    },
+                if (o != null) {
+                    o::class.simpleName!!
+                } else {
+                    "Anonymous"
+                },
             )
         }
         if (arg !is EngineState) {
@@ -306,4 +316,18 @@ open class WhiteLabelViewModel(
                 error = if (isError(arg)) o.error else null,
             )
     }
+}
+
+
+
+fun main() {
+
+    val rightNowTimeMonth = java.time.YearMonth.now()
+    val input = "1022"
+    val inputYearMonth = YearMonth.parse("20${input.substring(2,4)}-${input.substring(0,2)}")
+
+    println(rightNowTimeMonth)
+    println(inputYearMonth)
+    println(inputYearMonth >= rightNowTimeMonth)
+
 }
