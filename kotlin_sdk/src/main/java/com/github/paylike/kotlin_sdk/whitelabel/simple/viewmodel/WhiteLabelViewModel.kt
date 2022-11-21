@@ -46,14 +46,14 @@ open class WhiteLabelViewModel(
     protected val engine: PaylikeEngine,
     val webView: PaylikeWebView = PaylikeWebView(engine),
     protected val onPayButton:
-        (suspend (
-            engine: PaylikeEngine,
-            cardNumber: String,
-            cvc: String,
-            expiryMonth: Int,
-            expiryYear: Int,
-            extenderFields: List<String>?
-        ) -> Unit) =
+    (suspend (
+        engine: PaylikeEngine,
+        cardNumber: String,
+        cvc: String,
+        expiryMonth: Int,
+        expiryYear: Int,
+        extenderFields: List<String>?
+    ) -> Unit) =
         { engine, cardNumber, cvc, expiryMonth, expiryYear, _ ->
             engine.addEssentialPaymentData(
                 cardNumber,
@@ -269,15 +269,15 @@ open class WhiteLabelViewModel(
         var canExecute = true
         if (
             !possibleCardNumberLengthRange.contains(paymentFormState.cardNumber.length) ||
-                !PaylikeLuhn.isValid(paymentFormState.cardNumber) ||
-                !paymentFormState.isCardNumberValid
+            !PaylikeLuhn.isValid(paymentFormState.cardNumber) ||
+            !paymentFormState.isCardNumberValid
         ) {
             setIsCardNumberValid(false)
             canExecute = false
         }
         if (
             paymentFormState.expiryDate.length < expiryDateLength ||
-                !paymentFormState.isExpiryDateValid
+            !paymentFormState.isExpiryDateValid
         ) {
             setIsExpiryDateValid(false)
             canExecute = false
@@ -305,11 +305,11 @@ open class WhiteLabelViewModel(
             throw WrongTypeOfObservableListened(
                 observer = this::class.simpleName!!,
                 observable =
-                    if (o != null) {
-                        o::class.simpleName!!
-                    } else {
-                        "Anonymous"
-                    },
+                if (o != null) {
+                    o::class.simpleName!!
+                } else {
+                    "Anonymous"
+                },
             )
         }
         if (arg !is EngineState) {
@@ -326,15 +326,4 @@ open class WhiteLabelViewModel(
                 error = if (isError(arg)) o.error else null,
             )
     }
-}
-
-fun main() {
-
-    val rightNowTimeMonth = java.time.YearMonth.now()
-    val input = "1022"
-    val inputYearMonth = YearMonth.parse("20${input.substring(2,4)}-${input.substring(0,2)}")
-
-    println(rightNowTimeMonth)
-    println(inputYearMonth)
-    println(inputYearMonth >= rightNowTimeMonth)
 }
