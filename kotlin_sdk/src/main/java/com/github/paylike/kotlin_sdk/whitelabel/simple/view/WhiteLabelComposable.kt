@@ -1,13 +1,15 @@
 package com.github.paylike.kotlin_sdk.whitelabel.simple.view
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusManager
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import com.github.paylike.kotlin_sdk.*
 import com.github.paylike.kotlin_sdk.whitelabel.simple.viewmodel.WhiteLabelViewModel
@@ -34,38 +36,43 @@ fun WhiteLabelComposable(
      */
     val webView = remember { mutableStateOf(viewModel.webView) }
 
+    /**
+     * Manages the focus changes through the input fields
+     */
+    val focusManager = LocalFocusManager.current
+
     /** Wrapped in predefined theme */
     theme {
-        Surface(modifier = modifier, color = MaterialTheme.colors.background) {
-            /** Wraps every field */
-            Column(
-                modifier = Modifier,
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
+        /** Wraps every field */
+        Column(
+            modifier = modifier.background(color = MaterialTheme.colors.background),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+
+            /** WebView to help TDS flow */
+            webView.value.WebViewComposable(modifier = Modifier.fillMaxWidth(1f).height(200.dp))
+            /** Form that contains the fields */
+            SimpleWhiteLabelFormComposable(
+                modifier = Modifier.fillMaxWidth(),
+                viewModel = viewModel,
+                focusManager = focusManager,
+            )
+
+            /** Pay button */
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceAround
             ) {
-
-                /** WebView to help TDS flow */
-                webView.value.WebViewComposable(modifier = Modifier.fillMaxWidth(1f).height(200.dp))
-                /** Form that contains the fields */
-                SimpleWhiteLabelFormComposable(
-                    modifier = Modifier.fillMaxWidth(),
-                    viewModel = viewModel,
+                PayButton(
+                    modifier = Modifier,
+                    onClick = { viewModel.onPayButtonClick() },
+                    isVisible =
+                        viewModel.paymentFormState.isInitialState &&
+                            !viewModel.paymentFormState.isPaymentFlowInitiated,
+                    focusManager = focusManager,
                 )
-
-                /** Pay button */
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceAround
-                ) {
-                    PayButton(
-                        modifier = Modifier,
-                        onClick = { viewModel.onPayButtonClick() },
-                        isVisible =
-                            viewModel.paymentFormState.isInitialState &&
-                                !viewModel.paymentFormState.isPaymentFlowInitiated,
-                    )
-                }
             }
         }
     }
@@ -88,6 +95,7 @@ fun WhiteLabelComposable(
 fun SimpleWhiteLabelFormComposable(
     modifier: Modifier = Modifier,
     viewModel: WhiteLabelViewModel,
+    focusManager: FocusManager,
 ) {
     Column(
         modifier = modifier,
@@ -106,7 +114,8 @@ fun SimpleWhiteLabelFormComposable(
                 isValid = viewModel.paymentFormState.isCardNumberValid,
                 isEnabled = viewModel.paymentFormState.isInitialState,
                 onValueChanged = { viewModel.onCardNumberChanged(it) },
-                highlightedCardProvider = viewModel.paymentFormState.highlightedCardProvider
+                highlightedCardProvider = viewModel.paymentFormState.highlightedCardProvider,
+                focusManager = focusManager,
             )
         }
 
@@ -122,6 +131,7 @@ fun SimpleWhiteLabelFormComposable(
                 isValid = viewModel.paymentFormState.isExpiryDateValid,
                 isEnabled = viewModel.paymentFormState.isInitialState,
                 onValueChanged = { viewModel.onExpiryDateChanged(it) },
+                focusManager = focusManager,
             )
             CardVerificationCodeField(
                 modifier = Modifier,
@@ -129,6 +139,7 @@ fun SimpleWhiteLabelFormComposable(
                 isValid = viewModel.paymentFormState.isCardVerificationCodeValid,
                 isEnabled = viewModel.paymentFormState.isInitialState,
                 onValueChanged = { viewModel.onCardVerificationCodeChanged(it) },
+                focusManager = focusManager,
             )
         }
     }
