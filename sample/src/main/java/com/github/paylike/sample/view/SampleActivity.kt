@@ -31,7 +31,6 @@ import com.github.paylike.kotlin_sdk.theme.PaylikeTheme
 import com.github.paylike.sample.R
 import com.github.paylike.sample.viewmodel.SampleViewModel
 import com.github.paylike.sample.viewmodel.SdkExampleModel
-import java.util.*
 
 /** Example application single activity */
 class SampleActivity : ComponentActivity() {
@@ -41,7 +40,7 @@ class SampleActivity : ComponentActivity() {
 
         /** Disables the default action bar and default padding values */
         actionBar?.hide()
-        WindowCompat.setDecorFitsSystemWindows(window, false)
+        WindowCompat.setDecorFitsSystemWindows(window, true)
 
         /** Sample VM to manage sample application states and predefined example data */
         val model: SampleViewModel by viewModels()
@@ -71,7 +70,7 @@ fun SampleAppComposable(
                 topBar = { TopBarContentComposable() },
                 content = { padding ->
                     NavHost(
-                        modifier = Modifier.systemBarsPadding().padding(padding),
+                        modifier = Modifier.padding(padding),
                         navController = navController,
                         startDestination = viewModel.rootRoute,
                     ) {
@@ -84,22 +83,33 @@ fun SampleAppComposable(
                         }
                         viewModel.sdkExampleModelMap.forEach { (keyAsRoute, model) ->
                             composable(keyAsRoute) {
-                                Column(verticalArrangement = Arrangement.Top) {
+                                Scaffold(
                                     /** To show the title of the example */
-                                    Text(
-                                        modifier =
-                                            Modifier.fillMaxWidth()
-                                                .fillMaxHeight(0.1f)
-                                                .padding(PaylikeTheme.paddings.smallPadding),
-                                        text = LocalContext.current.getString(model.titleId),
-                                        style = PaylikeTheme.typography.h6,
-                                        textAlign = TextAlign.Center,
-                                    )
+                                    topBar = {
+                                        Text(
+                                            modifier =
+                                                Modifier.fillMaxWidth()
+                                                    .padding(PaylikeTheme.paddings.smallPadding),
+                                            text = LocalContext.current.getString(model.titleId),
+                                            style = PaylikeTheme.typography.h6,
+                                            textAlign = TextAlign.Center,
+                                        )
+                                    },
+                                ) { padding ->
                                     /** Form composable */
-                                    model.exampleComposable.invoke(
-                                        model.exampleViewModel,
-                                        model.paymentData
-                                    )
+                                    Column(
+                                        modifier =
+                                            Modifier.fillMaxSize()
+                                                .verticalScroll(rememberScrollState(), true)
+                                                .imePadding()
+                                                .padding(padding),
+                                        verticalArrangement = Arrangement.Center,
+                                    ) {
+                                        model.exampleComposable.invoke(
+                                            model.exampleViewModel,
+                                            model.paymentData
+                                        )
+                                    }
                                 }
                             }
                         }
@@ -252,9 +262,7 @@ fun ExampleCard(
                                 onClick = {
                                     navController.navigate(
                                         route = route,
-                                        //                                        navOptions =
-                                        // NavOptions(),
-                                        )
+                                    )
                                 },
                             ) {
                                 Text(

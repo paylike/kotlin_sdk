@@ -5,7 +5,6 @@ import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModel
 import com.github.paylike.kotlin_client.domain.dto.payment.request.PaymentData
@@ -108,7 +107,7 @@ class SampleViewModel : ViewModel() {
                                 )
                             }
                             WhiteLabelComposable(
-                                modifier = Modifier.imePadding().fillMaxSize(),
+                                modifier = Modifier,
                                 viewModel = exampleViewModel,
                             )
                         },
@@ -172,7 +171,7 @@ class SampleViewModel : ViewModel() {
                                 )
                             }
                             ExtendableWhiteLabelComposable(
-                                modifier = Modifier.imePadding().fillMaxSize(),
+                                modifier = Modifier,
                                 viewModel = exampleViewModel as ExtendableWhiteLabelViewModel,
                             )
                         },
@@ -217,7 +216,7 @@ class SampleViewModel : ViewModel() {
                                 )
                             }
                             PaylikeStyleSimpleWhiteLabelComposable(
-                                modifier = Modifier.imePadding().fillMaxSize(),
+                                modifier = Modifier,
                                 viewModel = exampleViewModel,
                             )
                         },
@@ -282,7 +281,7 @@ class SampleViewModel : ViewModel() {
                                 )
                             }
                             PaylikeStyleExtendableWhiteLabelComposable(
-                                modifier = Modifier.imePadding().fillMaxSize(),
+                                modifier = Modifier,
                                 viewModel = exampleViewModel as ExtendableWhiteLabelViewModel,
                             )
                         },
@@ -320,30 +319,22 @@ class SampleViewModel : ViewModel() {
                         exampleComposable = { exampleViewModel, paymentData ->
                             SideEffect {
                                 exampleViewModel.resetViewModelAndEngine()
-
                                 exampleViewModel.addDescriptionPaymentDataToEngine(
                                     paymentTestData = paymentTestDtoEntry.second,
                                     paymentAmount = paymentData.amount,
                                 )
                             }
-                            Column(
-                                modifier = Modifier.fillMaxSize().imePadding(),
-                                verticalArrangement = Arrangement.Center,
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                            ) {
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                                    LocalePicker()
-                                }
-                                ErrorCasePicker(
-                                    errorCase = paymentTestDtoEntry,
-                                    onErrorCaseChanged = { onPaymentTestDtoEntryChanged(it) },
-                                )
-
-                                PaylikeStyleSimpleWhiteLabelComposable(
-                                    modifier = Modifier.imePadding(),
-                                    viewModel = exampleViewModel,
-                                )
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                                LocalePicker()
                             }
+                            ErrorCasePicker(
+                                errorCase = paymentTestDtoEntry,
+                                onErrorCaseChanged = { onPaymentTestDtoEntryChanged(it) },
+                            )
+                            PaylikeStyleSimpleWhiteLabelComposable(
+                                modifier = Modifier,
+                                viewModel = exampleViewModel,
+                            )
                         },
                     )
                 ),
