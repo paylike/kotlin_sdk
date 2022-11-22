@@ -1,5 +1,6 @@
 package com.github.paylike.kotlin_sdk.whitelabel.simple.viewmodel
 
+import android.speech.tts.TextToSpeech.Engine
 import android.util.Range
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -296,6 +297,21 @@ open class WhiteLabelViewModel(
     protected fun isError(state: EngineState): Boolean = state == EngineState.ERROR
 
     /**
+     * Overrideable callback events called on engine state changes
+     *
+     * [onWaitingForInput] - Not called on the initialization of the engine, only if it is reset
+     *
+     * [onWebViewChallengeStarted], [onWebViewChallengeUserInputRequired] - transient state, possibility to hook the flow and implement additional functionality
+     *
+     * [onSuccess], [onError] - these are the possible final states of the engine, possibility to hook the end of the flow depending on the result
+     */
+    protected open fun onWaitingForInput() {}
+    protected open fun onWebViewChallengeStarted() {}
+    protected open fun onWebViewChallengeUserInputRequired() {}
+    protected open fun onSuccess() {}
+    protected open fun onError() {}
+
+    /**
      * Check if we listen to the right object, receive the right argument and update UI state based
      * on [EngineState].
      */
@@ -325,5 +341,16 @@ open class WhiteLabelViewModel(
                 isPaymentFlowInitiated = !(isInitialState(arg) || isSuccess(arg) || isError(arg)),
                 error = if (isError(arg)) o.error else null,
             )
+
+        /**
+         * Calls overrideable callback functions on given event
+         */
+        when (arg) {
+            EngineState.WAITING_FOR_INPUT -> onWaitingForInput()
+            EngineState.WEBVIEW_CHALLENGE_STARTED -> onWebViewChallengeStarted()
+            EngineState.WEBVIEW_CHALLENGE_USER_INPUT_REQUIRED -> onWebViewChallengeUserInputRequired()
+            EngineState.SUCCESS -> onSuccess()
+            EngineState.ERROR -> onError()
+        }
     }
 }
