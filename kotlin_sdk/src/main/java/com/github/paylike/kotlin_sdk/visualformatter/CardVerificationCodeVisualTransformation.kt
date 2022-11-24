@@ -10,8 +10,6 @@ import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 
-/**
- */
 class CardVerificationCodeVisualTransformation(
     private val mask: Char = '\u2022',
     private val validColor: Color,

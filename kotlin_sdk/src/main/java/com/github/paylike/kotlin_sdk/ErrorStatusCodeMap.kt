@@ -2,8 +2,6 @@ package com.github.paylike.kotlin_sdk
 
 import com.github.paylike.kotlin_request.exceptions.api.ApiCodes
 
-/**
- */
 val ErrorCodeToResourceStringMap: Map<ApiCodes, Int> =
     mapOf(
         /** Internal and network errors */

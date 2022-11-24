@@ -20,10 +20,6 @@ internal val PaylikeDarkColorPalette =
         secondary = PaylikeDarkRed,
         secondaryVariant = PaylikeRed,
         onSecondary = Color.White,
-        //        surface = Color.Black,
-        //        onSurface = Color.White,
-        //        background = Color.Black,
-        //        onBackground = Color.White,
         error = PaylikeErrorRed,
         onError = Color.White,
     )
@@ -36,10 +32,6 @@ internal val PaylikeLightColorPalette =
         secondary = PaylikeLightRed,
         secondaryVariant = PaylikeRed,
         onSecondary = Color.Black,
-        //        surface = Color.White,
-        //        onSurface = Color.Black,
-        //        background = Color.White,
-        //        onBackground = Color.Black,
         error = PaylikeErrorRed,
         onError = Color.White,
     )

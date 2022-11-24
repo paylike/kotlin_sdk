@@ -9,8 +9,6 @@ import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 
-/**
- */
 class ExpirationDateVisualTransformation(
     private val validColor: Color,
     private val invalidColor: Color,
@@ -64,8 +62,6 @@ class ExpirationDateVisualTransformation(
             )
         )
 
-        /**
-         */
         val offsetMapping =
             object : OffsetMapping {
                 override fun originalToTransformed(offset: Int): Int {
@@ -81,8 +77,6 @@ class ExpirationDateVisualTransformation(
                 }
             }
 
-        /**
-         */
         return TransformedText(finalText, offsetMapping)
     }
 }

@@ -9,8 +9,6 @@ import androidx.compose.ui.text.style.TextAlign
 import com.github.paylike.kotlin_sdk.cardprovider.SupportedCardProviders
 import com.github.paylike.kotlin_sdk.cardprovider.calculateProviderFromNumber
 
-/**
- */
 class CardNumberVisualTransformation(
     private val validColor: Color,
     private val invalidColor: Color,
@@ -70,8 +68,6 @@ class CardNumberVisualTransformation(
             )
         )
 
-        /**
-         */
         val offsetMapping =
             object : OffsetMapping {
                 override fun originalToTransformed(offset: Int): Int {
@@ -91,8 +87,6 @@ class CardNumberVisualTransformation(
                 }
             }
 
-        /**
-         */
         return TransformedText(finalText, offsetMapping)
     }
 }

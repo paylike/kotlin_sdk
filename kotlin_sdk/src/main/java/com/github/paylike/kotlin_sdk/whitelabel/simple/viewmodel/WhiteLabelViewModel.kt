@@ -1,6 +1,5 @@
 package com.github.paylike.kotlin_sdk.whitelabel.simple.viewmodel
 
-import android.speech.tts.TextToSpeech.Engine
 import android.util.Range
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -47,16 +46,16 @@ open class WhiteLabelViewModel(
     protected val engine: PaylikeEngine,
     val webView: PaylikeWebView = PaylikeWebView(engine),
     protected val onPayButton:
-    (suspend (
-        engine: PaylikeEngine,
-        cardNumber: String,
-        cvc: String,
-        expiryMonth: Int,
-        expiryYear: Int,
-        extenderFields: List<String>?
-    ) -> Unit) =
-        { engine, cardNumber, cvc, expiryMonth, expiryYear, _ ->
-            engine.addEssentialPaymentData(
+        (suspend (
+            paylikeEngine: PaylikeEngine,
+            cardNumber: String,
+            cvc: String,
+            expiryMonth: Int,
+            expiryYear: Int,
+            extenderFields: List<String>?
+        ) -> Unit) =
+        { paylikeEngine, cardNumber, cvc, expiryMonth, expiryYear, _ ->
+            paylikeEngine.addEssentialPaymentData(
                 cardNumber,
                 cvc,
                 expiryMonth,
@@ -270,15 +269,15 @@ open class WhiteLabelViewModel(
         var canExecute = true
         if (
             !possibleCardNumberLengthRange.contains(paymentFormState.cardNumber.length) ||
-            !PaylikeLuhn.isValid(paymentFormState.cardNumber) ||
-            !paymentFormState.isCardNumberValid
+                !PaylikeLuhn.isValid(paymentFormState.cardNumber) ||
+                !paymentFormState.isCardNumberValid
         ) {
             setIsCardNumberValid(false)
             canExecute = false
         }
         if (
             paymentFormState.expiryDate.length < expiryDateLength ||
-            !paymentFormState.isExpiryDateValid
+                !paymentFormState.isExpiryDateValid
         ) {
             setIsExpiryDateValid(false)
             canExecute = false
@@ -299,11 +298,15 @@ open class WhiteLabelViewModel(
     /**
      * Overrideable callback events called on engine state changes
      *
-     * [onWaitingForInput] - Not called on the initialization of the engine, only if it is reset
+     * [onWaitingForInput]
+     * - Not called on the initialization of the engine, only if it is reset
      *
-     * [onWebViewChallengeStarted], [onWebViewChallengeUserInputRequired] - transient state, possibility to hook the flow and implement additional functionality
+     * [onWebViewChallengeStarted], [onWebViewChallengeUserInputRequired]
+     * - transient state, possibility to hook the flow and implement additional functionality
      *
-     * [onSuccess], [onError] - these are the possible final states of the engine, possibility to hook the end of the flow depending on the result
+     * [onSuccess], [onError]
+     * - these are the possible final states of the engine, possibility to hook the end of the flow
+     * depending on the result
      */
     protected open fun onWaitingForInput() {}
     protected open fun onWebViewChallengeStarted() {}
@@ -321,11 +324,11 @@ open class WhiteLabelViewModel(
             throw WrongTypeOfObservableListened(
                 observer = this::class.simpleName!!,
                 observable =
-                if (o != null) {
-                    o::class.simpleName!!
-                } else {
-                    "Anonymous"
-                },
+                    if (o != null) {
+                        o::class.simpleName!!
+                    } else {
+                        "Anonymous"
+                    },
             )
         }
         if (arg !is EngineState) {
@@ -342,13 +345,12 @@ open class WhiteLabelViewModel(
                 error = if (isError(arg)) o.error else null,
             )
 
-        /**
-         * Calls overrideable callback functions on given event
-         */
+        /** Calls overrideable callback functions on given event */
         when (arg) {
             EngineState.WAITING_FOR_INPUT -> onWaitingForInput()
             EngineState.WEBVIEW_CHALLENGE_STARTED -> onWebViewChallengeStarted()
-            EngineState.WEBVIEW_CHALLENGE_USER_INPUT_REQUIRED -> onWebViewChallengeUserInputRequired()
+            EngineState.WEBVIEW_CHALLENGE_USER_INPUT_REQUIRED ->
+                onWebViewChallengeUserInputRequired()
             EngineState.SUCCESS -> onSuccess()
             EngineState.ERROR -> onError()
         }

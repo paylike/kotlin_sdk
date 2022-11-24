@@ -21,8 +21,6 @@ import com.github.paylike.kotlin_sdk.visualformatter.CardNumberVisualTransformat
 import com.github.paylike.kotlin_sdk.visualformatter.CardVerificationCodeVisualTransformation
 import com.github.paylike.kotlin_sdk.visualformatter.ExpirationDateVisualTransformation
 
-/**
- */
 @Composable
 fun CardNumberField(
     modifier: Modifier = Modifier,
@@ -73,8 +71,6 @@ fun CardNumberField(
     )
 }
 
-/**
- */
 @Composable
 fun ExpiryDateField(
     modifier: Modifier = Modifier,
@@ -115,8 +111,6 @@ fun ExpiryDateField(
     )
 }
 
-/**
- */
 @Composable
 fun CardVerificationCodeField(
     modifier: Modifier = Modifier,
@@ -156,8 +150,6 @@ fun CardVerificationCodeField(
     )
 }
 
-/**
- */
 @Composable
 fun NoteField(
     modifier: Modifier = Modifier,
@@ -198,8 +190,6 @@ fun NoteField(
     )
 }
 
-/**
- */
 @Composable
 fun PayButton(
     modifier: Modifier = Modifier,

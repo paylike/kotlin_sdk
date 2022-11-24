@@ -41,8 +41,7 @@ fun PaylikeTheme(
 }
 
 /** Created based on [MaterialTheme] object */
-object PaylikeTheme /* : MaterialTheme*/ { // TODO find out how to inherit [MaterialTheme]
-    // the way we supposed to
+object PaylikeTheme {
     val colors: Colors
         @Composable @ReadOnlyComposable get() = MaterialTheme.colors
 

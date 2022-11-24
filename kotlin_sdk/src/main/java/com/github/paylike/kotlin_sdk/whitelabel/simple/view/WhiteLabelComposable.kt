@@ -36,9 +36,7 @@ fun WhiteLabelComposable(
      */
     val webView = remember { mutableStateOf(viewModel.webView) }
 
-    /**
-     * Manages the focus changes through the input fields
-     */
+    /** Manages the focus changes through the input fields */
     val focusManager = LocalFocusManager.current
 
     /** Wrapped in predefined theme */

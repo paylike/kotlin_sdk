@@ -35,9 +35,7 @@ fun ExtendableWhiteLabelComposable(
      */
     val webView = remember { mutableStateOf(viewModel.webView) }
 
-    /**
-     * Manages the focus changes through the input fields
-     */
+    /** Manages the focus changes through the input fields */
     val focusManager = LocalFocusManager.current
 
     /** Wrapped in predefined theme */
@@ -51,7 +49,7 @@ fun ExtendableWhiteLabelComposable(
             /** WebView to help TDS flow */
             webView.value.WebViewComposable(modifier = Modifier.fillMaxWidth(1f).height(200.dp))
 
-            /** Previous */
+            /** Extender fields */
             if (viewModel.extenderPaymentFormStateList.isNotEmpty()) {
                 viewModel.extenderPaymentFormStateList.forEach { extenderField ->
                     extenderField.extenderFieldComposable.invoke(
@@ -75,8 +73,6 @@ fun ExtendableWhiteLabelComposable(
                 viewModel = viewModel,
                 focusManager = focusManager,
             )
-
-            /** Latter */
 
             /** Pay button */
             Row(

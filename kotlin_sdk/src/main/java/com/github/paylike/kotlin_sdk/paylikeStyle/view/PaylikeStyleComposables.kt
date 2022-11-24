@@ -39,8 +39,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-/**
- */
+/** Single Image that shows a given icon */
 @Composable
 fun CardProviderIcon(
     modifier: Modifier = Modifier,
@@ -56,8 +55,7 @@ fun CardProviderIcon(
     )
 }
 
-/**
- */
+/** Three supported card provider icon with highlighting function */
 @Composable
 fun CardProviderIcons(
     modifier: Modifier = Modifier,
@@ -86,6 +84,7 @@ fun CardProviderIcons(
     }
 }
 
+/** Paylike style localized label with Paylike logo */
 @Composable
 fun SecurePaymentLabel(
     modifier: Modifier = Modifier,
@@ -109,6 +108,7 @@ fun SecurePaymentLabel(
     }
 }
 
+/** Paylike style loading indicator spinner animation */
 @Composable
 fun LoadingSpinner(
     modifier: Modifier = Modifier,
@@ -144,6 +144,7 @@ fun LoadingSpinner(
     }
 }
 
+/** Paylike style success animation */
 @Composable
 fun SuccessAnimation(
     modifier: Modifier = Modifier,
@@ -184,6 +185,7 @@ fun SuccessAnimation(
     }
 }
 
+/** Localised error log which adapts to the received error type */
 @Composable
 fun ErrorLog(
     modifier: Modifier,

@@ -17,15 +17,15 @@ class ExtendableWhiteLabelViewModel(
     extenderFieldList: MutableList<ExtenderFieldModel> = mutableListOf(),
     onExtendedPayButton:
         (suspend (
-            engine: PaylikeEngine,
+            paylikeEngine: PaylikeEngine,
             cardNumber: String,
             cvc: String,
             expiryMonth: Int,
             expiryYear: Int,
             extenderFields: List<String>?
         ) -> Unit) =
-        { engine, cardNumber, cvc, expiryMonth, expiryYear, extenderFields ->
-            engine.addEssentialPaymentData(
+        { paylikeEngine, cardNumber, cvc, expiryMonth, expiryYear, _ ->
+            paylikeEngine.addEssentialPaymentData(
                 cardNumber,
                 cvc,
                 expiryMonth,
