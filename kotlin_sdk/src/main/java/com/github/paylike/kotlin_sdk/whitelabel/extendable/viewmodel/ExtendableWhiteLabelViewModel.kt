@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import com.github.paylike.kotlin_client.domain.dto.payment.request.card.PaylikeCardDto
 import com.github.paylike.kotlin_engine.view.PaylikeWebView
 import com.github.paylike.kotlin_engine.viewmodel.PaylikeEngine
+import com.github.paylike.kotlin_sdk.whitelabel.simple.viewmodel.EngineStateChangesDelegate
 import com.github.paylike.kotlin_sdk.whitelabel.simple.viewmodel.WhiteLabelViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -32,11 +33,13 @@ class ExtendableWhiteLabelViewModel(
                 expiryYear,
             )
         },
+    onUpdateDelegate: EngineStateChangesDelegate = object : EngineStateChangesDelegate {},
 ) :
     WhiteLabelViewModel(
         engine = engine,
         webView = webView,
         onPayButton = onExtendedPayButton,
+        onUpdateDelegate = onUpdateDelegate,
     ) {
 
     /** Variable UI states */

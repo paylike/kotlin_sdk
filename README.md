@@ -71,9 +71,9 @@ dependencyResolutionManagement {
         maven {
             url 'https://jitpack.io'
         }
-        
+
         // or
-        
+
         mavenCentral()
     }
 }
@@ -99,7 +99,7 @@ android {
     // See:
     // * https://paylike.io/platforms/integration
     // * https://github.com/paylike/api-docs#getting-an-api-key
-    
+
     // def PaylikeMerchantApiKey = "loadingApiKeyFromEnv"
     // ...
 
@@ -537,7 +537,35 @@ Possible states:
 * SUCCESS and
 * ERROR.
 
-Every state has a callback defined with empty body.
+Delegation interface to define the state change callbacks.
+```kotlin
+interface EngineStateChangesDelegate {
+    fun onWaitingForInput(arg: Any? = null)
+    fun onWebViewChallengeStarted(arg: Any? = null)
+    fun onWebViewChallengeUserInputRequired(arg: Any? = null)
+    fun onSuccess(arg: Any? = null)
+    fun onError(arg: Any? = null)
+}
+
+```
+
+This interface can be implemented and added as a parameter to the viewModel. There is a default implementation with empty function bodies.
+```kotlin
+open class WhiteLabelViewModel(
+    // ...
+    val onUpdateDelegate: EngineStateChangesDelegate =
+        object : EngineStateChangesDelegate {
+            override fun onWaitingForInput(arg: Any?) {}
+            override fun onWebViewChallengeStarted(arg: Any?) {}
+            override fun onWebViewChallengeUserInputRequired(arg: Any?) {}
+            override fun onSuccess(arg: Any?) {}
+            override fun onError(arg: Any?) {}
+        },
+) : ViewModel(), Observer {
+    // ...
+}
+
+```
 
 These callback are called when the engine emits a state change
 ```kotlin
@@ -549,26 +577,29 @@ update(observable, currentState) {
     // ...
 
     when (currentState) {
-        EngineState.WAITING_FOR_INPUT -> onWaitingForInput()
-        EngineState.WEBVIEW_CHALLENGE_STARTED -> onWebViewChallengeStarted()
-        EngineState.WEBVIEW_CHALLENGE_USER_INPUT_REQUIRED -> onWebViewChallengeUserInputRequired()
-        EngineState.SUCCESS -> onSuccess()
-        EngineState.ERROR -> onError()
+        EngineState.WAITING_FOR_INPUT -> onUpdateDelegate.onWaitingForInput()
+        EngineState.WEBVIEW_CHALLENGE_STARTED -> onUpdateDelegate.onWebViewChallengeStarted()
+        EngineState.WEBVIEW_CHALLENGE_USER_INPUT_REQUIRED -> onUpdateDelegate.onWebViewChallengeUserInputRequired()
+        EngineState.SUCCESS -> onUpdateDelegate.onSuccess()
+        EngineState.ERROR -> onUpdateDelegate.onError()
     }
 }
 ```
 function.
 
-Example to override event callback:
+Example to override one event callback:
 ```kotlin
-
-class myViewModel(engine: PaylikeEngine) : WhiteLabelViewModel(engine) {
-
-    override fun onWebViewChallengeUserInputRequired() {
-        super.onWebViewChallengeUserInputRequired()
-        Log.d("State change", "We need User input on TDS!")
-    }
-}
+val exampleViewModel = WhiteLabelViewModel(
+    engine = PaylikeEngine(
+        merchantId = BuildConfig.PaylikeMerchantApiKey, // Your OWN merchant key, highly recommended to store it in obfuscated environmental variable and not hardcode it to codebase. Can be obtained from Paylike.
+        apiMode = ApiMode.TEST, // For test purposes
+    ),
+    onUpdateDelegate = object : EngineStateChangesDelegate {
+        override fun onWebViewChallengeUserInputRequired(arg: Any? = null) {
+            Log.d("State change", "We need User input on TDS!")
+        }
+    },
+)
 ```
 
 ## Details

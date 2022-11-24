@@ -62,6 +62,7 @@ open class WhiteLabelViewModel(
                 expiryYear,
             )
         },
+    val onUpdateDelegate: EngineStateChangesDelegate = object : EngineStateChangesDelegate {},
 ) : ViewModel(), Observer {
     /** Logic fields */
     private var possibleCardNumberLengthRange: Range<Int> = Range(16, 16)
@@ -308,11 +309,6 @@ open class WhiteLabelViewModel(
      * - these are the possible final states of the engine, possibility to hook the end of the flow
      * depending on the result
      */
-    protected open fun onWaitingForInput() {}
-    protected open fun onWebViewChallengeStarted() {}
-    protected open fun onWebViewChallengeUserInputRequired() {}
-    protected open fun onSuccess() {}
-    protected open fun onError() {}
 
     /**
      * Check if we listen to the right object, receive the right argument and update UI state based
@@ -347,12 +343,12 @@ open class WhiteLabelViewModel(
 
         /** Calls overrideable callback functions on given event */
         when (arg) {
-            EngineState.WAITING_FOR_INPUT -> onWaitingForInput()
-            EngineState.WEBVIEW_CHALLENGE_STARTED -> onWebViewChallengeStarted()
+            EngineState.WAITING_FOR_INPUT -> onUpdateDelegate.onWaitingForInput()
+            EngineState.WEBVIEW_CHALLENGE_STARTED -> onUpdateDelegate.onWebViewChallengeStarted()
             EngineState.WEBVIEW_CHALLENGE_USER_INPUT_REQUIRED ->
-                onWebViewChallengeUserInputRequired()
-            EngineState.SUCCESS -> onSuccess()
-            EngineState.ERROR -> onError()
+                onUpdateDelegate.onWebViewChallengeUserInputRequired()
+            EngineState.SUCCESS -> onUpdateDelegate.onSuccess()
+            EngineState.ERROR -> onUpdateDelegate.onError()
         }
     }
 }
