@@ -11,27 +11,29 @@ If you are looking for our core elements required to implement payment flow towa
 
 ## Table of Contents
 ---
-* [Table of Contents](#-table-of-contents)
-* [General Info](#general-info)
-    * [Purpose of this library](#purpose-of-this-library)
-    * [Used Android API level and Technologies](#used-android-api-level-and-technologies)
-    * [Paylike API Reference](#paylike-api-reference)
-* [Usage](#usage)
-* [TL;DR](#tldr)
-* [Forms](#forms)
-    * [Simple Forms](#simple-forms)
-        * [Simple White Label Form](#simple-white-label-form)
-        * [Simple Paylike Style Form](#simple-paylike-style-form)
-    * [Extendable Forms](#extendable-forms)
-        * [Extendable White Label Form](#extendable-white-label-form)
-        * [Extendable Paylike Style Form](#extendable-paylike-style-form)
-* [Custom Implementation](#custom-implementation)
-    * [Custom Theming](#custom-theming)
-    * [Custom Engine State Change Event Callbacks](#custom-engine-state-change-event-callbacks)
-* [Details](#details)
-    * [Localisation](#localisation)
-    * [Error Handling](#error-handling)
-* [Example Application](#example-application)
+- [Paylike's Android SDK](#paylikes-android-sdk)
+  - [Table of Contents](#table-of-contents)
+  - [General Info](#general-info)
+    - [Purpose of this library](#purpose-of-this-library)
+    - [Used Android API level and Technologies](#used-android-api-level-and-technologies)
+    - [Paylike API Reference](#paylike-api-reference)
+    - [Paylike Kotlin Ecosystem](#paylike-kotlin-ecosystem)
+  - [Usage](#usage)
+  - [TL;DR](#tldr)
+  - [Forms](#forms)
+    - [Simple Forms](#simple-forms)
+      - [Simple White Label Form](#simple-white-label-form)
+      - [Simple Paylike Style Form](#simple-paylike-style-form)
+    - [Extendable Forms](#extendable-forms)
+      - [Extendable White Label Form](#extendable-white-label-form)
+      - [Extendable Paylike Style Form](#extendable-paylike-style-form)
+  - [Custom Implementation](#custom-implementation)
+    - [Custom Theming](#custom-theming)
+    - [Custom Engine State Change Event Callbacks](#custom-engine-state-change-event-callbacks)
+  - [Details](#details)
+    - [Localisation](#localisation)
+    - [Error Handling](#error-handling)
+  - [Example Application](#example-application)
 
 ## General Info
 ---
@@ -46,6 +48,10 @@ For the UI related design and implementation the chosen technology is **Jetpack 
 ### Paylike API Reference
 For the library you can find the API reference [here](https://paylike.io#todo-link).  
 To get more familiar with our server API you can find here the [official documentation](https://github.com/paylike/api-reference).
+
+### Paylike Kotlin Ecosystem
+
+<img title="Paylike Kotlin Ecosystem" alt="System architecture diagram of the Paylike Kotlin Ecosystem" src="readme_res/SysArch.png">
 
 ## Usage
 ---
