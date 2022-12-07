@@ -15,6 +15,7 @@ import com.github.paylike.kotlin_engine.viewmodel.PaylikeEngine
 import com.github.paylike.kotlin_sdk.NoteField
 import com.github.paylike.kotlin_sdk.paylikeStyle.view.PaylikeStyleExtendableWhiteLabelComposable
 import com.github.paylike.kotlin_sdk.paylikeStyle.view.PaylikeStyleSimpleWhiteLabelComposable
+import com.github.paylike.kotlin_sdk.theme.PaylikeTheme
 import com.github.paylike.kotlin_sdk.whitelabel.extendable.view.ExtendableWhiteLabelComposable
 import com.github.paylike.kotlin_sdk.whitelabel.extendable.viewmodel.ExtendableWhiteLabelViewModel
 import com.github.paylike.kotlin_sdk.whitelabel.extendable.viewmodel.ExtenderFieldModel
@@ -324,13 +325,18 @@ class SampleViewModel : ViewModel() {
                                     paymentAmount = paymentData.amount,
                                 )
                             }
+
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                                LocalePicker()
+                                LocalePicker(
+                                    modifier = Modifier.padding(PaylikeTheme.paddings.smallPadding),
+                                )
                             }
                             ErrorCasePicker(
+                                modifier = Modifier.padding(PaylikeTheme.paddings.smallPadding),
                                 errorCase = paymentTestDtoEntry,
                                 onErrorCaseChanged = { onPaymentTestDtoEntryChanged(it) },
                             )
+
                             PaylikeStyleSimpleWhiteLabelComposable(
                                 modifier = Modifier,
                                 viewModel = exampleViewModel,

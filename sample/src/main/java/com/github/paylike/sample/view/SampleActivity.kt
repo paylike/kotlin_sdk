@@ -10,6 +10,7 @@ import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -17,6 +18,7 @@ import androidx.compose.material.icons.rounded.ArrowDropDown
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
@@ -62,7 +64,7 @@ fun SampleAppComposable(
 ) {
     val scaffoldState by remember { mutableStateOf(viewModel.scaffoldState) }
 
-    MaterialTheme {
+    PaylikeTheme() {
         Surface(modifier = Modifier.systemBarsPadding()) {
             val navController = rememberNavController()
             Scaffold(
@@ -76,6 +78,7 @@ fun SampleAppComposable(
                     ) {
                         composable(viewModel.rootRoute) {
                             /** Root composable */
+                            /** Root composable */
                             ExampleListComposable(
                                 viewModel,
                                 navController,
@@ -84,6 +87,7 @@ fun SampleAppComposable(
                         viewModel.sdkExampleModelMap.forEach { (keyAsRoute, model) ->
                             composable(keyAsRoute) {
                                 Scaffold(
+                                    /** To show the title of the example */
                                     /** To show the title of the example */
                                     topBar = {
                                         Text(
@@ -96,6 +100,7 @@ fun SampleAppComposable(
                                         )
                                     },
                                 ) { padding ->
+                                    /** Form composable */
                                     /** Form composable */
                                     Column(
                                         modifier =
@@ -124,7 +129,7 @@ fun SampleAppComposable(
 @Composable
 fun TopBarContentComposable() {
     TopAppBar(
-        backgroundColor = PaylikeTheme.colors.primary,
+        backgroundColor = PaylikeTheme.colors.primaryVariant,
         contentColor = PaylikeTheme.colors.onPrimary,
         title = {
             Box(
@@ -153,6 +158,18 @@ private fun ExampleListComposable(viewModel: SampleViewModel, navController: Nav
     ) {
         viewModel.sdkExampleModelMap.forEach { (keyAsRoute, model) ->
             ExampleCard(
+                modifier =
+                    Modifier.fillMaxWidth()
+                        .padding(PaylikeTheme.paddings.smallPadding)
+                        .clip(
+                            shape =
+                                CutCornerShape(
+                                    topStart = 0.dp,
+                                    topEnd = 0.dp,
+                                    bottomEnd = 0.dp,
+                                    bottomStart = 0.dp,
+                                )
+                        ),
                 route = keyAsRoute,
                 exampleModel = model,
                 onClick = { viewModel.toggleCard(key = keyAsRoute) },
@@ -161,7 +178,7 @@ private fun ExampleListComposable(viewModel: SampleViewModel, navController: Nav
         }
         /** Language picker located at the end of the example list */
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            LocalePicker()
+            LocalePicker(modifier = Modifier.padding(PaylikeTheme.paddings.smallPadding))
         }
     }
 }
@@ -175,6 +192,7 @@ private fun ExampleListComposable(viewModel: SampleViewModel, navController: Nav
 @ExperimentalMaterialApi
 @Composable
 fun ExampleCard(
+    modifier: Modifier = Modifier,
     route: String,
     exampleModel: SdkExampleModel,
     onClick: () -> Unit,
@@ -192,7 +210,7 @@ fun ExampleCard(
         )
     /** Holds the [SdkExampleModel] and formats it to the user */
     Card(
-        modifier = Modifier.fillMaxWidth().padding(0.dp, 0.dp, 0.dp, 0.dp),
+        modifier = modifier,
         backgroundColor = PaylikeTheme.colors.secondary,
         onClick = { onClick.invoke() },
         content = {
@@ -205,19 +223,19 @@ fun ExampleCard(
                     modifier =
                         Modifier.height(50.dp)
                             .fillMaxWidth()
-                            .background(PaylikeTheme.colors.secondaryVariant),
+                            .background(PaylikeTheme.colors.primary)
+                            .padding(PaylikeTheme.paddings.smallPadding),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text(
-                        modifier = Modifier.padding(PaylikeTheme.paddings.smallPadding),
+                        modifier = Modifier,
                         text = LocalContext.current.getString(exampleModel.titleId),
                         style = PaylikeTheme.typography.button
                     )
                     Icon(
                         imageVector = Icons.Rounded.ArrowDropDown,
-                        modifier =
-                            Modifier.padding(PaylikeTheme.paddings.smallPadding).rotate(rotate),
+                        modifier = Modifier.rotate(rotate),
                         contentDescription = null,
                     )
                 }
