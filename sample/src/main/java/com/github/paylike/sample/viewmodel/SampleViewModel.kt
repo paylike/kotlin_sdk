@@ -2,10 +2,12 @@ package com.github.paylike.sample.viewmodel
 
 import android.os.Build
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import com.github.paylike.kotlin_client.domain.dto.payment.request.PaymentData
 import com.github.paylike.kotlin_client.domain.dto.payment.request.money.PaymentAmount
@@ -20,6 +22,7 @@ import com.github.paylike.kotlin_sdk.whitelabel.extendable.view.ExtendableWhiteL
 import com.github.paylike.kotlin_sdk.whitelabel.extendable.viewmodel.ExtendableWhiteLabelViewModel
 import com.github.paylike.kotlin_sdk.whitelabel.extendable.viewmodel.ExtenderFieldModel
 import com.github.paylike.kotlin_sdk.whitelabel.simple.view.WhiteLabelComposable
+import com.github.paylike.kotlin_sdk.whitelabel.simple.viewmodel.EngineStateChangesDelegate
 import com.github.paylike.kotlin_sdk.whitelabel.simple.viewmodel.WhiteLabelViewModel
 import com.github.paylike.sample.BuildConfig
 import com.github.paylike.sample.R
@@ -37,6 +40,13 @@ class SampleViewModel : ViewModel() {
 
     /** Stores every example usage and their needed data for the library "kotlin_sdk" */
     val sdkExampleModelMap: Map<String, SdkExampleModel>
+
+    /**
+     * Helper variables to feedback at the end of payment flow in case of Simple and Extendable
+     * White Label examples
+     */
+    private var isSuccessMessageTriggered = mutableStateOf(false)
+    private var isErrorMessageTriggered = mutableStateOf(false)
 
     /**
      * Defined extender content to show how to define and add it to [ExtendableWhiteLabelComposable]
@@ -97,6 +107,15 @@ class SampleViewModel : ViewModel() {
                                         merchantId = BuildConfig.PaylikeMerchantApiKey,
                                         apiMode = ApiMode.TEST,
                                     ),
+                                onUpdateDelegate =
+                                    object : EngineStateChangesDelegate {
+                                        override fun onSuccess(arg: Any?) {
+                                            isSuccessMessageTriggered.value = true
+                                        }
+                                        override fun onError(arg: Any?) {
+                                            isErrorMessageTriggered.value = true
+                                        }
+                                    },
                             ),
                         exampleComposable = { exampleViewModel, paymentData ->
                             SideEffect {
@@ -107,10 +126,25 @@ class SampleViewModel : ViewModel() {
                                     paymentAmount = paymentData.amount,
                                 )
                             }
+
+                            val isSuccess by remember { isSuccessMessageTriggered }
+                            val isError by remember { isErrorMessageTriggered }
+
                             WhiteLabelComposable(
                                 modifier = Modifier,
                                 viewModel = exampleViewModel,
                             )
+
+                            if (isSuccess) {
+                                Toast.makeText(LocalContext.current, "Success!", Toast.LENGTH_LONG)
+                                    .show()
+                                isSuccessMessageTriggered.value = false
+                            }
+                            if (isError) {
+                                Toast.makeText(LocalContext.current, "Error!", Toast.LENGTH_LONG)
+                                    .show()
+                                isErrorMessageTriggered.value = false
+                            }
                         },
                     )
                 ),
@@ -161,6 +195,15 @@ class SampleViewModel : ViewModel() {
                                     )
                                     engine.addAdditionalPaymentData(textData = extenderFields!![0])
                                 },
+                                onUpdateDelegate =
+                                    object : EngineStateChangesDelegate {
+                                        override fun onSuccess(arg: Any?) {
+                                            isSuccessMessageTriggered.value = true
+                                        }
+                                        override fun onError(arg: Any?) {
+                                            isErrorMessageTriggered.value = true
+                                        }
+                                    },
                             ),
                         exampleComposable = { exampleViewModel, paymentData ->
                             SideEffect {
@@ -171,10 +214,24 @@ class SampleViewModel : ViewModel() {
                                     paymentAmount = paymentData.amount,
                                 )
                             }
+                            val isSuccess by remember { isSuccessMessageTriggered }
+                            val isError by remember { isErrorMessageTriggered }
+
                             ExtendableWhiteLabelComposable(
                                 modifier = Modifier,
                                 viewModel = exampleViewModel as ExtendableWhiteLabelViewModel,
                             )
+
+                            if (isSuccess) {
+                                Toast.makeText(LocalContext.current, "Success!", Toast.LENGTH_LONG)
+                                    .show()
+                                isSuccessMessageTriggered.value = false
+                            }
+                            if (isError) {
+                                Toast.makeText(LocalContext.current, "Error!", Toast.LENGTH_LONG)
+                                    .show()
+                                isErrorMessageTriggered.value = false
+                            }
                         },
                     )
                 ),
