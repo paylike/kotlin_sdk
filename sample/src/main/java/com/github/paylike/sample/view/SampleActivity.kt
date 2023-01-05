@@ -17,6 +17,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowDropDown
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
@@ -78,7 +79,6 @@ fun SampleAppComposable(
                     ) {
                         composable(viewModel.rootRoute) {
                             /** Root composable */
-                            /** Root composable */
                             ExampleListComposable(
                                 viewModel,
                                 navController,
@@ -87,7 +87,6 @@ fun SampleAppComposable(
                         viewModel.sdkExampleModelMap.forEach { (keyAsRoute, model) ->
                             composable(keyAsRoute) {
                                 Scaffold(
-                                    /** To show the title of the example */
                                     /** To show the title of the example */
                                     topBar = {
                                         Text(
@@ -101,11 +100,10 @@ fun SampleAppComposable(
                                     },
                                 ) { padding ->
                                     /** Form composable */
-                                    /** Form composable */
                                     Column(
                                         modifier =
                                             Modifier.fillMaxSize()
-                                                .verticalScroll(rememberScrollState(), true)
+                                                .verticalScroll(rememberScrollState())
                                                 .imePadding()
                                                 .padding(padding),
                                         verticalArrangement = Arrangement.Center,
@@ -152,7 +150,7 @@ fun TopBarContentComposable() {
 @Composable
 private fun ExampleListComposable(viewModel: SampleViewModel, navController: NavHostController) {
     Column(
-        modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState(), true),
+        modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.Start,
     ) {

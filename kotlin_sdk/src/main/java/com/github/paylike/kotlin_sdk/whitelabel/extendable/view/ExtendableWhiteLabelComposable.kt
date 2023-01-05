@@ -1,6 +1,10 @@
 package com.github.paylike.kotlin_sdk.whitelabel.extendable.view
 
+import android.content.Context
+import android.util.DisplayMetrics
+import android.view.WindowManager
 import androidx.compose.foundation.background
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -8,6 +12,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import com.github.paylike.kotlin_sdk.*
@@ -47,7 +52,13 @@ fun ExtendableWhiteLabelComposable(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             /** WebView to help TDS flow */
-            webView.value.WebViewComposable(modifier = Modifier.fillMaxWidth(1f).height(200.dp))
+            val displayMetrics = DisplayMetrics()
+            val windowManager = LocalContext.current.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+            windowManager.defaultDisplay.getMetrics(displayMetrics)
+
+            webView.value.WebViewComposable(modifier = Modifier.fillMaxWidth(1f).height(
+                displayMetrics.heightPixels.dp / displayMetrics.density * 0.8f
+            ).focusable())
 
             /** Extender fields */
             if (viewModel.extenderPaymentFormStateList.isNotEmpty()) {

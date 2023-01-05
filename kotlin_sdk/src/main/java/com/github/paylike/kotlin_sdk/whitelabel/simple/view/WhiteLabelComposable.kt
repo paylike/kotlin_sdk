@@ -1,6 +1,12 @@
 package com.github.paylike.kotlin_sdk.whitelabel.simple.view
 
+import android.app.Activity
+import android.content.Context.WINDOW_SERVICE
+import android.util.DisplayMetrics
+import android.util.Log
+import android.view.WindowManager
 import androidx.compose.foundation.background
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -9,6 +15,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusManager
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import com.github.paylike.kotlin_sdk.*
@@ -49,7 +57,15 @@ fun WhiteLabelComposable(
         ) {
 
             /** WebView to help TDS flow */
-            webView.value.WebViewComposable(modifier = Modifier.fillMaxWidth(1f).height(200.dp))
+            val displayMetrics = DisplayMetrics()
+            val windowManager = LocalContext.current.getSystemService(WINDOW_SERVICE) as WindowManager
+            windowManager.defaultDisplay.getMetrics(displayMetrics)
+
+            webView.value.WebViewComposable(modifier = Modifier.fillMaxWidth(1f).height(
+                displayMetrics.heightPixels.dp / displayMetrics.density * 0.8f
+            ).focusable())
+
+
             /** Form that contains the fields */
             SimpleWhiteLabelFormComposable(
                 modifier = Modifier.fillMaxWidth(),
