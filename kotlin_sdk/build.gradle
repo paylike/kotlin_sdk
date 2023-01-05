@@ -46,11 +46,11 @@ android {
 
 dependencies {
 	testImplementation 'junit:junit:4.13.2'
-	api "androidx.compose.animation:animation-graphics:$compose_version" // set it to impl
+	api "androidx.compose.animation:animation-graphics:$compose_version"
 	api "androidx.compose.ui:ui:$compose_version"
 	api "androidx.compose.material:material:$compose_version"
 	api "com.google.accompanist:accompanist-systemuicontroller:0.23.1"
-	api 'com.github.paylike:kotlin_engine:1.0.2'
+	api 'com.github.paylike:kotlin_engine:1.0.+'
 
 	api 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
 	api 'androidx.activity:activity-compose:1.5.1'
