@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Paylike Példa Android Alkalmazás</string>
+    <string name="top_app_bar_title">Példa fizetőformok</string>
+
+    <string name="example_description_text">Leírás</string>
+    <string name="example_show_button_text">Megnyitás</string>
+
+    <string name="simple_white_label_example_title">Egyszerű fizetési form példa</string>
+    <string name="simple_white_label_example_description">Ez a példa fizetési form bemutatja a legegyszerűbb módját a fizetési funkció felhasználói felületének implementálásához. A formon használt téma módosítható.</string>
+    <string name="extendable_white_label_example_title">Bővíthető fizetési form példa</string>
+    <string name="extendable_white_label_example_description">Példa a bővíthető fizetési form képességeinek bemutatására. Egyszerű módja annak, hogy további beviteli mezőket adjon hozzá, és személyre szabja ezeket a mezőket a fizetési űrlapokon.</string>
+    <string name="paylike_style_white_label_example_title">Paylike stílusú fizetési form példa</string>
+    <string name="paylike_style_extendable_white_label_example_title">Paylike stílusú bővíthető fizetési form példa</string>
+    <string name="paylike_style_extendable_white_label_example_description">Az bővíthető fizetési form és a Paylike stílus kombinációjaként kiterjesztheti az űrlapot. Alkalmazza a Paylike témát, és a Paylike felhasználói felület elemeit használja.</string>
+    <string name="error_and_localisation_example_description">Példák különböző hibaforgatókönyvekre és nyelvekre, amelyek bemutatják, hogy mely leggyakoribb hibaesetekkel találkozhat az alkalmazás, és hogyan támogatjuk Önt ezeknek a problémáknak a lokalizálásában.</string>
+    <string name="error_and_localisation_example_title">Hibakezelés és támogatott nyelvek példa</string>
+    <string name="paylike_style_white_label_example_description">Egy egyedi tervezésű, Paylike stílusú widget növeli az ügyfelek bizalmát az alkalmazás fizetési folyamatában. Ez a widget ugyanazokkal a képességekkel rendelkezik, mint a egyszerű fizetési űrlap, de Paylike témát és előre meghatározott Paylike stílusú felhasználói felület elemeket használ.</string>
+</resources>

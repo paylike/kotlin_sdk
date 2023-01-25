@@ -1,0 +1,35 @@
+<resources>
+    <string name="POPUP_HEADER_PAYMENT">Płatność</string>
+    <string name="POPUP_HEADER_SUBSEQUENT">Zapisz się</string>
+    <string name="CARD_NUMBER">Numer karty</string>
+    <string name="CARD_EXPIRY">Miesiąc/rok ważności</string>
+    <string name="CARD_CODE">Kod CVC</string>
+    <string name="PAY">Zapłać</string>
+    <string name="PAYING">Płacenie…</string>
+    <string name="SAVE_CARD">Zapisz kartę</string>
+    <string name="SAVING">Zapisywanie…</string>
+    <string name="POWERED_BY">Bezpieczna płatność przez Paylike</string>
+    <string name="TDS_FULL_SCREEN_TEXT">Problem z wyświetleniem tego okna?</string>
+    <string name="TDS_FULL_SCREEN_LINK">Otwórz na pełnym ekranie.</string>
+    <string name="ERROR_TIMEOUT">Niespodziewany błąd\nPrawdopodobnie masz problemy z połączeniem internetowym. Spróbuj ponownie za jakiś czas.</string>
+    <string name="ERROR_RATE_LIMIT">Niespodziewany błąd\nObsługujemy obecnie zbyt dużą ilość płatności. Spróbuj ponownie za kilka minut.</string>
+    <string name="ERROR_UNEXPECTED">Niespodziewany problem\nSpróbuj ponownie za chwilę lub napisz wiadomość do obsługi: %1$s.</string>
+    <string name="ERROR_PUBLIC_KEY_IS_NOT_TEST">Okno płatności jest w trybie „test”, ale podano klucz „public key” dla konta „live account”. Użyj klucza „public key” dla konta „test account”.</string>
+    <string name="ERROR_PUBLIC_KEY_IS_TEST">Okno płatności jest w trybie „live”, ale podano klucz „public key” dla konta „test account”. Użyj klucza „public key” dla konta „live account”.</string>
+    <string name="ERROR_PUBLIC_KEY_UNKNOWN">Podany klucz „public key” nie jest powiązany z kontem Paylike account”. Uzupełnij klucz „public key” i spróbuj ponownie.</string>
+    <string name="ERROR_PUBLIC_KEY_PAYMENTS_NOT_ALLOWED">Ten klucz „public key” jest niedozwolony w celu przyjmowania płatności.</string>
+    <string name="ERROR_INVALID_CARD_NUMBER">Nieprawidłowy numer karty\nProsimy sprawdzić wszystkie dane karty. Jeśli problem będzie się powtarzał, skontaktuj się ze swoim bankiem.</string>
+    <string name="ERROR_CARD_SCHEME_UNKNOWN">Nieprawidłowy numer karty lub karta nie jest obsługiwana\nNumer karty jest nieprawidłowy lub typ karty nie jest obsługiwany.</string>
+    <string name="ERROR_CARD_SCHEME_UNSUPPORTED">Karty %1$s nie są obsługiwane\nNiestety, ale karty %1$s nie są obsługiwane. Użyj jednej z następujących kart: %2$s.</string>
+    <string name="ERROR_CARD_SECURITY_CODE_INVALID">Nieprawidłowe CVC (kod zabezpieczający)\nProsimy sprawdzić CVC (kod zabezpieczający), zazwyczaj znajduje się on na odwrocie karty. Jeśli problem będzie się powtarzał, skontaktuj się ze swoim bankiem.</string>
+    <string name="ERROR_CARD_EXPIRED">Karta straciła ważność\nTwoja karta straciła ważność. Prosimy spróbować z inną kartą.</string>
+    <string name="ERROR_CARD_DISABLED">Karta została zastrzeżona\nTa karta została zastrzeżona. Skontaktuj się ze swoim bankiem, aby uzyskać dodatkowe informacje.</string>
+    <string name="ERROR_CARD_LOST">Skradziona lub zgubiona karta\nTa karta została zablokowana i oznaczona jako zgubiona lub skradziona. Prosimy skontaktować się ze swoim bankiem, by uzyskać więcej informacji.</string>
+    <string name="ERROR_AMOUNT_LIMIT">Przekroczono limit kwoty karty\nOsiągnięto limit kwoty na karcie. Prosimy skontaktować się ze swoim bankiem, aby wyzerować lub zwiększyć limit.</string>
+    <string name="ERROR_INSUFFICIENT_FUNDS">Niewystarczające środki\nBrak wystarczających środków na pokrycie kosztów zakupu. Spróbuj użyć innej karty lub przelej środki na swoje konto. Jeśli problem będzie się powtarzał, skontaktuj się ze swoim bankiem.</string>
+    <string name="ERROR_RECEIVER_BLOCKED">Sprzedawca zablokowany\nPłatność została odrzucona przez bank z powodu zablokowania sprzedawcy. Skontaktuj się ze swoim bankiem</string>
+    <string name="ERROR_REJECTED_BY_ISSUER">Karta została odrzucona\nKarta została odrzucona przez Twój bank. Skontaktuj się ze swoim bankiem.</string>
+    <string name="ERROR_REJECTED">Płatność została odrzucona\nSpróbuj ponownie za chwilę lub skontaktuj się z obsługą, jeśli problem będzie się powtarzał.</string>
+    <string name="ERROR_TDSECURE_REQUIRED">Wymagane uwierzytelnienie 3-D Secure\nUwierzytelnienie 3-D Secure (Visa Secure/Mastercard Identity Check) jest było wymagane do zaakceptowania tej płatności, ale nie można go było uzyskać. Spróbuj ponownie za chwilę lub skontaktuj się ze swoim bankiem.\n</string>
+    <string name="ERROR_TDSECURE_FAILED">Nieudane uwierzytelnienie 3-D Secure\nUwierzytelnienie 3-D Secure (Visa Secure/Mastercard Identity Check) jest wymagane, ale nie udało się go uzyskać. Spróbuj ponownie za chwilę lub skontaktuj się ze swoim bankiem.\n</string>
+</resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Aplicación de muestra de Android de Paylike</string>
+    <string name="top_app_bar_title">Demostración de formularios de pago Paylike</string>
+
+    <string name="example_description_text">Descripción</string>
+    <string name="example_show_button_text">Ver ejemplo</string>
+
+    <string name="simple_white_label_example_title">Ejemplo de formulario de etiqueta blanca simple</string>
+    <string name="simple_white_label_example_description">Ejemplo para mostrar la funcionalidad más simple de nuestro widget de marca blanca. Solo puede personalizar el tema de este widget. Esta es la forma más rápida de integrar pagos.</string>
+    <string name="extendable_white_label_example_title">Ejemplo de formulario de etiqueta blanca extensible</string>
+    <string name="extendable_white_label_example_description">Ejemplo para mostrar las capacidades de nuestro widget de etiqueta blanca extensible que le brinda la posibilidad de agregar sus extensiones al widget. Una manera fácil de agregar más campos de entrada y personalizar esos campos en sus formularios de pago.</string>
+    <string name="paylike_style_white_label_example_title">Ejemplo de estilo Paylike</string>
+    <string name="paylike_style_white_label_example_description">Un widget personalizado con estilo Paylike aumenta la confianza del cliente en el flujo de pago de su aplicación. Este widget tiene las mismas capacidades que el formulario de etiqueta blanca simple, pero utiliza el tema Paylike y elementos de interfaz de usuario de estilo Paylike predefinidos.</string>
+    <string name="paylike_style_extendable_white_label_example_title">Ejemplo de formulario extensible estilo Paylike</string>
+    <string name="paylike_style_extendable_white_label_example_description">Como una combinación del formulario de etiqueta blanca extensible y el estilo Paylike, puede ampliar su formulario. Aplica el tema de Paylike y utiliza los elementos de la interfaz de usuario de Paylike.</string>
+    <string name="error_and_localisation_example_description">Ejemplos de diferentes escenarios de error e idiomas para mostrar los casos de error más comunes que puede encontrar su aplicación y cómo lo ayudamos a localizar estos problemas.</string>
+    <string name="error_and_localisation_example_title">Ejemplo de error y localización</string>
+</resources>

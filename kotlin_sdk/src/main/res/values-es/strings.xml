@@ -1,0 +1,23 @@
+<resources>
+    <string name="POPUP_HEADER_PAYMENT">Pago</string>
+    <string name="POPUP_HEADER_SUBSEQUENT">Regístrate</string>
+    <string name="CARD_NUMBER">Número de la tarjeta</string>
+    <string name="CARD_EXPIRY">Vencimiento mes/año</string>
+    <string name="CARD_CODE">CVC</string>
+    <string name="PAY">Pagar</string>
+    <string name="PAYING">Pagando…</string>
+    <string name="SAVE_CARD">Guardar tarjeta</string>
+    <string name="SAVING">Guardando…</string>
+    <string name="POWERED_BY">Pago seguro por Paylike</string>
+    <string name="TDS_FULL_SCREEN_TEXT">¿Tienes problemas para ver la ventana?</string>
+    <string name="TDS_FULL_SCREEN_LINK">Abrir en pantalla completa.</string>
+    <string name="ERROR_INVALID_CARD_NUMBER">Número de tarjeta invalido\nRevisa el número de la tarjeta. Si el problema persiste, por favor comunícate con tu banco.</string>
+    <string name="ERROR_CARD_SCHEME_UNKNOWN">Número de tarjeta invalido o tarjeta no soportada\nEl número de la tarjeta es incorrecto o ese tipo de tarjeta no está soportado.</string>
+    <string name="ERROR_CARD_SECURITY_CODE_INVALID">CVC Invalido (código de seguridad)\nPor favor revise el CVC (código de seguridad), que normalmente se encuentra en la parte posterior de la tarjeta. Si el problema persiste, por favor comunícate con tu banco.</string>
+    <string name="ERROR_CARD_EXPIRED">La tarjeta ha expirado\nTu tarjeta ha expirado. Por favor intente con otra tarjeta.</string>
+    <string name="ERROR_CARD_DISABLED">La tarjeta esta restringida\nLa tarjeta esta restringida. Por favor comunícate con tu banco para obtener más información.</string>
+    <string name="ERROR_CARD_LOST">Tarjeta perdida o robada\nLa tarjeta ha sido bloqueada y reportada como perdida o robada, por favor comunícate con tu banco para obtener más información.</string>
+    <string name="ERROR_AMOUNT_LIMIT">Límite de la tarjeta excedido\nEl límite de tu tarjeta ha sido alcanzado. Por favor comunícate con tu banco para reiniciar o aumentar el limite.</string>
+    <string name="ERROR_INSUFFICIENT_FUNDS">Fondos insuficientes\nNo hay fondos suficientes disponibles para cubrir tu compra. Por favor intente con otra tarjeta o agregue más fondos a su cuenta. Si el problema persiste, por favor comunícate con tu banco.</string>
+    <string name="ERROR_REJECTED_BY_ISSUER">La tarjeta fue rechazada\nLa tarjeta ha sido rechazada por el banco. Por favor comunícate con tu banco.</string>
+</resources>
