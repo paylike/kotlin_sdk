@@ -639,6 +639,5 @@ Supported languages:
 For error definitions see: [here](https://github.com/paylike/api-reference/blob/main/status-codes.md)
 
 ## Example Application
----
 
-There is an example application showcasing the usual use-cases in a sample application under [this folder](https://github.com/kocsislaci/kotlin_sdk/tree/main/sample) of this repository.
+There is an example application showcasing the usual use-cases in a sample application under [this folder](https://github.com/paylike/kotlin_sdk/tree/main/sample) of this repository.
