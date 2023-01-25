@@ -1,0 +1,18 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name" tools:ignore="MissingTranslation">Paylike\'s Android Sample App</string>
+    <string name="top_app_bar_title" tools:ignore="MissingTranslation">Paylike Payment Forms Demo</string>
+
+    <string name="example_description_text" tools:ignore="MissingTranslation">Description</string>
+    <string name="example_show_button_text" tools:ignore="MissingTranslation">See example</string>
+
+    <string name="simple_white_label_example_title" tools:ignore="MissingTranslation">Simple White Label form example</string>
+    <string name="simple_white_label_example_description" tools:ignore="MissingTranslation">Example to showcase the most simple functionality of our white label widget. You can only customise the theme of this widget. This is the quickest way to integrate payments.</string>
+    <string name="extendable_white_label_example_title" tools:ignore="MissingTranslation">Extendable White Label form example</string>
+    <string name="extendable_white_label_example_description" tools:ignore="MissingTranslation">Example to showcase the capabilities of our Extendable White Label widget that provides you with the possibility to add your extensions to the widget. An easy way to add more input fields and customise those fields in your payment forms.</string>
+    <string name="paylike_style_white_label_example_title" tools:ignore="MissingTranslation">Paylike Style example</string>
+    <string name="paylike_style_white_label_example_description" tools:ignore="MissingTranslation">A custom-made widget with Paylike styling boosts customer trust in your application\'s payment flow. This widget has the same capabilities as the Simple White Label form but uses Paylike theme and predefined Paylike style UI elements.</string>
+    <string name="paylike_style_extendable_white_label_example_title" tools:ignore="MissingTranslation">Paylike Style Extendable form example</string>
+    <string name="paylike_style_extendable_white_label_example_description" tools:ignore="MissingTranslation">As a combination of the Extendable White label form and Paylike Style, it can extend your form. Applies the Paylike theme and uses Paylike\'s UI elements.</string>
+    <string name="error_and_localisation_example_title" tools:ignore="MissingTranslation">Error and localisation example</string>
+    <string name="error_and_localisation_example_description" tools:ignore="MissingTranslation">Examples of different error scenarios and languages to showcase the most common error cases your application can encounter and how we support you with localising these issues.</string>
+</resources>

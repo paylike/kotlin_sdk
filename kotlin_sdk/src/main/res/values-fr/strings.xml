@@ -1,0 +1,23 @@
+<resources>
+    <string name="POPUP_HEADER_PAYMENT">Paiement</string>
+    <string name="POPUP_HEADER_SUBSEQUENT">S\'inscrire</string>
+    <string name="CARD_NUMBER">Numéro de carte</string>
+    <string name="CARD_EXPIRY">Mois d expiration / année</string>
+    <string name="CARD_CODE">CVC</string>
+    <string name="PAY">Payer</string>
+    <string name="PAYING">Payant…</string>
+    <string name="SAVE_CARD">Enregistrer la carte</string>
+    <string name="SAVING">sauvegarde…</string>
+    <string name="POWERED_BY">Paiement sécurisé par Paylike</string>
+    <string name="TDS_FULL_SCREEN_TEXT">Trouble de voir la fenêtre?</string>
+    <string name="TDS_FULL_SCREEN_LINK">Ouvrir plein écran.</string>
+    <string name="ERROR_INVALID_CARD_NUMBER">Numéro de carte invalide\nVeuillez vérifier le numéro de la carte. Si le problème persiste, contactez votre banque.</string>
+    <string name="ERROR_CARD_SCHEME_UNKNOWN">Numéro de carte ou carte non valide non pris en charge\nLe numéro de carte est incorrect ou la marque de carte n est pas prise en charge.</string>
+    <string name="ERROR_CARD_SECURITY_CODE_INVALID">CVC non valide (code de sécurité)\nVeuillez vérifier le CVC (code de sécurité), qui se trouve généralement au dos de votre carte. Si le problème persiste, contactez votre banque.</string>
+    <string name="ERROR_CARD_EXPIRED">La carte a expiré\nVotre carte a expiré. Essayez un autre</string>
+    <string name="ERROR_CARD_DISABLED">La carte est restreinte\nCette carte est restreinte, veuillez contacter votre banque pour plus d informations.</string>
+    <string name="ERROR_CARD_LOST">Carte perdue ou volée\nLa carte a été bloquée et répertoriée comme perdue ou volée, veuillez contacter votre banque pour plus d informations.</string>
+    <string name="ERROR_AMOUNT_LIMIT">Limite du montant de la carte dépassée\nLa limite de quantité de votre carte a été atteinte. Veuillez contacter votre banque pour réinitialiser ou augmenter la limite.</string>
+    <string name="ERROR_INSUFFICIENT_FUNDS">Fonds insuffisants\nIl n y a pas assez de fonds disponibles pour couvrir l achat. Veuillez essayer une autre carte ou ajouter des fonds à votre compte. Si le problème persiste, contactez votre banque.</string>
+    <string name="ERROR_REJECTED_BY_ISSUER">La carte a été rejetée\nLa carte a été refusée par votre banque. Veuillez contacter votre banque.</string>
+</resources>

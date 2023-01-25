@@ -1,0 +1,23 @@
+<resources>
+    <string name="POPUP_HEADER_PAYMENT">Makse</string>
+    <string name="POPUP_HEADER_SUBSEQUENT">Registreeri</string>
+    <string name="CARD_NUMBER">Kaardi number</string>
+    <string name="CARD_EXPIRY">Aegub kuu/aasta</string>
+    <string name="CARD_CODE">CVC</string>
+    <string name="PAY">Soorita makse</string>
+    <string name="PAYING">Tasumine...</string>
+    <string name="SAVE_CARD">Salvesta kaardi andmed</string>
+    <string name="SAVING">Salvestan...</string>
+    <string name="POWERED_BY">Turvalist makset vahendab Paylike</string>
+    <string name="TDS_FULL_SCREEN_TEXT">Sul esineb probleeme selle akna nägemisega?</string>
+    <string name="TDS_FULL_SCREEN_LINK">Ava täisvaates.</string>
+    <string name="ERROR_INVALID_CARD_NUMBER">Kehtetu Kaardi number\nKontrollige kõiki andmeid. Probleemi püsimisel võtke ühendust oma pangaga.</string>
+    <string name="ERROR_CARD_SCHEME_UNKNOWN">Kehtetu kaardi number või kaarti ei toetata\nKaardi number on vale või seda ei toetata.</string>
+    <string name="ERROR_CARD_SECURITY_CODE_INVALID">Kehtetu turvakood\nPalun kontrollige CVC turvakoodi, tavaliselt asub kaardi tagaküljel. Probleemi püsimisel võtke ühendust oma pangaga.</string>
+    <string name="ERROR_CARD_EXPIRED">Kaart on aegunud\nTeie kaart on aegunud. Proovige teist kaarti.</string>
+    <string name="ERROR_CARD_DISABLED">Makse lükati tagasi\nSee makse on piiratud, võtke lisateabe saamiseks ühendust oma pangaga.</string>
+    <string name="ERROR_CARD_LOST">Kaart on kadunud või varastatud\nKaart on blokeeritud ja märgitud kadunuks või varastatuks, võtke lisateabe saamiseks ühendust oma pangaga.</string>
+    <string name="ERROR_AMOUNT_LIMIT">Kaardi limiit on ületatud\nKaardile määratud limiit on täis. Palun pöörduge panga poole, et piirang eemaldada või limiiti suurendada.</string>
+    <string name="ERROR_INSUFFICIENT_FUNDS">Pole piisavalt raha\nKaardil ei ole piisavalt vahendeid ostu sooritamiseks. Palun proovige mõnda muud kaarti või lisage oma kontole raha. Kui probleem ei lahene, võtke ühendust oma pangaga.</string>
+    <string name="ERROR_REJECTED_BY_ISSUER">Makse lükati tagasi\nMakse on panga poolt tagasi lükatud. Võtke ühendust oma pangaga.</string>
+</resources>

@@ -1,0 +1,87 @@
+plugins {
+	id 'com.android.library'
+	id 'org.jetbrains.kotlin.android'
+	id 'maven-publish'
+	id 'com.diffplug.spotless' version '6.8.0'
+}
+
+def compose_version = '1.2.0'
+
+android {
+	compileSdk 33
+	defaultConfig {
+		minSdk 26
+		targetSdk 33
+		vectorDrawables {
+			useSupportLibrary true
+		}
+		resConfigs "bg", "cs", "da", "de", "en",
+				"es", "et", "fi", "fr", "gr",
+				"hu", "kl", "nl", "no", "pl",
+				"ro", "si", "sk", "sv"
+	}
+	buildTypes {
+		debug {
+		}
+	}
+	compileOptions {
+		sourceCompatibility JavaVersion.VERSION_1_8
+		targetCompatibility JavaVersion.VERSION_1_8
+	}
+	kotlinOptions {
+		jvmTarget = '1.8'
+	}
+	buildFeatures {
+		compose true
+	}
+	composeOptions {
+		kotlinCompilerExtensionVersion compose_version
+	}
+	packagingOptions {
+		resources {
+			excludes += '/META-INF/{AL2.0,LGPL2.1}'
+		}
+	}
+}
+
+dependencies {
+	testImplementation 'junit:junit:4.13.2'
+	api "androidx.compose.animation:animation-graphics:$compose_version"
+	api "androidx.compose.ui:ui:$compose_version"
+	api "androidx.compose.material:material:$compose_version"
+	api "com.google.accompanist:accompanist-systemuicontroller:0.23.1"
+	api 'com.github.paylike:kotlin_engine:1.0.+'
+
+	api 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
+	api 'androidx.activity:activity-compose:1.5.1'
+}
+
+spotless {
+	kotlin {
+		target 'src/**/*.kt', 'src/**/*.kts'
+		ktfmt().kotlinlangStyle()
+		trimTrailingWhitespace()
+		endWithNewline()
+	}
+	groovyGradle {
+		target '*.gradle'
+		greclipse()
+		trimTrailingWhitespace()
+		endWithNewline()
+	}
+}
+assemble.dependsOn 'spotlessApply'
+
+afterEvaluate {
+	publishing {
+		publications {
+			release(MavenPublication) {
+				from components.release
+
+				groupId = 'com.github.paylike'
+				artifactId = 'kotlin_sdk'
+				version = '1.0.0'
+			}
+		}
+	}
+}

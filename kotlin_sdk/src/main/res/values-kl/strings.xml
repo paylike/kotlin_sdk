@@ -1,0 +1,23 @@
+<resources>
+    <string name="POPUP_HEADER_PAYMENT">Akiliineq</string>
+    <string name="POPUP_HEADER_SUBSEQUENT">Korti toqqoruk</string>
+    <string name="CARD_NUMBER">Kortip normua</string>
+    <string name="CARD_EXPIRY">Qaammat/ukioq qaangiuffissaa</string>
+    <string name="CARD_CODE">Isumannaallisaanermut kisitsit</string>
+    <string name="PAY">Akiliigit</string>
+    <string name="PAYING">Akiliivoq…</string>
+    <string name="SAVE_CARD">Korti toqqoruk</string>
+    <string name="SAVING">Toqqorpoq…</string>
+    <string name="POWERED_BY">Akiliineq isumannaatsoq Paylike aqqutigalugu</string>
+    <string name="TDS_FULL_SCREEN_TEXT">Takuniarlugu ajornartorsiorpit?</string>
+    <string name="TDS_FULL_SCREEN_LINK">Tamakkerlugu ammaruk.</string>
+    <string name="ERROR_INVALID_CARD_NUMBER">Kortip normua atorsinnaanngilaq\nKortip normua misissoruk. Ajornartorsiut aaqqinngippat banki attaveqarfigiuk.</string>
+    <string name="ERROR_CARD_SCHEME_UNKNOWN">Kortip normua imaluunniit korti atorsinnaanngilaq\nKortip normua eqqunngilaq imaluunniit korti atorsinnaanngilaq.</string>
+    <string name="ERROR_CARD_SECURITY_CODE_INVALID">Isumannaallisaanermut kisitsit atorsinnaanngilaq\nIsumannaallisaanermut kisitsit misissoruk, nalinginnaasumik kortip tunuani nassaarineqarsinnaavoq. Ajornartorsiut aaqqinngippat banki attaveqarfigiuk.</string>
+    <string name="ERROR_CARD_EXPIRED">Korti qaangiussimavoq\nKortit qaangiussimavoq. Allamik misiliigit.</string>
+    <string name="ERROR_CARD_DISABLED">Korti killeqarpoq\nKorti una killeqarpoq, banki attaveqarfigiuk paasisaqarnerorusukkuit.</string>
+    <string name="ERROR_CARD_LOST">Korti tammarsimavoq imaluunniit tillinneqarsimavoq\nKorti matuneqarsimavoq tammarsimasutullu imaluunniit tillinneqarsimasutut nalunaarsorsimalluni, banki attaveqarfigiuk paasisaqarnerorusukkuit.</string>
+    <string name="ERROR_AMOUNT_LIMIT">Aningaasat atorsinnaasavit killinga qaangersimavat\nKortinni aningaasat atorsinnaasavit killinga qaangersimavat. Killinga atorunnaarsinniarukku imaluunniit qaffanniarukku banki attaveqarfigiuk.</string>
+    <string name="ERROR_INSUFFICIENT_FUNDS">Aningaasat amigartoorput\nPisiaq naammassinissaanut aningaasat amigartoorput. Korti alla misiliguk imaluunniit kontonnut aningaasanik ikisigit. Ajornartorsiut aaqqinngippat banki attaveqarfigiuk.</string>
+    <string name="ERROR_REJECTED_BY_ISSUER">Korti akuerineqanngilaq\nKorti bankimit akuerineqanngilaq. Banki attaveqarfigiuk.</string>
+</resources>

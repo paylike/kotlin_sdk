@@ -1,0 +1,23 @@
+<resources>
+    <string name="POPUP_HEADER_PAYMENT">Плащане</string>
+    <string name="POPUP_HEADER_SUBSEQUENT">Регистрирай се</string>
+    <string name="CARD_NUMBER">Номер на картата</string>
+    <string name="CARD_EXPIRY">Валидна до</string>
+    <string name="CARD_CODE">CVC</string>
+    <string name="PAY">Плати</string>
+    <string name="PAYING">Плащане…</string>
+    <string name="SAVE_CARD">Запази карта</string>
+    <string name="SAVING">Запазване…</string>
+    <string name="POWERED_BY">Сигурни разплащания с Paylike</string>
+    <string name="TDS_FULL_SCREEN_TEXT">Проблем с виждането на прозореца?</string>
+    <string name="TDS_FULL_SCREEN_LINK">Отворете в цял екран.</string>
+    <string name="ERROR_INVALID_CARD_NUMBER">Невалиден номер на картата\nМоля, проверете всички данни за картата. Ако проблемът продължава, обърнете се към Вашата банка.</string>
+    <string name="ERROR_CARD_SECURITY_CODE_INVALID">Невалиден CVC (код за сигурност)\nМоля, проверете CVC (кодът за сигурност), намира се на гърба на Вашата карта. Ако проблемът продължава, обърнете се към Вашата банка.</string>
+    <string name="ERROR_CARD_EXPIRED">Картата е изтекла\nВашата карта е с изтекъл срок. Моля опитайте с друга.</string>
+    <string name="ERROR_CARD_DISABLED">Картата е ограничена\nТази карта е ограничена, обърнете се към Вашата банка за повече информация.</string>
+    <string name="ERROR_CARD_LOST">Картата е изгубена или открадната\nКартата е блокирана и обявена за загубена или открадната, свържете се с Вашата банка за повече информация.</string>
+    <string name="ERROR_AMOUNT_LIMIT">Лимитът за плащане с картата е надминат\nДостигнато е ограничение за сумата на Вашата карта. Обърнете се към Вашата банка, за да занулите или увеличите лимита.</string>
+    <string name="ERROR_INSUFFICIENT_FUNDS">Недостатъчна наличност на средства\nНяма достатъчно средства в картата за покриване на покупката. Опитайте с друга карта или добавите средства към вашата сметка. Ако проблемът продължава, свържете се в Вашата банка.</string>
+    <string name="ERROR_REJECTED_BY_ISSUER">Картата е отхвърлена\nКарта е отхвърлена от Вашата банка. Моля обърнете се към Вашата банка.</string>
+    <string name="ERROR_REJECTED">Транзакцията е отхвърлена</string>
+</resources>

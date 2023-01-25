@@ -1,0 +1,23 @@
+<resources>
+    <string name="POPUP_HEADER_PAYMENT">Betaling</string>
+    <string name="POPUP_HEADER_SUBSEQUENT">Melde deg på</string>
+    <string name="CARD_NUMBER">Kortnummer</string>
+    <string name="CARD_EXPIRY">Utløpsdato måned/år</string>
+    <string name="CARD_CODE">CVC</string>
+    <string name="PAY">Betal nå</string>
+    <string name="PAYING">Betaler…</string>
+    <string name="SAVE_CARD">Lagre kort</string>
+    <string name="SAVING">Lagrer…</string>
+    <string name="POWERED_BY">Sikker betaling med Paylike</string>
+    <string name="TDS_FULL_SCREEN_TEXT">Har du problemer med å se vinduet?</string>
+    <string name="TDS_FULL_SCREEN_LINK">Åpne i fullskjerm.</string>
+    <string name="ERROR_INVALID_CARD_NUMBER">Ugyldig kortnummer\nVennligst sjekk kortnummeret. Vennligst kontakt din bank om problemet fortsetter.</string>
+    <string name="ERROR_CARD_SCHEME_UNKNOWN">Ugyldig kortnummer eller kort ikke støttet\nKortnummeret er ukorrekt eller kortet er ikke støttet.</string>
+    <string name="ERROR_CARD_SECURITY_CODE_INVALID">Ugyldig CVC (sikkerhetskode)\nVennligst sjekk CVC (sikkerhetskode), vanligvis lokalisert på baksiden av kortet. Vennligst kontakt din bank om problemet fortsetter.</string>
+    <string name="ERROR_CARD_EXPIRED">Kortet har forfalt\nKortet ditt har forfalt. Vennligst prøv et annet kort.</string>
+    <string name="ERROR_CARD_DISABLED">Kortet er sperret\nDette kortet er sperret, vennligst kontakt din bank for nærmere informasjon.</string>
+    <string name="ERROR_CARD_LOST">Kort tapt eller stjålet\nKortet har blitt blokkert og listet som tapt eller stjålet, vennligst kontakt din bank for nærmere informasjon.</string>
+    <string name="ERROR_AMOUNT_LIMIT">Kortets beløpsgrense er overskredet\nBeløpsgrensen på ditt kort er nådd. Kontakt din bank for å nullstille eller heve grensen.</string>
+    <string name="ERROR_INSUFFICIENT_FUNDS">Manglende dekning\nDet er ikke tilstrekkelige midler tilgjengelige til å dekke kjøpet. Vennligst prøv et annet kort eller legg til midler til din konto. Vennligst kontakt din bank om problemet fortsetter.</string>
+    <string name="ERROR_REJECTED_BY_ISSUER">Kortet ble avvist\nKortet har blitt avvist av din bank. Vennligst kontakt din bank.</string>
+</resources>
