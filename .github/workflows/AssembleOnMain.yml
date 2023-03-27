@@ -24,4 +24,4 @@ jobs:
       - name: Get secret and add to freshly created local.properties
         run: echo ${{ secrets.PAYLIKEMERCHANTAPIKEY }} > local.properties
       - name: Build APK
-        run: ./gradlew assemble
+        run: ./gradlew build
