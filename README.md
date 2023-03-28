@@ -191,7 +191,7 @@ This form provides the simplest implementation of a payment flow.
 * webView to help TDS and
 * can receive custom theme definition.
 
-Every field has a realtime sanitation and check if its acceptable. Pushing the pay button has a check if every field meets the requirements, if not refuses to trigger the payment flow. If every field exaushted the expected conditions then the payment flow starts, the fields become disabled and the button disappears. The webView appears when necessary, accepts user input to solve TDS, then disappears. This form does not show any sign of feedback about the flow. The navigation to and from the form is up to the developer. In case of any error at any time, the form jumps to the error state, but like success state, does not show any feedback.  
+Every field has a realtime sanitation and check if its acceptable. Pushing the pay button has a check if every field meets the requirements, if not refuses to trigger the payment flow. If every field exhausted the expected conditions then the payment flow starts, the fields become disabled and the button disappears. The webView appears when necessary, accepts user input to solve TDS, then disappears. This form does not show any sign of feedback about the flow. The navigation to and from the form is up to the developer. In case of any error at any time, the form jumps to the error state, but like success state, does not show any feedback.  
 Theme has to be defined like built-in MaterialTheme.
 
 The white label view model has UI states what are used only by the Paylike style form.
