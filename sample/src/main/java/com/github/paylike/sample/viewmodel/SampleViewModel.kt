@@ -1,7 +1,6 @@
 package com.github.paylike.sample.viewmodel
 
 import android.os.Build
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -58,7 +57,6 @@ class SampleViewModel : ViewModel() {
         mutableStateOf(Pair("Unsupported card scheme", errorCases["Unsupported card scheme"]!!))
 
     private fun onPaymentTestDtoEntryChanged(newValue: Pair<String, PaymentTestDto>) {
-        Log.d("hello", "onchanged")
         paymentTestDtoEntry = newValue
     }
 

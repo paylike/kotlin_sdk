@@ -53,12 +53,16 @@ fun ExtendableWhiteLabelComposable(
         ) {
             /** WebView to help TDS flow */
             val displayMetrics = DisplayMetrics()
-            val windowManager = LocalContext.current.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+            val windowManager =
+                LocalContext.current.getSystemService(Context.WINDOW_SERVICE) as WindowManager
             windowManager.defaultDisplay.getMetrics(displayMetrics)
 
-            webView.value.WebViewComposable(modifier = Modifier.fillMaxWidth(1f).height(
-                displayMetrics.heightPixels.dp / displayMetrics.density * 0.8f
-            ).focusable())
+            webView.value.WebViewComposable(
+                modifier =
+                    Modifier.fillMaxWidth(1f)
+                        .height(displayMetrics.heightPixels.dp / displayMetrics.density * 0.8f)
+                        .focusable()
+            )
 
             /** Extender fields */
             if (viewModel.extenderPaymentFormStateList.isNotEmpty()) {
